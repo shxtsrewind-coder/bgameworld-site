@@ -1,0 +1,14 @@
+{
+  // Static-site deploy config for Cloudflare Workers (the unified replacement
+  // for "classic" Cloudflare Pages). No server-side Worker code here — this
+  // is a plain static HTML/CSS/JS site, and Workers' static-assets mode
+  // serves it directly with no backend of its own.
+  //
+  // Build step (run by Cloudflare before deploy): none — it's already static.
+  // Deploy step: `npx wrangler deploy`
+  "name": "bgameworld-site",
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "directory": "./"
+  }
+}
