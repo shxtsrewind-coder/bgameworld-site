@@ -1,5 +1,5 @@
 <title>BGameWorld</title>
-<meta name="description" content="BGameWorld — play free browser games. When & Where, Jetpack Surge and more. Play · Connect · Explore.">
+<meta name="description" content="BGameWorld — play free browser games. When & Where, Wordezy and more. Play · Connect · Explore.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -461,11 +461,11 @@ const GAMES = [
   { name: "When & Where", genre: "Trivia", art: "timeguess", url: "https://whenandwhere.bgameworld.com",
     blurb: "Look at a real archival photo, then guess the year, the place and even the day of the week it was taken.",
     platforms: ["Desktop", "Mobile"] },
-  { name: "Jetpack Surge", genre: "Arcade", art: "jetpack", url: "https://jetpacksurge.bgameworld.com",
-    blurb: "Strap on a jetpack and see how far you can fly in this endless runner built for one thumb.",
-    platforms: ["Mobile", "Desktop"] }
+  { name: "Wordezy", genre: "Puzzle", art: "wordezy", url: "https://wordezy.bgameworld.com",
+    blurb: "Guess the daily word in six tries, warm up first with a free practice round, and race the clock for a spot on the speed leaderboard.",
+    platforms: ["Desktop", "Mobile"] }
 ];
-const COMING = ["World 03", "World 04", "World 05"];
+const COMING = ["Jetpack Surge", "Word Search", "Crossword"];
 
 const FRAME_COUNT = 192, SRC_W = 1280, SRC_H = 720;
 const framePath = i => `frames/f${String(i + 1).padStart(3, "0")}.webp`;
@@ -549,6 +549,23 @@ const titleSvg = (a, b, col, y) => `<rect x="0" y="${y - 120}" width="400" heigh
   <text x="200" y="${y}" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="60" textLength="${Math.min(352, (a + b).length * 30)}" lengthAdjust="spacingAndGlyphs" fill="#fff">${a}<tspan fill="${col}">${b}</tspan></text>`;
 const fadeDef = () => `<linearGradient id="ft${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0F2E" stop-opacity="0"/><stop offset="1" stop-color="#0A0F2E" stop-opacity=".95"/></linearGradient>`;
 
+/* Wordezy's own tile-feedback palette (jade/gold/charcoal), the same mark used on the game itself */
+const WZ_COLORS = { correct: ["#2F9E6E", "#0B0A08"], present: ["#C9922F", "#0B0A08"], absent: ["#342F26", "#978C79"] };
+const WZ_ROWS = [
+  [["C", "absent"], ["R", "absent"], ["A", "present"], ["N", "absent"], ["E", "absent"]],
+  [["S", "absent"], ["L", "present"], ["A", "absent"], ["T", "present"], ["E", "present"]],
+  [["W", "correct"], ["R", "correct"], ["I", "correct"], ["T", "correct"], ["E", "correct"]]
+];
+function wzBoard() {
+  const TS = 70, GAP = 10, out = [];
+  WZ_ROWS.forEach((row, ri) => row.forEach(([letter, status], ci) => {
+    const x = ci * (TS + GAP), y = ri * (TS + GAP), [bg, fg] = WZ_COLORS[status];
+    out.push(`<rect x="${x}" y="${y}" width="${TS}" height="${TS}" rx="12" fill="${bg}"/>
+      <text x="${x + TS / 2}" y="${y + TS / 2 + 13}" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="32" fill="${fg}">${letter}</text>`);
+  }));
+  return out.join("");
+}
+
 function art(kind, variant) {
   const u = ++uid;
   const poster = variant === "poster";
@@ -564,6 +581,11 @@ function art(kind, variant) {
     body = poster
       ? `<rect width="400" height="560" fill="url(#sk${u})"/><rect width="400" height="560" fill="url(#hz${u})"/>${stars(400, 300, 26, 7)}${jpSkyline(400, 560, 11, .55)}<g transform="translate(-95 10) scale(.82)">${jpPilot(u)}</g>${titleSvg("JETPACK", " SURGE", "#FF7A3D", 520)}`
       : `<rect width="1600" height="700" fill="url(#sk${u})"/><rect width="1600" height="700" fill="url(#hz${u})"/>${stars(1600, 420, 70, 3)}${jpSkyline(1600, 700, 5, 1)}<g transform="translate(960 30) scale(1.05)">${jpPilot(u)}</g>`;
+  } else if (kind === "wordezy") {
+    defs += `<radialGradient id="wz${u}" cx=".5" cy=".28" r=".85"><stop offset="0" stop-color="#2F9E6E" stop-opacity=".32"/><stop offset="1" stop-color="#15120D" stop-opacity="0"/></radialGradient>`;
+    body = poster
+      ? `<rect width="400" height="560" fill="#15120D"/><rect width="400" height="560" fill="url(#wz${u})"/>${stars(400, 300, 16, 21)}<g transform="translate(5 150) rotate(-4)">${wzBoard()}</g>${titleSvg("WORD", "EZY", "#2F9E6E", 520)}`
+      : `<rect width="1600" height="700" fill="#15120D"/><rect width="1600" height="700" fill="url(#wz${u})"/>${stars(1600, 500, 36, 13)}<g transform="translate(900 150) scale(1.85) rotate(-3)">${wzBoard()}</g>`;
   } else { // coming soon
     defs += `<radialGradient id="pk${u}" cx=".7" cy=".3" r=".8"><stop offset="0" stop-color="#EC4899" stop-opacity=".45"/><stop offset=".5" stop-color="#8B5CF6" stop-opacity=".25"/><stop offset="1" stop-color="#0A0F2E" stop-opacity="0"/></radialGradient>`;
     body = poster
@@ -896,7 +918,7 @@ show(0); auto(true);
 const CHIPS = [
   { k: "all", label: "All games", icon: '<path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z"/>' },
   { k: "Trivia", label: "Trivia", icon: '<circle cx="10" cy="10" r="7.5"/><path d="M8 8a2 2 0 1 1 3 1.7c-.7.4-1 .9-1 1.6M10 14.2v.1"/>' },
-  { k: "Arcade", label: "Arcade", icon: '<path d="M6 6h8a4 4 0 0 1 4 4v1.5a3 3 0 0 1-5.4 1.8L12 12.5H8l-.6.8A3 3 0 0 1 2 11.5V10a4 4 0 0 1 4-4z"/><path d="M6.5 8.5v3M5 10h3"/>' },
+  { k: "Puzzle", label: "Puzzle", icon: '<rect x="3" y="7.5" width="4.2" height="5" rx="1"/><rect x="7.9" y="4" width="4.2" height="12" rx="1"/><rect x="12.8" y="7.5" width="4.2" height="5" rx="1"/>' },
   { k: "soon", label: "Coming soon", icon: '<path d="M10 2.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/>' }
 ];
 const chipsEl = document.getElementById("chips");
