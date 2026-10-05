@@ -556,10 +556,9 @@ function art(kind, variant) {
   const par = poster ? "xMidYMid slice" : "xMaxYMid slice";
   let defs = fadeDef(), body = "";
   if (kind === "timeguess") {
-    defs += tgDefs(u);
     body = poster
-      ? `<rect width="400" height="560" fill="url(#bg${u})"/><g transform="translate(-55 10) scale(.85)">${tgMotif(u)}</g>${titleSvg("TIME", "GUESS", "#FFD140", 520)}`
-      : `<rect width="1600" height="700" fill="url(#bg${u})"/><circle cx="1230" cy="350" r="420" fill="url(#gl${u})"/><g transform="translate(910 40) scale(1.03)">${tgMotif(u)}</g>`;
+      ? `<image href="art/when-and-where-poster.webp" x="0" y="0" width="400" height="560" preserveAspectRatio="xMidYMid slice"/>${titleSvg("WHEN &amp; ", "WHERE", "#38D9E8", 520)}`
+      : `<image href="art/when-and-where-banner.webp" x="0" y="0" width="1600" height="700" preserveAspectRatio="xMidYMid slice"/>`;
   } else if (kind === "jetpack") {
     defs += jpDefs(u);
     body = poster
