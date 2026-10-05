@@ -155,9 +155,9 @@ body.loaded .ni{opacity:1;transform:none}
 /* ---------- chapters ---------- */
 .stage{position:absolute;inset:0;display:flex;align-items:center;padding:0 var(--px);visibility:hidden}
 .stage.on{visibility:visible}
-.stage:not(.on){transition:visibility 0s linear .45s}
-.rv{opacity:0;transform:translateY(24px);transition:opacity .45s var(--ease2),transform .45s var(--ease2)}
-.stage.on .rv{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0ms)}
+.stage:not(.on){transition:visibility 0s linear .3s}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .3s var(--ease2),transform .3s var(--ease2)}
+.stage.on .rv{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:var(--d,0ms)}
 .stage:not(.on) .live{pointer-events:none}
 
 .eyebrow{margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
@@ -170,6 +170,20 @@ body.loaded .ni{opacity:1;transform:none}
 .hero .wrap{width:min(480px,40vw);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px}
 .hero .logo{width:100%;height:auto;filter:drop-shadow(0 18px 40px rgba(11,107,255,.35))}
 .hero .row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+
+/* ---------- hero scroll cue: a quiet nudge to keep going ---------- */
+.scrollcue{position:absolute;left:50%;bottom:calc(26px + var(--safe-b));transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;gap:10px;opacity:0;transition:opacity .8s var(--ease2) .9s,transform .25s var(--ease);z-index:2}
+.stage.hero.on .scrollcue{opacity:1}
+.scrollcue:hover{transform:translateX(-50%) translateY(3px)}
+.scrollcue-pill{width:22px;height:34px;border:1.5px solid var(--line);border-radius:999px;position:relative;transition:border-color .25s}
+.scrollcue:hover .scrollcue-pill{border-color:var(--cyan)}
+.scrollcue-dot{position:absolute;top:6px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--yellow);
+  animation:scrollcue-dot 1.5s ease-in-out infinite}
+.scrollcue-label{font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--dim)}
+@keyframes scrollcue-dot{0%{opacity:0;transform:translateY(0)}35%{opacity:1}80%{opacity:0;transform:translateY(14px)}100%{opacity:0;transform:translateY(14px)}}
+@media (max-width:767px){.scrollcue{bottom:calc(16px + var(--safe-b))}}
+@media (prefers-reduced-motion:reduce){.scrollcue-dot{animation:none;opacity:1}}
 
 /* mission */
 .mid{justify-content:flex-end}
@@ -415,6 +429,10 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
             <a href="#" class="btn btn-ghost live" data-go="1">Our mission</a>
           </div>
         </div>
+        <button type="button" class="scrollcue live" data-go="1" aria-label="Scroll to see what's next">
+          <span class="scrollcue-pill"><span class="scrollcue-dot"></span></span>
+          <span class="scrollcue-label">Scroll</span>
+        </button>
       </section>
 
       <section class="stage mid" id="s1" aria-label="Mission">
@@ -858,7 +876,7 @@ function frame(now) {
   const tp = targetProgress();
   if (reduced) curP = tp;
   else {
-    curP += (tp - curP) * (1 - Math.exp(-dt / 90));
+    curP += (tp - curP) * (1 - Math.exp(-dt / 50));
     if (Math.abs(tp - curP) < 0.0002) curP = tp;
   }
   const L = layoutAt(curP, LAYOUT);
