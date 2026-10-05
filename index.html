@@ -549,23 +549,6 @@ const titleSvg = (a, b, col, y) => `<rect x="0" y="${y - 120}" width="400" heigh
   <text x="200" y="${y}" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="60" textLength="${Math.min(352, (a + b).length * 30)}" lengthAdjust="spacingAndGlyphs" fill="#fff">${a}<tspan fill="${col}">${b}</tspan></text>`;
 const fadeDef = () => `<linearGradient id="ft${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0F2E" stop-opacity="0"/><stop offset="1" stop-color="#0A0F2E" stop-opacity=".95"/></linearGradient>`;
 
-/* Wordezy's own tile-feedback palette (jade/gold/charcoal), the same mark used on the game itself */
-const WZ_COLORS = { correct: ["#2F9E6E", "#0B0A08"], present: ["#C9922F", "#0B0A08"], absent: ["#342F26", "#978C79"] };
-const WZ_ROWS = [
-  [["C", "absent"], ["R", "absent"], ["A", "present"], ["N", "absent"], ["E", "absent"]],
-  [["S", "absent"], ["L", "present"], ["A", "absent"], ["T", "present"], ["E", "present"]],
-  [["W", "correct"], ["R", "correct"], ["I", "correct"], ["T", "correct"], ["E", "correct"]]
-];
-function wzBoard() {
-  const TS = 70, GAP = 10, out = [];
-  WZ_ROWS.forEach((row, ri) => row.forEach(([letter, status], ci) => {
-    const x = ci * (TS + GAP), y = ri * (TS + GAP), [bg, fg] = WZ_COLORS[status];
-    out.push(`<rect x="${x}" y="${y}" width="${TS}" height="${TS}" rx="12" fill="${bg}"/>
-      <text x="${x + TS / 2}" y="${y + TS / 2 + 13}" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="32" fill="${fg}">${letter}</text>`);
-  }));
-  return out.join("");
-}
-
 function art(kind, variant) {
   const u = ++uid;
   const poster = variant === "poster";
@@ -582,10 +565,9 @@ function art(kind, variant) {
       ? `<rect width="400" height="560" fill="url(#sk${u})"/><rect width="400" height="560" fill="url(#hz${u})"/>${stars(400, 300, 26, 7)}${jpSkyline(400, 560, 11, .55)}<g transform="translate(-95 10) scale(.82)">${jpPilot(u)}</g>${titleSvg("JETPACK", " SURGE", "#FF7A3D", 520)}`
       : `<rect width="1600" height="700" fill="url(#sk${u})"/><rect width="1600" height="700" fill="url(#hz${u})"/>${stars(1600, 420, 70, 3)}${jpSkyline(1600, 700, 5, 1)}<g transform="translate(960 30) scale(1.05)">${jpPilot(u)}</g>`;
   } else if (kind === "wordezy") {
-    defs += `<radialGradient id="wz${u}" cx=".5" cy=".28" r=".85"><stop offset="0" stop-color="#2F9E6E" stop-opacity=".32"/><stop offset="1" stop-color="#15120D" stop-opacity="0"/></radialGradient>`;
     body = poster
-      ? `<rect width="400" height="560" fill="#15120D"/><rect width="400" height="560" fill="url(#wz${u})"/>${stars(400, 300, 16, 21)}<g transform="translate(5 150) rotate(-4)">${wzBoard()}</g>${titleSvg("WORD", "EZY", "#2F9E6E", 520)}`
-      : `<rect width="1600" height="700" fill="#15120D"/><rect width="1600" height="700" fill="url(#wz${u})"/>${stars(1600, 500, 36, 13)}<g transform="translate(900 150) scale(1.85) rotate(-3)">${wzBoard()}</g>`;
+      ? `<image href="art/wordezy-poster.webp" x="0" y="0" width="400" height="560" preserveAspectRatio="xMidYMid slice"/>${titleSvg("WORD", "EZY", "#2F9E6E", 520)}`
+      : `<image href="art/wordezy-banner.webp" x="0" y="0" width="1600" height="700" preserveAspectRatio="xMidYMid slice"/>`;
   } else { // coming soon
     defs += `<radialGradient id="pk${u}" cx=".7" cy=".3" r=".8"><stop offset="0" stop-color="#EC4899" stop-opacity=".45"/><stop offset=".5" stop-color="#8B5CF6" stop-opacity=".25"/><stop offset="1" stop-color="#0A0F2E" stop-opacity="0"/></radialGradient>`;
     body = poster
