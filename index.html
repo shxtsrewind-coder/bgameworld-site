@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BGameWorld — Free Browser Games</title>
-<meta name="description" content="BGameWorld — play free browser games. When & Where, Wordezy and more. Play · Connect · Explore.">
+<meta name="description" content="BGameWorld — play free browser games. When & Where, Wordezy, Wordezy Search and more. Play · Connect · Explore.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bgameworld.com/">
 <meta name="theme-color" content="#0A0F2E">
@@ -10,7 +10,7 @@
 <!-- Open Graph (Facebook, LinkedIn, Discord, WhatsApp, ...) -->
 <meta property="og:site_name" content="BGameWorld">
 <meta property="og:title" content="BGameWorld — Free Browser Games">
-<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy and more. Play · Connect · Explore.">
+<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search and more. Play · Connect · Explore.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bgameworld.com/">
 <meta property="og:image" content="https://bgameworld.com/og-image.jpg">
@@ -23,7 +23,7 @@
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BGameWorld — Free Browser Games">
-<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, Wordezy and more.">
+<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search and more.">
 <meta name="twitter:image" content="https://bgameworld.com/og-image.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -60,6 +60,13 @@
       "@type": "VideoGame",
       "name": "Wordezy",
       "url": "https://wordezy.bgameworld.com",
+      "genre": ["Puzzle", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Wordezy Search",
+      "url": "https://wordezysearch.bgameworld.com",
       "genre": ["Puzzle", "Word Game"],
       "isAccessibleForFree": true
     }
@@ -541,9 +548,12 @@ const GAMES = [
     platforms: ["Desktop", "Mobile"] },
   { name: "Wordezy", genre: "Puzzle", art: "wordezy", url: "https://wordezy.bgameworld.com",
     blurb: "Guess the daily word in six tries, warm up first with a free practice round, and race the clock for a spot on the speed leaderboard.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Wordezy Search", genre: "Puzzle", art: "wordsearch", url: "https://wordezysearch.bgameworld.com",
+    blurb: "Hunt 24 hidden words a day across 22 themes, race the clock on the shared daily board, or pick your difficulty and go unlimited.",
     platforms: ["Desktop", "Mobile"] }
 ];
-const COMING = ["Jetpack Surge", "Word Search", "Crossword"];
+const COMING = ["Jetpack Surge", "Crossword"];
 
 const FRAME_COUNT = 192, SRC_W = 1280, SRC_H = 720;
 const framePath = i => `frames/f${String(i + 1).padStart(3, "0")}.webp`;
@@ -618,6 +628,30 @@ function jpDefs(u) {
   <linearGradient id="fo${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9F40"/><stop offset="1" stop-color="#FF4D4D" stop-opacity="0"/></linearGradient>
   <linearGradient id="fi${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6C8"/><stop offset="1" stop-color="#FFD140" stop-opacity="0"/></linearGradient>`;
 }
+function wsDefs(u) {
+  return `<linearGradient id="wsbg${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15215C"/><stop offset="1" stop-color="#0A0F2E"/></linearGradient>
+  <radialGradient id="wsgl${u}" cx=".5" cy=".28" r=".65"><stop offset="0" stop-color="#FFC857" stop-opacity=".25"/><stop offset="1" stop-color="#0A0F2E" stop-opacity="0"/></radialGradient>`;
+}
+// A tilted letter-grid card with one diagonal word picked out, same amber
+// bar the game itself draws under a dragged selection. Fixed 5x5 layout
+// (not random) so the highlighted word always reads cleanly as "OCEAN".
+function wsCard(u) {
+  const rows = [["O","T","R","Q","S"], ["K","C","B","M","H"], ["W","L","E","N","P"], ["D","F","X","A","J"], ["G","V","Y","Z","N"]];
+  const cell = 56, pad = 24, size = cell * 5 + pad * 2;
+  const cx = pad + (cell * 5) / 2;
+  let letters = "";
+  rows.forEach((row, r) => row.forEach((ch, c) => {
+    const onDiag = r === c;
+    const x = pad + c * cell + cell / 2, y = pad + r * cell + cell / 2;
+    letters += `<text x="${x}" y="${y + 12}" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="34" font-weight="700" fill="${onDiag ? "#1B1536" : "#5B4A2E"}">${ch}</text>`;
+  }));
+  const diagLen = 4 * cell * Math.SQRT2 + cell;
+  return { size, cx, html: `
+    <rect width="${size}" height="${size}" rx="18" fill="#F7E6BE"/>
+    <rect width="${size}" height="${size}" rx="18" fill="none" stroke="#E3C988" stroke-width="3"/>
+    <rect x="${cx - diagLen / 2}" y="${cx - 22}" width="${diagLen}" height="44" rx="22" fill="#FFC857" opacity=".92" transform="rotate(45 ${cx} ${cx})"/>
+    ${letters}` };
+}
 function stars(w, h, n, seed) {
   const r = rand(seed); let o = "";
   for (let i = 0; i < n; i++) o += `<circle cx="${(r() * w).toFixed(0)}" cy="${(r() * h).toFixed(0)}" r="${(r() * 1.8 + .4).toFixed(1)}" fill="#fff" opacity="${(r() * .6 + .2).toFixed(2)}"/>`;
@@ -646,6 +680,12 @@ function art(kind, variant) {
     body = poster
       ? `<image href="art/wordezy-poster.webp" x="0" y="0" width="400" height="560" preserveAspectRatio="xMidYMid slice"/>${titleSvg("WORD", "EZY", "#2F9E6E", 520)}`
       : `<image href="art/wordezy-banner.webp" x="0" y="0" width="1600" height="700" preserveAspectRatio="xMidYMid slice"/>`;
+  } else if (kind === "wordsearch") {
+    defs += wsDefs(u);
+    const card = wsCard(u);
+    body = poster
+      ? `<rect width="400" height="560" fill="url(#wsbg${u})"/><rect width="400" height="560" fill="url(#wsgl${u})"/><g transform="translate(${(400 - card.size) / 2} 150) rotate(-5 ${card.cx} ${card.cx})">${card.html}</g>${titleSvg("WORD", " SEARCH", "#FFC857", 520)}`
+      : `<rect width="1600" height="700" fill="url(#wsbg${u})"/><rect width="1600" height="700" fill="url(#wsgl${u})"/><g transform="translate(980 95) scale(1.35) rotate(-5 ${card.cx} ${card.cx})">${card.html}</g>`;
   } else { // coming soon
     defs += `<radialGradient id="pk${u}" cx=".7" cy=".3" r=".8"><stop offset="0" stop-color="#EC4899" stop-opacity=".45"/><stop offset=".5" stop-color="#8B5CF6" stop-opacity=".25"/><stop offset="1" stop-color="#0A0F2E" stop-opacity="0"/></radialGradient>`;
     body = poster
