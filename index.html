@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BGameWorld — Free Browser Games</title>
-<meta name="description" content="BGameWorld — play free browser games. When & Where, Wordezy, Wordezy Search and more. Play · Connect · Explore.">
+<meta name="description" content="BGameWorld — play free browser games: When & Where, Wordezy, Wordezy Search, Scramble, Ladder, Sortezy and more. Play · Connect · Explore.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bgameworld.com/">
 <meta name="theme-color" content="#0A0F2E">
@@ -10,7 +10,7 @@
 <!-- Open Graph (Facebook, LinkedIn, Discord, WhatsApp, ...) -->
 <meta property="og:site_name" content="BGameWorld">
 <meta property="og:title" content="BGameWorld — Free Browser Games">
-<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search and more. Play · Connect · Explore.">
+<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Wordezy Scramble, Wordezy Ladder, Sortezy and more. Play · Connect · Explore.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bgameworld.com/">
 <meta property="og:image" content="https://bgameworld.com/og-image.jpg">
@@ -23,7 +23,7 @@
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BGameWorld — Free Browser Games">
-<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search and more.">
+<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Scramble, Ladder, Sortezy and more.">
 <meta name="twitter:image" content="https://bgameworld.com/og-image.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -68,6 +68,27 @@
       "name": "Wordezy Search",
       "url": "https://wordezysearch.bgameworld.com",
       "genre": ["Puzzle", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Wordezy Scramble",
+      "url": "https://wordezyscramble.bgameworld.com",
+      "genre": ["Puzzle", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Wordezy Ladder",
+      "url": "https://wordezyladder.bgameworld.com",
+      "genre": ["Puzzle", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Sortezy",
+      "url": "https://sortezy.bgameworld.com",
+      "genre": "Puzzle",
       "isAccessibleForFree": true
     }
   ]
@@ -293,7 +314,10 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 
 /* ---------- final chapter: 3D poster fan ---------- */
 .fan{display:flex;align-items:center;height:240px;perspective:1100px;margin:4px 0 28px;padding-left:20px}
-.fan .pc{position:relative;flex:none;display:block;width:148px;aspect-ratio:5/7;border-radius:14px;overflow:hidden;margin-left:-30px;
+/* --n is the card count (set from GAMES): overlap grows with it so the fan always fits its column. The extra px allow for
+   the cards' 3D tilt, which makes each one look narrower than its box. */
+.fan .pc{--w:148px;position:relative;flex:none;display:block;width:var(--w);aspect-ratio:5/7;border-radius:14px;overflow:hidden;
+  margin-left:min(-30px, calc((100% - var(--n,4) * var(--w) + 16px) / (var(--n,4) - 1)));
   transform:rotateY(-26deg) translateZ(var(--z,0px));transition:transform .55s var(--ease),box-shadow .4s;
   box-shadow:0 24px 50px -18px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.08)}
 .fan .pc:first-child{margin-left:0}
@@ -326,6 +350,7 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 .slide[data-pos="0"]{transform:translateX(-50%);z-index:3}
 .slide[data-pos="1"]{transform:translateX(-50%) translateX(68%) translateZ(-240px) rotateY(-30deg);opacity:.55;filter:brightness(.55);z-index:2;cursor:pointer}
 .slide[data-pos="-1"]{transform:translateX(-50%) translateX(-68%) translateZ(-240px) rotateY(30deg);opacity:.55;filter:brightness(.55);z-index:2;cursor:pointer}
+.slide[data-pos="far"]{transform:translateX(-50%) translateZ(-480px);opacity:0;z-index:1;pointer-events:none}
 .slide:not([data-pos="0"]) .card *{pointer-events:none}
 .slide .card{position:relative;width:100%;height:100%;border-radius:24px;overflow:hidden;transform-style:preserve-3d;
   box-shadow:0 50px 90px -40px rgba(0,0,0,.95),0 0 0 1px rgba(34,211,238,.12);
@@ -361,7 +386,9 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 .shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 var(--hx)}
 .shelf-h h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
 .shelf-h span{font-size:13px;color:var(--dim)}
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(160px,16vw,215px);justify-content:start;gap:22px;overflow-x:auto;padding:18px var(--hx) 16px;scroll-snap-type:x proximity;scrollbar-width:none}
+/* --cols is the number of live games (set from GAMES), so the whole row fits on a laptop screen;
+   below 130px a card the rail scrolls sideways instead. */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(130px,calc((100% - (var(--cols,6) - 1) * 22px) / var(--cols,6)),215px);justify-content:start;gap:22px;overflow-x:auto;padding:18px var(--hx) 16px;scroll-padding-inline:var(--hx);scroll-snap-type:x proximity;scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
 .item{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;min-width:0}
 .poster{position:relative;display:block;aspect-ratio:5/7;border-radius:16px;overflow:hidden;background:var(--panel);
@@ -378,11 +405,12 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
 .item .m em{font-style:normal;color:var(--cyan)}
 .item.soon .t{color:var(--muted)}
 .empty{margin:0;padding:18px var(--hx) 0;color:var(--dim);font-size:15px}
-@media (hover:none){.pbtn{opacity:1;transform:none;width:38px;height:38px}}
+/* Touch screens show the button all the time, so it sits top-right, clear of the painted title. */
+@media (hover:none){.pbtn{opacity:1;transform:none;width:38px;height:38px;top:10px;right:10px;bottom:auto}}
 
 @media (max-width:767px){
   .fan{height:160px;margin:0 0 16px;padding-left:10px}
-  .fan .pc{width:96px;margin-left:-22px;border-radius:10px}
+  .fan .pc{--w:96px;margin-left:min(-22px, calc((100% - var(--n,4) * var(--w) + 24px) / (var(--n,4) - 1)));border-radius:10px}
   .cf{height:470px}
   .slide{width:86%}
   .slide[data-pos="1"]{transform:translateX(-50%) translateX(80%) translateZ(-220px) rotateY(-30deg)}
@@ -551,14 +579,20 @@ const GAMES = [
     platforms: ["Desktop", "Mobile"] },
   { name: "Wordezy Search", genre: "Puzzle", art: "wordsearch", url: "https://wordezysearch.bgameworld.com",
     blurb: "Hunt 24 hidden words a day across 22 themes, race the clock on the shared daily board, or pick your difficulty and go unlimited.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Wordezy Scramble", genre: "Puzzle", art: "scramble", url: "https://wordezyscramble.bgameworld.com",
+    blurb: "Unscramble five words a day, from 4 letters up to 8, shuffle the tiles and race the clock for a spot on the daily leaderboard.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Wordezy Ladder", genre: "Puzzle", art: "ladder", url: "https://wordezyladder.bgameworld.com",
+    blurb: "Climb from one word to another by changing a single letter at a time, every step a real word, and try to reach the top in par.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Sortezy", genre: "Puzzle", art: "sortezy", url: "https://sortezy.bgameworld.com",
+    blurb: "Pour coloured water until every tube holds one colour, with a new puzzle every day and levels that grow from 3 colours to 12.",
     platforms: ["Desktop", "Mobile"] }
 ];
-// Built but not on their own subdomain yet. When one goes live, move it into
-// GAMES above with its url, genre and blurb (its art key stays the same).
+// Not built yet. When one goes live, move it into GAMES above with its url,
+// genre and blurb.
 const COMING = [
-  { name: "Wordezy Scramble", art: "scramble" },
-  { name: "Wordezy Ladder", art: "ladder" },
-  { name: "Sortezy", art: "sortezy" },
   { name: "Jetpack Surge" },
   { name: "Crossword" }
 ];
@@ -691,9 +725,12 @@ GAMES.forEach(g => {
 });
 
 /* ---------- final chapter fan ---------- */
-document.getElementById("fan").innerHTML =
-  GAMES.map((g, i) => `<a class="pc" href="${g.url}" target="_blank" rel="noopener" style="--z:${i * 30}px" aria-label="Play ${g.name}">${art(g.art, "poster")}</a>`).join("") +
-  `<div class="pc" style="--z:${GAMES.length * 30}px" aria-hidden="true">${art("soon", "poster")}</div>`;
+// The cards step forward in depth; the whole fan keeps the same 90px depth however many games there are.
+const fanEl = document.getElementById("fan"), zStep = 90 / GAMES.length;
+fanEl.style.setProperty("--n", GAMES.length + 1);
+fanEl.innerHTML =
+  GAMES.map((g, i) => `<a class="pc" href="${g.url}" target="_blank" rel="noopener" style="--z:${i * zStep}px" aria-label="Play ${g.name}">${art(g.art, "poster")}</a>`).join("") +
+  `<div class="pc" style="--z:${GAMES.length * zStep}px" aria-hidden="true">${art("soon", "poster")}</div>`;
 
 /* ---------- elements ---------- */
 const canvas = document.getElementById("frames"), ctx = canvas.getContext("2d");
@@ -711,6 +748,7 @@ function targetProgress() {
 const STAGE_AT = [0, 0.41, 0.9];
 const WINDOWS = [[-1, 0.1], [0.3, 0.52], [0.72, 2]];
 const hub = document.getElementById("hub"), nav = document.querySelector(".nav");
+hub.style.setProperty("--cols", GAMES.length);
 function goStage(i) {
   if (i === "hub") { scrollTo({ top: hub.offsetTop, behavior: reduced ? "auto" : "smooth" }); return; }
   const max = track.offsetHeight - innerHeight;
