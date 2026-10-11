@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BGameWorld — Free Browser Games</title>
-<meta name="description" content="BGameWorld — play free browser games: When & Where, Wordezy, Wordezy Search, Scramble, Ladder, Sortezy and more. Play · Connect · Explore.">
+<meta name="description" content="BGameWorld — free browser games: When & Where, the Wordezy word games, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bgameworld.com/">
 <meta name="theme-color" content="#0A0F2E">
@@ -10,7 +10,7 @@
 <!-- Open Graph (Facebook, LinkedIn, Discord, WhatsApp, ...) -->
 <meta property="og:site_name" content="BGameWorld">
 <meta property="og:title" content="BGameWorld — Free Browser Games">
-<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Wordezy Scramble, Wordezy Ladder, Sortezy and more. Play · Connect · Explore.">
+<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Scramble and Ladder, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bgameworld.com/">
 <meta property="og:image" content="https://bgameworld.com/og-image.jpg">
@@ -23,7 +23,7 @@
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BGameWorld — Free Browser Games">
-<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Scramble, Ladder, Sortezy and more.">
+<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, the Wordezy word games, Sortezy, Linkezy, Lingoezy and more.">
 <meta name="twitter:image" content="https://bgameworld.com/og-image.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -88,6 +88,20 @@
       "@type": "VideoGame",
       "name": "Sortezy",
       "url": "https://sortezy.bgameworld.com",
+      "genre": "Puzzle",
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Lingoezy",
+      "url": "https://lingoezy.bgameworld.com",
+      "genre": ["Quiz", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Linkezy",
+      "url": "https://linkezy.bgameworld.com",
       "genre": "Puzzle",
       "isAccessibleForFree": true
     }
@@ -386,7 +400,14 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 .shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 var(--hx)}
 .shelf-h h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
 .shelf-h span{font-size:13px;color:var(--dim)}
-/* --cols is the number of live games (set from GAMES), so the whole row fits on a laptop screen;
+/* Arrows for mouse users; touch screens swipe. Shown only while the row overflows. */
+.shelf-tools{display:flex;align-items:center;gap:8px}
+.rail-arrow{display:none;width:36px;height:36px;border-radius:50%;background:var(--panel);border:1.5px solid var(--line);color:var(--gray);place-items:center;cursor:pointer;transition:border-color .2s,opacity .2s}
+.rail-arrow:hover:not(:disabled){border-color:var(--cyan)}
+.rail-arrow:disabled{opacity:.35;cursor:default}
+.shelf.scrolls .rail-arrow{display:grid}
+@media (hover:none){.shelf.scrolls .rail-arrow{display:none}}
+/* --cols is how many cards fit across (set from GAMES): all of them up to six, else six and a half;
    below 130px a card the rail scrolls sideways instead. */
 .rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(130px,calc((100% - (var(--cols,6) - 1) * 22px) / var(--cols,6)),215px);justify-content:start;gap:22px;overflow-x:auto;padding:18px var(--hx) 16px;scroll-padding-inline:var(--hx);scroll-snap-type:x proximity;scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
@@ -525,7 +546,7 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
   <div class="cf-dots" id="cfDots"></div>
   <div class="chips" id="chips" role="toolbar" aria-label="Filter games"></div>
   <div class="shelf" id="shelfReady">
-    <div class="shelf-h"><h3>Ready to play</h3><span id="readyCount"></span></div>
+    <div class="shelf-h"><h3>Ready to play</h3><div class="shelf-tools"><span id="readyCount"></span><button class="rail-arrow" id="railPrev" aria-label="Scroll games left"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4l-5 5 5 5"/></svg></button><button class="rail-arrow" id="railNext" aria-label="Scroll games right"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l5 5-5 5"/></svg></button></div></div>
     <div class="rail" id="railReady"></div>
     <p class="empty" id="empty" hidden></p>
   </div>
@@ -588,6 +609,12 @@ const GAMES = [
     platforms: ["Desktop", "Mobile"] },
   { name: "Sortezy", genre: "Puzzle", art: "sortezy", url: "https://sortezy.bgameworld.com",
     blurb: "Pour coloured water until every tube holds one colour, with a new puzzle every day and levels that grow from 3 colours to 12.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Lingoezy", genre: "Trivia", art: "lingoezy", url: "https://lingoezy.bgameworld.com",
+    blurb: "Pick the right translation from four look-alike words and dodge the false friends, with ten new words a day in five languages.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Linkezy", genre: "Puzzle", art: "linkezy", url: "https://linkezy.bgameworld.com",
+    blurb: "Join each pair of dots without crossing a line and fill every square, with a new board every day and 100 levels to climb.",
     platforms: ["Desktop", "Mobile"] }
 ];
 // Not built yet. When one goes live, move it into GAMES above with its url,
@@ -678,7 +705,9 @@ const PAINTED = {
   wordsearch: { file: "wordezy-search",   title: ["WORD", " SEARCH", "#FFC857"] },
   scramble:   { file: "wordezy-scramble", title: ["WORD", " SCRAMBLE", "#2F9E6E"] },
   ladder:     { file: "wordezy-ladder",   title: ["WORD", " LADDER", "#C9922F"] },
-  sortezy:    { file: "sortezy",          title: ["SORT", "EZY", "#8B5CF6"] }
+  sortezy:    { file: "sortezy",          title: ["SORT", "EZY", "#8B5CF6"] },
+  lingoezy:   { file: "lingoezy",         title: ["LINGO", "EZY", "#8AA4FF"] },
+  linkezy:    { file: "linkezy",          title: ["LINK", "EZY", "#FF4D5E"] }
 };
 function stars(w, h, n, seed) {
   const r = rand(seed); let o = "";
@@ -726,11 +755,14 @@ GAMES.forEach(g => {
 
 /* ---------- final chapter fan ---------- */
 // The cards step forward in depth; the whole fan keeps the same 90px depth however many games there are.
-const fanEl = document.getElementById("fan"), zStep = 90 / GAMES.length;
-fanEl.style.setProperty("--n", GAMES.length + 1);
+// A "more soon" card closes the fan while the arcade is small; from six games on it's all real games,
+// so the newest one sits at the front.
+const fanEl = document.getElementById("fan"), fanSoon = GAMES.length < 6;
+const fanCards = GAMES.length + (fanSoon ? 1 : 0), zStep = 90 / (fanCards - 1);
+fanEl.style.setProperty("--n", fanCards);
 fanEl.innerHTML =
   GAMES.map((g, i) => `<a class="pc" href="${g.url}" target="_blank" rel="noopener" style="--z:${i * zStep}px" aria-label="Play ${g.name}">${art(g.art, "poster")}</a>`).join("") +
-  `<div class="pc" style="--z:${GAMES.length * zStep}px" aria-hidden="true">${art("soon", "poster")}</div>`;
+  (fanSoon ? `<div class="pc" style="--z:90px" aria-hidden="true">${art("soon", "poster")}</div>` : "");
 
 /* ---------- elements ---------- */
 const canvas = document.getElementById("frames"), ctx = canvas.getContext("2d");
@@ -748,7 +780,8 @@ function targetProgress() {
 const STAGE_AT = [0, 0.41, 0.9];
 const WINDOWS = [[-1, 0.1], [0.3, 0.52], [0.72, 2]];
 const hub = document.getElementById("hub"), nav = document.querySelector(".nav");
-hub.style.setProperty("--cols", GAMES.length);
+// Up to six games fit in one row; with more, six and a half show so the next card peeks out and the row scrolls.
+hub.style.setProperty("--cols", GAMES.length <= 6 ? GAMES.length : 6.5);
 function goStage(i) {
   if (i === "hub") { scrollTo({ top: hub.offsetTop, behavior: reduced ? "auto" : "smooth" }); return; }
   const max = track.offsetHeight - innerHeight;
@@ -1062,6 +1095,19 @@ railReady.innerHTML = GAMES.map(g => `
   </div>`).join("");
 railSoon.innerHTML = COMING.map(c => `
   <div class="item soon"><div class="poster">${art(c.art || "soon", "poster")}</div><div class="t">${c.name}</div><div class="m">In development</div></div>`).join("");
+/* Ready-row arrows: page by most of the visible width; hide when everything fits. */
+const shelfReady = document.getElementById("shelfReady"), railPrev = document.getElementById("railPrev"), railNext = document.getElementById("railNext");
+function syncArrows() {
+  const max = railReady.scrollWidth - railReady.clientWidth;
+  shelfReady.classList.toggle("scrolls", max > 4);
+  railPrev.disabled = railReady.scrollLeft <= 4;
+  railNext.disabled = railReady.scrollLeft >= max - 4;
+}
+const pageRail = dir => railReady.scrollBy({ left: dir * railReady.clientWidth * 0.8, behavior: reduced ? "auto" : "smooth" });
+railPrev.addEventListener("click", () => pageRail(-1));
+railNext.addEventListener("click", () => pageRail(1));
+railReady.addEventListener("scroll", syncArrows, { passive: true });
+addEventListener("resize", syncArrows);
 function renderShelves() {
   let shown = 0;
   railReady.querySelectorAll(".item").forEach(it => {
@@ -1076,6 +1122,7 @@ function renderShelves() {
   empty.textContent = query ? `No games match “${query}” yet. Try another name or clear the search.` : "No games in this category yet.";
   railReady.hidden = shown === 0;
   document.getElementById("readyCount").textContent = `${shown} ${shown === 1 ? "game" : "games"}`;
+  syncArrows();
 }
 document.getElementById("q").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); renderShelves(); });
 renderShelves();
