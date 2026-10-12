@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BGameWorld — Free Browser Games</title>
-<meta name="description" content="BGameWorld — free browser games: When & Where, the Wordezy word games, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
+<meta name="description" content="BGameWorld — free browser games: When & Where, the Wordezy word games, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bgameworld.com/">
 <meta name="theme-color" content="#0A0F2E">
@@ -10,7 +10,7 @@
 <!-- Open Graph (Facebook, LinkedIn, Discord, WhatsApp, ...) -->
 <meta property="og:site_name" content="BGameWorld">
 <meta property="og:title" content="BGameWorld — Free Browser Games">
-<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Scramble and Ladder, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
+<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Scramble and Ladder, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bgameworld.com/">
 <meta property="og:image" content="https://bgameworld.com/og-image.jpg">
@@ -23,7 +23,7 @@
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BGameWorld — Free Browser Games">
-<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, the Wordezy word games, Sortezy, Linkezy, Lingoezy and more.">
+<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, the Wordezy word games, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more.">
 <meta name="twitter:image" content="https://bgameworld.com/og-image.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -102,6 +102,27 @@
       "@type": "VideoGame",
       "name": "Linkezy",
       "url": "https://linkezy.bgameworld.com",
+      "genre": "Puzzle",
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Warmezy",
+      "url": "https://warmezy.bgameworld.com",
+      "genre": ["Puzzle", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Letterezy",
+      "url": "https://letterezy.bgameworld.com",
+      "genre": ["Puzzle", "Word Game"],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Mergezy",
+      "url": "https://mergezy.bgameworld.com",
       "genre": "Puzzle",
       "isAccessibleForFree": true
     }
@@ -615,6 +636,15 @@ const GAMES = [
     platforms: ["Desktop", "Mobile"] },
   { name: "Linkezy", genre: "Puzzle", art: "linkezy", url: "https://linkezy.bgameworld.com",
     blurb: "Join each pair of dots without crossing a line and fill every square, with a new board every day and 100 levels to climb.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Warmezy", genre: "Puzzle", art: "warmezy", url: "https://warmezy.bgameworld.com",
+    blurb: "Find the secret word by meaning: every guess gets a rank, and the lower the number, the hotter you are. One word a day for everyone.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Letterezy", genre: "Puzzle", art: "letterezy", url: "https://letterezy.bgameworld.com",
+    blurb: "Spell words from today's bag of 25 letters to score points, reach the bonus squares with long words, and try to use every letter.",
+    platforms: ["Desktop", "Mobile"] },
+  { name: "Mergezy", genre: "Puzzle", art: "mergezy", url: "https://mergezy.bgameworld.com",
+    blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard.",
     platforms: ["Desktop", "Mobile"] }
 ];
 // Not built yet. When one goes live, move it into GAMES above with its url,
@@ -707,7 +737,11 @@ const PAINTED = {
   ladder:     { file: "wordezy-ladder",   title: ["WORD", " LADDER", "#C9922F"] },
   sortezy:    { file: "sortezy",          title: ["SORT", "EZY", "#8B5CF6"] },
   lingoezy:   { file: "lingoezy",         title: ["LINGO", "EZY", "#8AA4FF"] },
-  linkezy:    { file: "linkezy",          title: ["LINK", "EZY", "#FF4D5E"] }
+  linkezy:    { file: "linkezy",          title: ["LINK", "EZY", "#FF4D5E"] },
+  doodlezy:   { file: "doodlezy",         title: ["DOODLE", "ZY", "#E9B520"] },
+  warmezy:    { file: "warmezy",          title: ["WARM", "EZY", "#FF6A3D"] },
+  letterezy:  { file: "letterezy",        title: ["LETTER", "EZY", "#C9922F"] },
+  mergezy:    { file: "mergezy",          title: ["MERGE", "ZY", "#4FB3FF"] }
 };
 function stars(w, h, n, seed) {
   const r = rand(seed); let o = "";
