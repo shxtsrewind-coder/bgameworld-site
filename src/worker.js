@@ -8,9 +8,13 @@
 //   2. GET /api/social/status shows what has been posted, what is scheduled
 //      and any errors. It never shows the token.
 //
+//   3. TikTok drafts (src/tiktok.js): at each TikTok puzzle's time it sends the
+//      slideshow to the connected account's TikTok inbox, ready to post.
+//
 // To pause posting: in the SOCIAL KV namespace, set the key PAUSED to 1.
 // Delete the key (or set it to 0) to resume.
 import posts from "./posts.json";
+import { tiktokRoute, tiktokDue, tiktokStatus } from "./tiktok.js";
 
 const GRAPH = "https://graph.facebook.com/v26.0";
 const SITE = "https://bgameworld.com";
@@ -23,11 +27,13 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/api/social/status") return status(env);
+    if (url.pathname.startsWith("/api/tiktok/")) return tiktokRoute(request, env, url);
     return env.ASSETS.fetch(request);
   },
 
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(postDue(env, Date.now()));
+    const now = Date.now();
+    ctx.waitUntil(Promise.all([postDue(env, now), tiktokDue(env, now)]));
   },
 };
 
@@ -104,6 +110,7 @@ async function status(env) {
     if (err) row.last_error = JSON.parse(err);
     out.posts.push(row);
   }
+  out.tiktok = await tiktokStatus(env, now);
   return new Response(JSON.stringify(out, null, 2), {
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
   });

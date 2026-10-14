@@ -9,6 +9,8 @@
   // Secrets (set in the Cloudflare dashboard, never in this file):
   //   FB_PAGE_ID     the BGameWorld Facebook Page ID
   //   FB_PAGE_TOKEN  the never-expiring Page access token
+  //   TIKTOK_CLIENT_KEY, TIKTOK_CLIENT_SECRET  from the TikTok developer app
+  //   TIKTOK_SETUP_KEY  a password for /api/tiktok/connect (see src/tiktok.js)
   //
   // Build step (run by Cloudflare before deploy): none.
   // Deploy step: `npx wrangler deploy`
