@@ -1,14 +1,28 @@
 {
-  // Static-site deploy config for Cloudflare Workers (the unified replacement
-  // for "classic" Cloudflare Pages). No server-side Worker code here — this
-  // is a plain static HTML/CSS/JS site, and Workers' static-assets mode
-  // serves it directly with no backend of its own.
+  // Deploy config for Cloudflare Workers.
   //
-  // Build step (run by Cloudflare before deploy): none — it's already static.
+  // The site is still plain static HTML/CSS/JS, served straight from assets.
+  // src/worker.js only handles what static files can't: the 30-minute cron
+  // that posts the scheduled Facebook puzzles (src/posts.json), and
+  // /api/social/status. Any request that matches a file is served as before.
+  //
+  // Secrets (set in the Cloudflare dashboard, never in this file):
+  //   FB_PAGE_ID     the BGameWorld Facebook Page ID
+  //   FB_PAGE_TOKEN  the never-expiring Page access token
+  //
+  // Build step (run by Cloudflare before deploy): none.
   // Deploy step: `npx wrangler deploy`
   "name": "bgameworld-site",
+  "main": "src/worker.js",
   "compatibility_date": "2026-01-01",
   "assets": {
-    "directory": "./"
-  }
+    "directory": "./",
+    "binding": "ASSETS"
+  },
+  "triggers": {
+    "crons": ["*/30 * * * *"]
+  },
+  "kv_namespaces": [
+    { "binding": "SOCIAL", "id": "d19090c4a37449dd85e97ffe147a8d9d" }
+  ]
 }
