@@ -131,8 +131,8 @@
 </script>
 
 <style>
-/* Layout: a 500vh scroll track under a sticky stage. The controller film sits on a navy field with a brand-blue glow,
-   sliding right → left so each chapter (logo, mission, games) gets its own clear side. Single dark brand look. */
+/* Layout: a sticky header, then the full game grid immediately below it — every game is one click away
+   with nothing to scroll past first. A short brand-mission section sits further down. Single dark brand look. */
 :root{
   color-scheme:dark;
   --blue:#0B6BFF;
@@ -172,15 +172,6 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 svg{display:block}
 img{max-width:100%}
 
-/* ---------- scene ---------- */
-#track{position:relative;height:500vh}
-#scene{position:sticky;top:0;width:100%;height:100vh;height:100dvh;overflow:hidden;background:var(--navy)}
-#film{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none;mix-blend-mode:lighten}
-#frames{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .45s var(--ease2)}
-#frames.ready{opacity:1}
-#ui{position:absolute;inset:0;pointer-events:none}
-.live{pointer-events:auto}
-
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 28px;border-radius:999px;
   font-weight:800;font-size:14px;letter-spacing:.12em;text-transform:uppercase;transition:transform .25s var(--ease),box-shadow .25s var(--ease2),border-color .25s}
@@ -191,37 +182,25 @@ img{max-width:100%}
 .btn-sm{height:40px;padding:0 18px;font-size:12px}
 
 /* ---------- nav ---------- */
-.nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:24px;
-  padding:calc(20px + var(--safe-t)) 24px 20px;z-index:5}
-@media (min-width:640px){.nav{padding:calc(28px + var(--safe-t)) 32px 20px}}
+.nav{position:sticky;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:24px;
+  padding:calc(16px + var(--safe-t)) 24px 16px;background:rgba(10,15,46,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(34,211,238,.12)}
 @media (min-width:768px){.nav{padding-left:48px;padding-right:48px}}
 .nav-l,.nav-r{display:flex;align-items:center;gap:36px}
-.ni{opacity:0;transform:translateY(-12px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--n,0) * 80ms)}
-body.loaded .ni{opacity:1;transform:none}
 .brand{display:flex;align-items:center;gap:12px}
-.brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 6px 20px -6px rgba(11,107,255,.8)}
-.brand b{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.02em}
+.brand img{width:36px;height:36px;border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 6px 20px -6px rgba(11,107,255,.8)}
+.brand b{font-family:var(--display);font-weight:400;font-size:19px;letter-spacing:.02em}
 .brand b span{background:var(--g-accent);-webkit-background-clip:text;background-clip:text;color:transparent}
-.links{display:none;gap:32px}
+.links{display:none;gap:28px}
 @media (min-width:1024px){.links{display:flex}}
 .links a{position:relative;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);transition:color .25s}
 .links a:hover,.links a.active{color:var(--gray)}
 .links a::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:2px;border-radius:2px;background:var(--g-primary);opacity:0;transition:opacity .25s}
 .links a.active::after{opacity:1}
-.nav .btn{display:none}
-@media (min-width:1024px){.nav .btn{display:inline-flex}}
-.burger{width:44px;height:44px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px}
+.burger{width:40px;height:40px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px}
 .burger i{display:block;height:2px;width:24px;border-radius:2px;background:var(--gray)}
 .burger i:last-child{width:16px;background:var(--yellow)}
 @media (min-width:1024px){.burger{display:none}}
-
-/* ---------- chapters ---------- */
-.stage{position:absolute;inset:0;display:flex;align-items:center;padding:0 var(--px);visibility:hidden}
-.stage.on{visibility:visible}
-.stage:not(.on){transition:visibility 0s linear .3s}
-.rv{opacity:0;transform:translateY(24px);transition:opacity .3s var(--ease2),transform .3s var(--ease2)}
-.stage.on .rv{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:var(--d,0ms)}
-.stage:not(.on) .live{pointer-events:none}
 
 .eyebrow{margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
 .h-display{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1.02;letter-spacing:.01em;margin:0;text-wrap:balance}
@@ -229,62 +208,17 @@ body.loaded .ni{opacity:1;transform:none}
 .tagline{margin:0;font-size:14px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:var(--muted)}
 .tagline i{font-style:normal;color:var(--yellow);margin:0 .5em}
 
-/* hero */
-.hero .wrap{width:min(480px,40vw);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px}
-.hero .logo{width:100%;height:auto;filter:drop-shadow(0 18px 40px rgba(11,107,255,.35))}
-.hero .row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
-
-/* ---------- hero scroll cue: a quiet nudge to keep going ---------- */
-.scrollcue{position:absolute;left:50%;bottom:calc(26px + var(--safe-b));transform:translateX(-50%);display:flex;flex-direction:column;
-  align-items:center;gap:10px;opacity:0;transition:opacity .8s var(--ease2) .9s,transform .25s var(--ease);z-index:2}
-.stage.hero.on .scrollcue{opacity:1}
-.scrollcue:hover{transform:translateX(-50%) translateY(3px)}
-.scrollcue-pill{width:22px;height:34px;border:1.5px solid var(--line);border-radius:999px;position:relative;transition:border-color .25s}
-.scrollcue:hover .scrollcue-pill{border-color:var(--cyan)}
-.scrollcue-dot{position:absolute;top:6px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--yellow);
-  animation:scrollcue-dot 1.5s ease-in-out infinite}
-.scrollcue-label{font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--dim)}
-@keyframes scrollcue-dot{0%{opacity:0;transform:translateY(0)}35%{opacity:1}80%{opacity:0;transform:translateY(14px)}100%{opacity:0;transform:translateY(14px)}}
-@media (max-width:767px){.scrollcue{bottom:calc(16px + var(--safe-b))}}
-@media (prefers-reduced-motion:reduce){.scrollcue-dot{animation:none;opacity:1}}
-
-/* mission */
-.mid{justify-content:flex-end}
-.mid .wrap{max-width:min(560px,46vw)}
-.mid h2{font-size:clamp(2.4rem,4.6vw,4.4rem);font-style:italic;transform:skewX(-6deg);transform-origin:left}
-.mid .copy{margin:20px 0 0;font-size:17px;line-height:1.6;color:var(--muted);max-width:52ch}
+/* ---------- mission ---------- */
+#mission{padding:72px var(--px) 80px;border-top:1px solid var(--line);
+  background:radial-gradient(50% 60% at 85% 0%,rgba(139,92,246,.12),transparent 70%),var(--navy)}
+#mission .wrap{max-width:760px}
+#mission h2{font-size:clamp(2.2rem,4.4vw,3.6rem)}
+#mission .copy{margin:18px 0 0;font-size:16px;line-height:1.65;color:var(--muted);max-width:60ch}
 .pillars{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px}
 .pillar{display:flex;align-items:center;gap:12px}
 .pillar svg{flex:none}
 .pillar b{display:block;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .pillar span{display:block;font-size:12px;color:var(--dim);margin-top:2px}
-
-/* games */
-.final{justify-content:flex-end}
-.final .wrap{width:100%;max-width:540px}
-.final h2{font-size:clamp(2.4rem,4.4vw,4rem);margin-bottom:24px}
-.games{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
-.game{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:16px;padding:14px 16px 14px 14px;border-radius:18px;
-  background:var(--panel);border:1px solid var(--line);transition:border-color .25s,transform .25s var(--ease)}
-a.game:hover{border-color:var(--cyan);transform:translateX(-4px)}
-.tile{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;color:#fff}
-.t-primary{background:var(--g-primary)}.t-accent{background:var(--g-accent);color:var(--navy)}.t-highlight{background:var(--g-highlight)}
-.game .nm{display:block;font-family:var(--display);font-size:24px;letter-spacing:.02em;text-transform:uppercase;line-height:1.1}
-.game .ds{display:block;margin-top:4px;font-size:13px;color:var(--muted)}
-.game .play{height:36px;padding:0 16px;border-radius:999px;background:var(--yellow);color:var(--navy);font-size:12px;font-weight:800;letter-spacing:.12em;display:inline-flex;align-items:center;gap:6px}
-.game.soon{background:transparent;border-style:dashed}
-.game.soon .nm,.game.soon .ds{opacity:.55}
-.game .badge{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--pink)}
-
-/* chapter indicator */
-.ind{position:absolute;right:24px;bottom:calc(48px + var(--safe-b));display:flex;flex-direction:column;align-items:center;gap:14px;z-index:4}
-@media (min-width:768px){.ind{right:40px}}
-.ind button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:border-color .25s}
-.ind button:hover{border-color:var(--cyan)}
-.dots{display:flex;flex-direction:column;align-items:center;gap:8px}
-.dots i{width:6px;height:6px;border-radius:6px;background:var(--dim);transition:all .4s var(--ease)}
-.dots i.on{height:20px;background:var(--yellow)}
-@media (max-width:767px){.ind{display:none}}
 
 /* ---------- footer ---------- */
 footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));border-top:1px solid var(--line);
@@ -313,100 +247,22 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 #close:hover{border-color:var(--cyan)}
 @media (min-width:640px){#menu{padding-left:32px;padding-right:32px}#close{right:32px;top:calc(28px + var(--safe-t))}}
 
-/* ---------- phones: text above/below the controller ---------- */
-@media (max-width:767px){
-  .hero{align-items:flex-start;justify-content:center;padding-top:calc(96px + var(--safe-t))}
-  .hero .wrap{width:min(340px,100%);gap:18px}
-  .hero .tagline{font-size:11px;letter-spacing:.3em}
-  .hero .btn{height:46px;padding:0 22px;font-size:13px}
-  .hero .row .btn-ghost{display:none}
-  .mid{align-items:flex-start;padding-top:calc(92px + var(--safe-t))}
-  .mid .wrap{max-width:100%}
-  .mid h2{font-size:clamp(2.1rem,10vw,2.8rem)}
-  .mid .copy{font-size:14px;margin-top:12px}
-  .pillars{gap:16px 20px;margin-top:18px}
-  .pillar svg{width:24px;height:24px}
-  .pillar span{display:none}
-  .final{align-items:flex-end;padding-bottom:calc(24px + var(--safe-b))}
-  .final .eyebrow{margin-bottom:8px}
-  .final h2{font-size:clamp(2rem,9vw,2.6rem);margin-bottom:14px}
-  .games{gap:8px}
-  .game{grid-template-columns:44px minmax(0,1fr) auto;gap:12px;padding:10px 12px 10px 10px;border-radius:14px}
-  .tile{width:44px;height:44px;border-radius:11px}
-  .tile svg{width:22px;height:22px}
-  .game .nm{font-size:19px}
-  .game .ds{font-size:12px}
-  .game .play{height:32px;padding:0 12px}
-}
-@media (max-height:740px) and (min-width:768px){
-  .hero .wrap{gap:20px}.final h2{margin-bottom:16px}.game{padding:10px 14px 10px 10px}.games{gap:8px}
-  .mid .copy{font-size:15px}.pillars{margin-top:22px}
-}
-
-/* ---------- fixed nav: turns solid over the library ---------- */
-.nav{position:fixed;z-index:50;border-bottom:1px solid transparent;transition:background .35s var(--ease2),border-color .35s,padding .35s var(--ease2)}
-.nav.solid{background:rgba(10,15,46,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:rgba(34,211,238,.12);padding-top:calc(14px + var(--safe-t));padding-bottom:14px}
-
-/* ---------- final chapter: 3D poster fan ---------- */
-.fan{display:flex;align-items:center;height:240px;perspective:1100px;margin:4px 0 28px;padding-left:20px}
-/* --n is the card count (set from GAMES): overlap grows with it so the fan always fits its column. The extra px allow for
-   the cards' 3D tilt, which makes each one look narrower than its box. */
-.fan .pc{--w:148px;position:relative;flex:none;display:block;width:var(--w);aspect-ratio:5/7;border-radius:14px;overflow:hidden;
-  margin-left:min(-30px, calc((100% - var(--n,4) * var(--w) + 16px) / (var(--n,4) - 1)));
-  transform:rotateY(-26deg) translateZ(var(--z,0px));transition:transform .55s var(--ease),box-shadow .4s;
-  box-shadow:0 24px 50px -18px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.08)}
-.fan .pc:first-child{margin-left:0}
-.fan a.pc:hover,.fan a.pc:focus-visible{transform:rotateY(-6deg) translateZ(calc(var(--z,0px) + 70px)) translateY(-6px);box-shadow:0 30px 60px -16px rgba(11,107,255,.7),0 0 0 2px var(--cyan);z-index:3}
-.pc svg,.poster svg,.slide .art svg{display:block;width:100%;height:100%}
-
-/* ---------- game library ---------- */
+/* ---------- game library: instant grid ---------- */
 :root{--hx:20px}
 @media (min-width:640px){:root{--hx:32px}}
 @media (min-width:1024px){:root{--hx:56px}}
-#hub{position:relative;overflow:hidden;padding:calc(112px + var(--safe-t)) 0 56px;background:var(--navy)}
+#hub{position:relative;overflow:hidden;padding:36px 0 56px;background:var(--navy)}
 #hub > *{position:relative}
-#hub > .hub-bg,#hub > .hub-glow{position:absolute;pointer-events:none}
-.hub-bg{top:-30px;right:-8%;width:min(980px,80%);aspect-ratio:16/9;background:url(frames/f192.webp) center/contain no-repeat;opacity:.2;mix-blend-mode:lighten;
-  -webkit-mask-image:radial-gradient(closest-side,#000 45%,transparent);mask-image:radial-gradient(closest-side,#000 45%,transparent)}
-.hub-glow{inset:0;background:radial-gradient(50% 36% at 82% 8%,rgba(11,107,255,.24),transparent 70%),radial-gradient(40% 30% at 6% 62%,rgba(139,92,246,.13),transparent 70%)}
-.hub-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;padding:0 var(--hx);margin-bottom:28px}
-.hub-head h2{font-size:clamp(2.6rem,5vw,4.2rem)}
+#hub > .hub-glow{position:absolute;pointer-events:none;inset:0;
+  background:radial-gradient(50% 36% at 82% 0%,rgba(11,107,255,.22),transparent 70%),radial-gradient(40% 30% at 6% 50%,rgba(139,92,246,.12),transparent 70%)}
+.hub-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;padding:0 var(--hx);margin-bottom:22px}
+.hub-head h1{font-size:clamp(2.2rem,4.2vw,3.4rem)}
 .hub-head .eyebrow{margin-bottom:10px}
 .search{display:flex;align-items:center;gap:10px;height:50px;padding:0 18px;border-radius:999px;background:var(--panel);border:1px solid var(--line);width:min(360px,100%);color:var(--dim);transition:border-color .2s}
 .search:focus-within{border-color:var(--cyan)}
 .search input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--gray);font:inherit;font-size:15px}
 .search input::placeholder{color:var(--dim)}
 .search input::-webkit-search-cancel-button{filter:invert(1)}
-
-/* coverflow */
-.cf{height:clamp(360px,36vw,470px);perspective:1600px;margin-bottom:20px;touch-action:pan-y}
-.slide{position:absolute;top:0;left:50%;width:min(1040px,78%);height:100%;transform-style:preserve-3d;
-  transition:transform .85s var(--ease),opacity .85s var(--ease),filter .85s var(--ease)}
-.slide[data-pos="0"]{transform:translateX(-50%);z-index:3}
-.slide[data-pos="1"]{transform:translateX(-50%) translateX(68%) translateZ(-240px) rotateY(-30deg);opacity:.55;filter:brightness(.55);z-index:2;cursor:pointer}
-.slide[data-pos="-1"]{transform:translateX(-50%) translateX(-68%) translateZ(-240px) rotateY(30deg);opacity:.55;filter:brightness(.55);z-index:2;cursor:pointer}
-.slide[data-pos="far"]{transform:translateX(-50%) translateZ(-480px);opacity:0;z-index:1;pointer-events:none}
-.slide:not([data-pos="0"]) .card *{pointer-events:none}
-.slide .card{position:relative;width:100%;height:100%;border-radius:24px;overflow:hidden;transform-style:preserve-3d;
-  box-shadow:0 50px 90px -40px rgba(0,0,0,.95),0 0 0 1px rgba(34,211,238,.12);
-  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s var(--ease)}
-.slide .art{position:absolute;inset:0}
-.slide .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,15,46,.97) 0%,rgba(10,15,46,.78) 34%,rgba(10,15,46,0) 64%)}
-.slide .txt{position:absolute;left:clamp(24px,4vw,56px);top:50%;transform:translateY(-50%);max-width:min(440px,48%);display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-.badge-f{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 12px;border-radius:999px;background:rgba(255,209,64,.14);color:var(--yellow);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
-.badge-f.pink{background:rgba(236,72,153,.16);color:#F9A8D4}
-.slide h3{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,4.8vw,4.4rem);line-height:1;text-transform:uppercase;letter-spacing:.01em}
-.meta{display:flex;flex-wrap:wrap;gap:8px}
-.meta span{height:26px;padding:0 10px;border-radius:8px;background:rgba(234,239,247,.09);font-size:12px;font-weight:600;display:inline-flex;align-items:center;color:var(--muted)}
-.meta span.free{color:var(--cyan);background:rgba(34,211,238,.12)}
-.slide p{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
-.slide .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
-.cf-arrow{position:absolute;top:50%;z-index:5;width:48px;height:48px;margin-top:-24px;border-radius:50%;background:rgba(10,15,46,.72);border:1.5px solid var(--line);display:grid;place-items:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:border-color .2s}
-.cf-arrow:hover{border-color:var(--cyan)}
-.cf-prev{left:var(--hx)}.cf-next{right:var(--hx)}
-.cf-dots{display:flex;justify-content:center;gap:8px;margin-bottom:36px}
-.cf-dots button{width:8px;height:8px;border-radius:8px;background:var(--dim);transition:width .4s var(--ease),background .3s}
-.cf-dots button.on{width:28px;background:var(--yellow)}
 
 /* chips */
 .chips{display:flex;gap:10px;overflow-x:auto;padding:4px var(--hx) 8px;margin-bottom:24px;scrollbar-width:none}
@@ -416,23 +272,9 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 .chip[aria-pressed="true"]{background:rgba(11,107,255,.22);border-color:var(--cyan);color:var(--gray)}
 .chip b{font-weight:600;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
 
-/* shelves */
-.shelf{margin-bottom:28px}
-.shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 var(--hx)}
-.shelf-h h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
-.shelf-h span{font-size:13px;color:var(--dim)}
-/* Arrows for mouse users; touch screens swipe. Shown only while the row overflows. */
-.shelf-tools{display:flex;align-items:center;gap:8px}
-.rail-arrow{display:none;width:36px;height:36px;border-radius:50%;background:var(--panel);border:1.5px solid var(--line);color:var(--gray);place-items:center;cursor:pointer;transition:border-color .2s,opacity .2s}
-.rail-arrow:hover:not(:disabled){border-color:var(--cyan)}
-.rail-arrow:disabled{opacity:.35;cursor:default}
-.shelf.scrolls .rail-arrow{display:grid}
-@media (hover:none){.shelf.scrolls .rail-arrow{display:none}}
-/* --cols is how many cards fit across (set from GAMES): all of them up to six, else six and a half;
-   below 130px a card the rail scrolls sideways instead. */
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(130px,calc((100% - (var(--cols,6) - 1) * 22px) / var(--cols,6)),215px);justify-content:start;gap:22px;overflow-x:auto;padding:18px var(--hx) 16px;scroll-padding-inline:var(--hx);scroll-snap-type:x proximity;scrollbar-width:none}
-.rail::-webkit-scrollbar{display:none}
-.item{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;min-width:0}
+/* grid of poster cards: every game is one click away, nothing to scroll past first */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px;padding:0 var(--hx)}
+.item{display:flex;flex-direction:column;gap:10px;min-width:0}
 .poster{position:relative;display:block;aspect-ratio:5/7;border-radius:16px;overflow:hidden;background:var(--panel);
   transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));transition:transform .5s var(--ease),box-shadow .35s;
   box-shadow:0 18px 40px -20px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.07)}
@@ -445,26 +287,23 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
 .item .t{font-size:15px;font-weight:700}
 .item .m{font-size:13px;color:var(--dim);margin-top:-6px}
 .item .m em{font-style:normal;color:var(--cyan)}
+.item.soon .poster{display:flex;align-items:center;justify-content:center;
+  background:repeating-linear-gradient(135deg,rgba(234,239,247,.05) 0 10px,rgba(234,239,247,.02) 10px 20px);
+  border:1.5px dashed rgba(234,239,247,.22)}
+.item.soon .poster svg{width:30px;height:30px;opacity:.4}
 .item.soon .t{color:var(--muted)}
+.item.soon .m{color:var(--orange)}
 .empty{margin:0;padding:18px var(--hx) 0;color:var(--dim);font-size:15px}
 /* Touch screens show the button all the time, so it sits top-right, clear of the painted title. */
 @media (hover:none){.pbtn{opacity:1;transform:none;width:38px;height:38px;top:10px;right:10px;bottom:auto}}
 
 @media (max-width:767px){
-  .fan{height:160px;margin:0 0 16px;padding-left:10px}
-  .fan .pc{--w:96px;margin-left:min(-22px, calc((100% - var(--n,4) * var(--w) + 24px) / (var(--n,4) - 1)));border-radius:10px}
-  .cf{height:470px}
-  .slide{width:86%}
-  .slide[data-pos="1"]{transform:translateX(-50%) translateX(80%) translateZ(-220px) rotateY(-30deg)}
-  .slide[data-pos="-1"]{transform:translateX(-50%) translateX(-80%) translateZ(-220px) rotateY(30deg)}
-  .slide .shade{background:linear-gradient(0deg,rgba(10,15,46,.98) 0%,rgba(10,15,46,.82) 44%,rgba(10,15,46,0) 72%)}
-  .slide .art{bottom:34%}
-  .slide .txt{top:auto;bottom:22px;left:20px;right:20px;max-width:none;transform:none;gap:10px}
-  .slide h3{font-size:2.6rem}
-  .slide p{font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-  .cf-arrow{display:none}
-  .rail{grid-auto-columns:42vw;gap:14px}
-  .hub-head{margin-bottom:22px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px}
+  .hub-head{margin-bottom:18px}
+  #mission{padding:52px var(--px) 60px}
+  #mission .pillars{gap:16px 20px;margin-top:18px}
+  #mission .pillar svg{width:24px;height:24px}
+  #mission .pillar span{display:none}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -473,107 +312,52 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
 }
 </style>
 
-<div id="track">
-  <div id="scene">
-    <video id="film" src="controller.mp4" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
-    <canvas id="frames" aria-hidden="true"></canvas>
-
-    <div id="ui">
-      <header class="nav live">
-        <div class="nav-l">
-          <a href="#" class="brand ni" style="--n:0" data-go="0" aria-label="BGameWorld home">
-            <img src="icon.webp" alt="" width="40" height="40"><b>B<span>Game</span>World</b>
-          </a>
-          <nav class="links" aria-label="Sections">
-            <a href="#" class="ni active" style="--n:1" data-go="0">Home</a>
-            <a href="#" class="ni" style="--n:2" data-go="1">Mission</a>
-            <a href="#" class="ni" style="--n:3" data-go="hub">Games</a>
-          </nav>
-        </div>
-        <div class="nav-r">
-          <a href="#" class="btn btn-accent btn-sm ni" style="--n:4" data-go="hub">Play now</a>
-          <button class="burger ni" style="--n:5" id="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
-        </div>
-      </header>
-
-      <section class="stage hero on" id="s0" aria-label="Welcome">
-        <div class="wrap">
-          <h1 class="rv" style="--d:0ms;margin:0"><img class="logo" src="logo.webp" alt="BGameWorld" width="602" height="348"></h1>
-          <p class="tagline rv" style="--d:150ms">Play<i>&bull;</i>Connect<i>&bull;</i>Explore</p>
-          <div class="row rv" style="--d:300ms">
-            <a href="#" class="btn btn-accent live" data-go="hub">Play now
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-            <a href="#" class="btn btn-ghost live" data-go="1">Our mission</a>
-          </div>
-        </div>
-        <button type="button" class="scrollcue live" data-go="1" aria-label="Scroll to see what's next">
-          <span class="scrollcue-pill"><span class="scrollcue-dot"></span></span>
-          <span class="scrollcue-label">Scroll</span>
-        </button>
-      </section>
-
-      <section class="stage mid" id="s1" aria-label="Mission">
-        <div class="wrap">
-          <p class="eyebrow rv" style="--d:0ms">Brand mission</p>
-          <h2 class="h-display rv" style="--d:120ms">More than games.<br>It&rsquo;s a <span class="grad-accent">world.</span></h2>
-          <p class="copy rv" style="--d:250ms">BGameWorld is a vibrant gaming platform built for players, creators and communities. We bring people together through the power of games, turning passion into real experiences.</p>
-          <div class="pillars rv" style="--d:400ms">
-            <div class="pillar">
-              <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h14a6 6 0 0 1 6 6v3a5 5 0 0 1-9 3l-1-1h-6l-1 1a5 5 0 0 1-9-3v-3a6 6 0 0 1 6-6z"/><path d="M10 14v4M8 16h4"/><circle cx="21" cy="15" r="1" fill="#22D3EE"/><circle cx="23.5" cy="17.5" r="1" fill="#22D3EE"/></svg>
-              <div><b>Play</b><span>Without limits</span></div>
-            </div>
-            <div class="pillar">
-              <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#0B6BFF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="11" r="4.5"/><path d="M4 26a8 8 0 0 1 16 0"/><circle cx="22" cy="12" r="3.5"/><path d="M21 18a7 7 0 0 1 8 7"/></svg>
-              <div><b>Connect</b><span>With others</span></div>
-            </div>
-            <div class="pillar">
-              <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"><path d="M16 4l3.6 7.4 8.1 1.2-5.9 5.7 1.4 8.1L16 22.6l-7.2 3.8 1.4-8.1-5.9-5.7 8.1-1.2z"/></svg>
-              <div><b>Explore</b><span>New worlds</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="stage final" id="s2" aria-label="Games">
-        <div class="wrap">
-          <p class="eyebrow rv" style="--d:0ms">Now playing</p>
-          <h2 class="h-display rv" style="--d:0ms">Choose your <span class="grad-accent">game</span></h2>
-          <div class="fan rv live" style="--d:150ms" id="fan"></div>
-          <a href="#" class="btn btn-accent rv live" style="--d:300ms" data-go="hub">Browse the arcade
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
-        </div>
-      </section>
-
-      <div class="ind live" aria-label="Chapters">
-        <button id="next" aria-label="Next chapter"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3v12M4 10l5 5 5-5"/></svg></button>
-        <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
-        <button id="top" aria-label="Back to start"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 13V3M4 7l4-4 4 4"/></svg></button>
-      </div>
-    </div>
+<header class="nav">
+  <div class="nav-l">
+    <a href="#" class="brand" data-go="hub" aria-label="BGameWorld home">
+      <img src="icon.webp" alt="" width="36" height="36"><b>B<span>Game</span>World</b>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#hub" class="active" data-go="hub">Games</a>
+      <a href="#mission" data-go="mission">Mission</a>
+    </nav>
   </div>
-</div>
+  <div class="nav-r">
+    <button class="burger" id="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
+  </div>
+</header>
 
 <section id="hub" aria-label="Game library">
-  <div class="hub-bg"></div><div class="hub-glow"></div>
+  <div class="hub-glow"></div>
   <div class="hub-head">
-    <div><p class="eyebrow">Game library</p><h2 class="h-display">The <span class="grad-accent">arcade</span></h2></div>
+    <div><p class="eyebrow">Game library</p><h1 class="h-display">Pick a game, <span class="grad-accent">play instantly</span></h1></div>
     <label class="search"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
       <input id="q" type="search" placeholder="Search games" aria-label="Search games" autocomplete="off"></label>
   </div>
-  <div class="cf" id="cf" aria-roledescription="carousel" aria-label="Featured">
-    <button class="cf-arrow cf-prev" id="cfPrev" aria-label="Previous featured"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4L6 9l5 5"/></svg></button>
-    <button class="cf-arrow cf-next" id="cfNext" aria-label="Next featured"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 4l5 5-5 5"/></svg></button>
-  </div>
-  <div class="cf-dots" id="cfDots"></div>
   <div class="chips" id="chips" role="toolbar" aria-label="Filter games"></div>
-  <div class="shelf" id="shelfReady">
-    <div class="shelf-h"><h3>Ready to play</h3><div class="shelf-tools"><span id="readyCount"></span><button class="rail-arrow" id="railPrev" aria-label="Scroll games left"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4l-5 5 5 5"/></svg></button><button class="rail-arrow" id="railNext" aria-label="Scroll games right"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l5 5-5 5"/></svg></button></div></div>
-    <div class="rail" id="railReady"></div>
-    <p class="empty" id="empty" hidden></p>
-  </div>
-  <div class="shelf" id="shelfSoon">
-    <div class="shelf-h"><h3>Coming soon</h3><span>New worlds in development</span></div>
-    <div class="rail" id="railSoon"></div>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden></p>
+</section>
+
+<section id="mission" aria-label="Mission">
+  <div class="wrap">
+    <p class="eyebrow">Brand mission</p>
+    <h2 class="h-display">More than games.<br>It&rsquo;s a <span class="grad-accent">world.</span></h2>
+    <p class="copy">BGameWorld is a vibrant gaming platform built for players, creators and communities. We bring people together through the power of games, turning passion into real experiences.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h14a6 6 0 0 1 6 6v3a5 5 0 0 1-9 3l-1-1h-6l-1 1a5 5 0 0 1-9-3v-3a6 6 0 0 1 6-6z"/><path d="M10 14v4M8 16h4"/><circle cx="21" cy="15" r="1" fill="#22D3EE"/><circle cx="23.5" cy="17.5" r="1" fill="#22D3EE"/></svg>
+        <div><b>Play</b><span>Without limits</span></div>
+      </div>
+      <div class="pillar">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#0B6BFF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="11" r="4.5"/><path d="M4 26a8 8 0 0 1 16 0"/><circle cx="22" cy="12" r="3.5"/><path d="M21 18a7 7 0 0 1 8 7"/></svg>
+        <div><b>Connect</b><span>With others</span></div>
+      </div>
+      <div class="pillar">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"><path d="M16 4l3.6 7.4 8.1 1.2-5.9 5.7 1.4 8.1L16 22.6l-7.2 3.8 1.4-8.1-5.9-5.7 8.1-1.2z"/></svg>
+        <div><b>Explore</b><span>New worlds</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -590,9 +374,8 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
     <div>
       <h3>BGameWorld</h3>
       <ul>
-        <li><a href="#" data-go="0">Home</a></li>
-        <li><a href="#" data-go="1">Mission</a></li>
-        <li><a href="#" data-go="hub">All games</a></li>
+        <li><a href="#hub" data-go="hub">All games</a></li>
+        <li><a href="#mission" data-go="mission">Mission</a></li>
         <li><a href="/privacy/">Privacy</a></li>
         <li><a href="/terms/">Terms</a></li>
       </ul>
@@ -604,9 +387,8 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
 <div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
   <button id="close" aria-label="Close menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14"/></svg></button>
   <nav aria-label="Sections">
-    <a href="#" data-go="0" class="active">Home</a>
-    <a href="#" data-go="1">Mission</a>
-    <a href="#" data-go="hub">Games</a>
+    <a href="#hub" data-go="hub" class="active">Games</a>
+    <a href="#mission" data-go="mission">Mission</a>
   </nav>
   <p class="sub">Play now</p>
   <nav id="menuGames" aria-label="Games"></nav>
@@ -656,8 +438,6 @@ const COMING = [
   { name: "Crossword" }
 ];
 
-const FRAME_COUNT = 192, SRC_W = 1280, SRC_H = 720;
-const framePath = i => `frames/f${String(i + 1).padStart(3, "0")}.webp`;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- poster & banner art (SVG, so it stays sharp at any size) ---------- */
@@ -776,8 +556,7 @@ function art(kind, variant) {
       ? `<rect width="400" height="560" fill="#120F3A"/><rect width="400" height="560" fill="url(#pk${u})"/>
          <text x="200" y="350" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="300" fill="none" stroke="rgba(236,72,153,.55)" stroke-width="3">?</text>
          <g transform="translate(200 430)" fill="none" stroke="#EAEFF7" stroke-width="5" stroke-linecap="round"><rect x="-26" y="-6" width="52" height="40" rx="8" fill="rgba(234,239,247,.12)"/><path d="M-15 -6v-12a15 15 0 0 1 30 0v12"/></g>`
-      : `<rect width="1600" height="700" fill="#0F0C35"/><rect width="1600" height="700" fill="url(#pk${u})"/>${stars(1600, 700, 60, 9)}
-         <image href="frames/f192.webp" x="720" y="0" width="1244" height="700" preserveAspectRatio="xMidYMid meet" style="mix-blend-mode:lighten"/>`;
+      : `<rect width="1600" height="700" fill="#0F0C35"/><rect width="1600" height="700" fill="url(#pk${u})"/>${stars(1600, 700, 60, 9)}`;
   }
   return `<svg viewBox="${vb}" preserveAspectRatio="${par}" aria-hidden="true"><defs>${defs}</defs>${body}</svg>`;
 }
@@ -789,237 +568,8 @@ GAMES.forEach(g => {
   const li = document.createElement("li"), b = a.cloneNode(true); li.appendChild(b); fg.appendChild(li);
 });
 
-/* ---------- final chapter fan ---------- */
-// The cards step forward in depth; the whole fan keeps the same 90px depth however many games there are.
-// A "more soon" card closes the fan while the arcade is small; from six games on it's all real games,
-// so the newest one sits at the front.
-const fanEl = document.getElementById("fan"), fanSoon = GAMES.length < 6;
-const fanCards = GAMES.length + (fanSoon ? 1 : 0), zStep = 90 / (fanCards - 1);
-fanEl.style.setProperty("--n", fanCards);
-fanEl.innerHTML =
-  GAMES.map((g, i) => `<a class="pc" href="${g.url}" target="_blank" rel="noopener" style="--z:${i * zStep}px" aria-label="Play ${g.name}">${art(g.art, "poster")}</a>`).join("") +
-  (fanSoon ? `<div class="pc" style="--z:90px" aria-hidden="true">${art("soon", "poster")}</div>` : "");
-
 /* ---------- elements ---------- */
-const canvas = document.getElementById("frames"), ctx = canvas.getContext("2d");
-const video = document.getElementById("film");
-const stages = [0, 1, 2].map(i => document.getElementById("s" + i));
-const dots = [...document.querySelectorAll("#dots i")];
-const navLinks = [...document.querySelectorAll(".links a, #menu nav:first-of-type a")];
-const track = document.getElementById("track");
-
-/* ---------- scroll → progress ---------- */
-function targetProgress() {
-  const max = track.offsetHeight - innerHeight;
-  return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-}
-const STAGE_AT = [0, 0.41, 0.9];
-const WINDOWS = [[-1, 0.1], [0.3, 0.52], [0.72, 2]];
-const hub = document.getElementById("hub"), nav = document.querySelector(".nav");
-// Up to six games fit in one row; with more, six and a half show so the next card peeks out and the row scrolls.
-hub.style.setProperty("--cols", GAMES.length <= 6 ? GAMES.length : 6.5);
-function goStage(i) {
-  if (i === "hub") { scrollTo({ top: hub.offsetTop, behavior: reduced ? "auto" : "smooth" }); return; }
-  const max = track.offsetHeight - innerHeight;
-  scrollTo({ top: track.offsetTop + STAGE_AT[i] * max, behavior: reduced ? "auto" : "smooth" });
-}
-
-/* ---------- where the film sits for each chapter ---------- */
-const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-function pad() { const w = innerWidth; return w >= 1024 ? 104 : w >= 768 ? 64 : w >= 640 ? 32 : 24; }
-function layouts() {
-  const W = innerWidth, H = innerHeight, P = pad();
-  if (W < 768) {
-    const sH = Math.min(W * .86 / 520, H * .36 / 360);
-    const sM = Math.min(W * .8 / 440, H * .34 / 700);
-    const sF = Math.min(W * .62 / 440, H * .34 / 700);
-    return [
-      { cx: W / 2, cy: H * .74, s: sH },
-      { cx: W / 2, cy: H * .79, s: sM },
-      { cx: W / 2, cy: H * .03 + 360 * sF + 52, s: sF }
-    ];
-  }
-  const sBase = H / SRC_H;
-  const textW = Math.min(480, W * .4);
-  const R = W - P - textW;
-  const fitH = (H - 150) / 700;
-  const midW = Math.min(560, W * .46);
-  const LM = W - P - midW;
-  const sM = Math.min(fitH, LM * .9 / 440);
-  const contentW = Math.min(540, W - 2 * P);
-  const L = W - P - contentW;
-  const sF = Math.min(fitH, L * .9 / 440);
-  return [
-    { cx: P + textW + R / 2, cy: H / 2 + 20, s: Math.min(sBase, R * .92 / 520) },
-    { cx: Math.max(LM / 2, 220 * sM + 16), cy: H / 2 + 30, s: sM },
-    { cx: Math.max(L / 2, 220 * sF + 16), cy: H / 2 + 30, s: sF }
-  ];
-}
-function layoutAt(p, L) {
-  const mix = (a, b, t) => ({ cx: a.cx + (b.cx - a.cx) * t, cy: a.cy + (b.cy - a.cy) * t, s: a.s + (b.s - a.s) * t });
-  if (p <= .1) return L[0];
-  if (p < .3) return mix(L[0], L[1], ease((p - .1) / .2));
-  if (p <= .52) return L[1];
-  if (p < .72) return mix(L[1], L[2], ease((p - .52) / .2));
-  return L[2];
-}
-const videoTime = p => clamp((p - .03) / .67, 0, 1);
-
-/* ---------- canvas ---------- */
-let dpr = 1, LAYOUT = layouts(), dirty = true;
-function resize() {
-  dpr = Math.min(2, devicePixelRatio || 1);
-  canvas.width = Math.round(innerWidth * dpr);
-  canvas.height = Math.round(innerHeight * dpr);
-  LAYOUT = layouts();
-  dirty = true;
-}
-
-/* ---------- frame bank: compressed blobs for every frame, decoded bitmaps in a small LRU ---------- */
-const blobs = new Array(FRAME_COUNT).fill(null);
-const cache = new Map();
-const decoding = new Set();
-const CACHE_MAX = 36;
-let mode = reduced ? "video" : "bank", failures = 0;
-let wantIdx = 0, drawnIdx = -1, lastKey = "", lastDir = 1;
-
-function loadOrder() {
-  const seen = new Set(), order = [];
-  const push = i => { if (i >= 0 && i < FRAME_COUNT && !seen.has(i)) { seen.add(i); order.push(i); } };
-  push(0); push(FRAME_COUNT - 1);
-  for (let step = 32; step >= 1; step >>= 1) for (let i = 0; i < FRAME_COUNT; i += step) push(i);
-  return order;
-}
-async function fetchBank() {
-  const queue = loadOrder();
-  const worker = async () => {
-    while (queue.length && mode === "bank") {
-      const i = queue.shift();
-      try {
-        const r = await fetch(framePath(i));
-        if (!r.ok) throw 0;
-        blobs[i] = await r.blob();
-        if (Math.abs(i - wantIdx) < 3) dirty = true;
-      } catch (e) { if (++failures > 8) { useVideo(); return; } }
-    }
-  };
-  await Promise.all(Array.from({ length: 6 }, worker));
-}
-function touch(i) { const b = cache.get(i); cache.delete(i); cache.set(i, b); }
-function decode(i) {
-  if (i < 0 || i >= FRAME_COUNT || !blobs[i] || cache.has(i) || decoding.has(i)) return;
-  decoding.add(i);
-  createImageBitmap(blobs[i]).then(bmp => {
-    decoding.delete(i);
-    cache.set(i, bmp);
-    let guard = 0;
-    while (cache.size > CACHE_MAX && guard++ < CACHE_MAX * 2) {
-      const oldest = cache.keys().next().value;
-      if (Math.abs(oldest - wantIdx) < 4) { touch(oldest); continue; }
-      const b = cache.get(oldest); if (b.close) b.close();
-      cache.delete(oldest);
-    }
-    if (Math.abs(i - wantIdx) <= 2) dirty = true;
-  }).catch(() => { decoding.delete(i); if (++failures > 8) useVideo(); });
-}
-function warm(i, dir) {
-  decode(i);
-  for (let k = 1; k <= 6; k++) decode(i + k * dir);
-  for (let k = 1; k <= 3; k++) decode(i - k * dir);
-}
-function nearestDecoded(i) {
-  for (let d = 0; d < FRAME_COUNT; d++) {
-    if (cache.has(i - d)) return i - d;
-    if (cache.has(i + d)) return i + d;
-  }
-  return -1;
-}
-function useVideo() { if (mode !== "video") { mode = "video"; canvas.classList.remove("ready"); } }
-
-/* ---------- drawing: navy field + brand glow, film composited with "lighten" so its black becomes navy ---------- */
-function paintField(L, p) {
-  ctx.globalCompositeOperation = "source-over";
-  ctx.fillStyle = "#0A0F2E";
-  ctx.fillRect(0, 0, innerWidth, innerHeight);
-  const r = 360 * L.s * 1.15;
-  let g = ctx.createRadialGradient(L.cx, L.cy, 0, L.cx, L.cy, r);
-  g.addColorStop(0, "rgba(11,107,255,.42)"); g.addColorStop(.55, "rgba(11,107,255,.12)"); g.addColorStop(1, "rgba(11,107,255,0)");
-  ctx.fillStyle = g; ctx.fillRect(0, 0, innerWidth, innerHeight);
-  const warm = clamp((p - .25) / .4, 0, 1);       // orange rim glow grows as the controller opens up
-  if (warm > 0) {
-    const ox = L.cx + 260 * L.s, oy = L.cy + 240 * L.s;
-    g = ctx.createRadialGradient(ox, oy, 0, ox, oy, r * .8);
-    g.addColorStop(0, `rgba(255,120,64,${.32 * warm})`); g.addColorStop(1, "rgba(255,77,77,0)");
-    ctx.fillStyle = g; ctx.fillRect(0, 0, innerWidth, innerHeight);
-  }
-}
-function placeVideo(L) {
-  video.style.width = SRC_W + "px";
-  video.style.height = SRC_H + "px";
-  video.style.transform = `translate(${L.cx - SRC_W / 2 * L.s}px,${L.cy - SRC_H / 2 * L.s}px) scale(${L.s})`;
-}
-function draw(L, p) {
-  placeVideo(L);
-  if (mode !== "bank") return;
-  const key = `${L.cx.toFixed(1)}|${L.cy.toFixed(1)}|${L.s.toFixed(4)}|${p.toFixed(3)}`;
-  warm(wantIdx, lastDir);
-  const idx = cache.has(wantIdx) ? wantIdx : nearestDecoded(wantIdx);
-  if (idx < 0) return;
-  if (idx === drawnIdx && key === lastKey && !dirty) return;
-  touch(idx);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  paintField(L, p);
-  ctx.globalCompositeOperation = "lighten";
-  ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(cache.get(idx), L.cx - SRC_W / 2 * L.s, L.cy - SRC_H / 2 * L.s, SRC_W * L.s, SRC_H * L.s);
-  ctx.globalCompositeOperation = "source-over";
-  drawnIdx = idx; lastKey = key; dirty = false;
-  if (!canvas.classList.contains("ready")) canvas.classList.add("ready");
-}
-
-/* video fallback: seek only, never play() */
-let seeking = false;
-video.addEventListener("seeked", () => { seeking = false; });
-function seekVideo(t) {
-  if (!video.duration || seeking) return;
-  const target = t * (video.duration - 0.05);
-  if (Math.abs(video.currentTime - target) > 1 / 48) { seeking = true; video.currentTime = target; }
-}
-
-/* ---------- chapters ---------- */
-let activeStage = 0, activeKey = "0";
-function setStage(p) {
-  let s = -1;
-  WINDOWS.forEach(([a, b], i) => { if (p >= a && p < b) s = i; });
-  stages.forEach((el, i) => el.classList.toggle("on", i === s));
-  const nearest = p < .2 ? 0 : p < .62 ? 1 : 2;
-  const past = scrollY > track.offsetTop + track.offsetHeight - innerHeight - 8;
-  nav.classList.toggle("solid", past);
-  const key = past || nearest === 2 ? "hub" : String(nearest);
-  if (nearest !== activeStage) { activeStage = nearest; dots.forEach((d, i) => d.classList.toggle("on", i === nearest)); }
-  if (key !== activeKey) { activeKey = key; navLinks.forEach(a => a.classList.toggle("active", a.dataset.go === key)); }
-}
-
-/* ---------- loop ---------- */
-let curP = targetProgress(), last = performance.now();
-function frame(now) {
-  const dt = Math.min(64, now - last); last = now;
-  const tp = targetProgress();
-  if (reduced) curP = tp;
-  else {
-    curP += (tp - curP) * (1 - Math.exp(-dt / 50));
-    if (Math.abs(tp - curP) < 0.0002) curP = tp;
-  }
-  const L = layoutAt(curP, LAYOUT);
-  const vt = videoTime(curP);
-  const idx = Math.round(vt * (FRAME_COUNT - 1));
-  if (idx !== wantIdx) { lastDir = idx > wantIdx ? 1 : -1; wantIdx = idx; }
-  draw(L, curP);
-  if (mode === "video") seekVideo(vt);
-  setStage(curP);
-  requestAnimationFrame(frame);
-}
+const navLinks = [...document.querySelectorAll(".links a, #menu nav a")];
 
 /* ---------- menu & controls ---------- */
 const menu = document.getElementById("menu"), openBtn = document.getElementById("openMenu");
@@ -1035,78 +585,13 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.class
 document.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click", e => {
   e.preventDefault();
   if (menu.classList.contains("open")) setMenu(false, false);
-  goStage(el.dataset.go === "hub" ? "hub" : +el.dataset.go);
+  const target = document.getElementById(el.dataset.go);
+  if (target) target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  navLinks.forEach(a => a.classList.toggle("active", a.dataset.go === el.dataset.go));
 }));
 mg.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false, false); });
-document.getElementById("next").addEventListener("click", () => goStage(activeStage < 2 ? activeStage + 1 : "hub"));
-document.getElementById("top").addEventListener("click", () => goStage(0));
-
-
-/* ---------- game library: coverflow ---------- */
-const cf = document.getElementById("cf"), cfDots = document.getElementById("cfDots");
-const SLIDES = [
-  ...GAMES.map(g => ({ g })),
-  { soon: true }
-];
-SLIDES.forEach((sl, i) => {
-  const el = document.createElement("div");
-  el.className = "slide"; el.dataset.i = i;
-  el.setAttribute("role", "group"); el.setAttribute("aria-roledescription", "slide");
-  const inner = sl.soon
-    ? `<span class="badge-f pink">Coming soon</span><h3>More worlds</h3>
-       <p>New games are in development. Every one will be free to play right here in your browser.</p>
-       <div class="acts"><a href="#shelfSoon" class="btn btn-ghost" data-jump="shelfSoon">See what&rsquo;s next</a></div>`
-    : `<span class="badge-f">&#9733; Featured</span><h3>${sl.g.name}</h3>
-       <div class="meta"><span>${sl.g.genre}</span><span class="free">Free</span>${sl.g.platforms.map(p => `<span>${p}</span>`).join("")}</div>
-       <p>${sl.g.blurb}</p>
-       <div class="acts"><a class="btn btn-accent" href="${sl.g.url}" target="_blank" rel="noopener">Play now ${PLAY_ICON}</a></div>`;
-  el.innerHTML = `<div class="card"><div class="art">${art(sl.soon ? "soon" : sl.g.art, "banner")}</div><div class="shade"></div><div class="txt">${inner}</div></div>`;
-  el.setAttribute("aria-label", sl.soon ? "More worlds coming soon" : sl.g.name);
-  cf.insertBefore(el, document.getElementById("cfPrev"));
-  const d = document.createElement("button");
-  d.setAttribute("aria-label", "Show " + (sl.soon ? "coming soon" : sl.g.name));
-  d.addEventListener("click", () => show(i));
-  cfDots.appendChild(d);
-});
-const slideEls = [...cf.querySelectorAll(".slide")], dotEls = [...cfDots.children];
-let cur = 0, timer = null;
-function show(i) {
-  const n = slideEls.length;
-  cur = (i + n) % n;
-  slideEls.forEach((el, k) => {
-    let pos = (k - cur + n) % n; if (pos > n / 2) pos -= n;
-    el.dataset.pos = Math.abs(pos) > 1 ? "far" : pos;
-    el.setAttribute("aria-hidden", pos !== 0);
-    el.querySelectorAll("a").forEach(a => a.tabIndex = pos === 0 ? 0 : -1);
-    el.querySelector(".card").style.cssText = "";
-  });
-  dotEls.forEach((d, k) => d.classList.toggle("on", k === cur));
-}
-function auto(on) { clearInterval(timer); if (on && !reduced) timer = setInterval(() => show(cur + 1), 7000); }
-document.getElementById("cfPrev").addEventListener("click", () => { show(cur - 1); auto(true); });
-document.getElementById("cfNext").addEventListener("click", () => { show(cur + 1); auto(true); });
-slideEls.forEach((el, k) => el.addEventListener("click", () => { if (el.dataset.pos !== "0") { show(k); auto(true); } }));
-cf.addEventListener("pointerenter", () => auto(false));
-cf.addEventListener("pointerleave", () => auto(true));
-cf.addEventListener("focusin", () => auto(false));
-let sx = null;
-cf.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") sx = e.clientX; });
-cf.addEventListener("pointerup", e => {
-  if (sx === null) return; const dx = e.clientX - sx; sx = null;
-  if (Math.abs(dx) > 40) { show(cur + (dx < 0 ? 1 : -1)); auto(true); }
-});
-cf.addEventListener("pointermove", e => {           // the front banner leans toward the cursor
-  if (e.pointerType !== "mouse" || reduced) return;
-  const card = slideEls[cur].querySelector(".card"), r = card.getBoundingClientRect();
-  const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-  if (Math.abs(x) > .6 || Math.abs(y) > .6) return;
-  card.style.setProperty("--ry", (x * 7).toFixed(2) + "deg");
-  card.style.setProperty("--rx", (-y * 5).toFixed(2) + "deg");
-});
-cf.addEventListener("pointerleave", () => { const c = slideEls[cur].querySelector(".card"); c.style.removeProperty("--rx"); c.style.removeProperty("--ry"); });
-show(0); auto(true);
-
-/* ---------- chips, search and shelves ---------- */
+/* ---------- chips, search and the instant grid ---------- */
+const LOCK_ICON = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 const CHIPS = [
   { k: "all", label: "All games", icon: '<path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z"/>' },
   { k: "Trivia", label: "Trivia", icon: '<circle cx="10" cy="10" r="7.5"/><path d="M8 8a2 2 0 1 1 3 1.7c-.7.4-1 .9-1 1.6M10 14.2v.1"/>' },
@@ -1114,58 +599,40 @@ const CHIPS = [
   { k: "soon", label: "Coming soon", icon: '<path d="M10 2.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/>' }
 ];
 const chipsEl = document.getElementById("chips");
+const gridEl = document.getElementById("grid");
+const emptyEl = document.getElementById("empty");
 let filter = "all", query = "";
 CHIPS.forEach(c => {
   const n = c.k === "all" ? GAMES.length : c.k === "soon" ? COMING.length : GAMES.filter(g => g.genre === c.k).length;
   const b = document.createElement("button");
   b.className = "chip"; b.dataset.k = c.k; b.setAttribute("aria-pressed", c.k === "all");
   b.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${c.icon}</svg>${c.label}<b>${n}</b>`;
-  b.addEventListener("click", () => { filter = c.k; chipsEl.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderShelves(); });
+  b.addEventListener("click", () => { filter = c.k; chipsEl.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderGrid(); });
   chipsEl.appendChild(b);
 });
-const railReady = document.getElementById("railReady"), railSoon = document.getElementById("railSoon");
-railReady.innerHTML = GAMES.map(g => `
-  <div class="item" data-genre="${g.genre}" data-name="${g.name.toLowerCase()}">
+function gameCard(g) {
+  return `<div class="item" data-genre="${g.genre}" data-name="${g.name.toLowerCase()}">
     <a class="poster" href="${g.url}" target="_blank" rel="noopener" aria-label="Play ${g.name}">${art(g.art, "poster")}<span class="pbtn">${PLAY_ICON}</span></a>
     <div class="t">${g.name}</div><div class="m">${g.genre} &middot; <em>Free</em></div>
-  </div>`).join("");
-railSoon.innerHTML = COMING.map(c => `
-  <div class="item soon"><div class="poster">${art(c.art || "soon", "poster")}</div><div class="t">${c.name}</div><div class="m">In development</div></div>`).join("");
-/* Ready-row arrows: page by most of the visible width; hide when everything fits. */
-const shelfReady = document.getElementById("shelfReady"), railPrev = document.getElementById("railPrev"), railNext = document.getElementById("railNext");
-function syncArrows() {
-  const max = railReady.scrollWidth - railReady.clientWidth;
-  shelfReady.classList.toggle("scrolls", max > 4);
-  railPrev.disabled = railReady.scrollLeft <= 4;
-  railNext.disabled = railReady.scrollLeft >= max - 4;
+  </div>`;
 }
-const pageRail = dir => railReady.scrollBy({ left: dir * railReady.clientWidth * 0.8, behavior: reduced ? "auto" : "smooth" });
-railPrev.addEventListener("click", () => pageRail(-1));
-railNext.addEventListener("click", () => pageRail(1));
-railReady.addEventListener("scroll", syncArrows, { passive: true });
-addEventListener("resize", syncArrows);
-function renderShelves() {
-  let shown = 0;
-  railReady.querySelectorAll(".item").forEach(it => {
-    const ok = (filter === "all" || it.dataset.genre === filter) && it.dataset.name.includes(query);
-    it.hidden = !ok; if (ok) shown++;
-  });
-  const showReady = filter !== "soon";
-  document.getElementById("shelfReady").hidden = !showReady;
-  document.getElementById("shelfSoon").hidden = !(filter === "all" || filter === "soon") || (query && filter !== "soon");
-  const empty = document.getElementById("empty");
-  empty.hidden = !(showReady && shown === 0);
-  empty.textContent = query ? `No games match “${query}” yet. Try another name or clear the search.` : "No games in this category yet.";
-  railReady.hidden = shown === 0;
-  document.getElementById("readyCount").textContent = `${shown} ${shown === 1 ? "game" : "games"}`;
-  syncArrows();
+function soonCard(c) {
+  return `<div class="item soon" data-genre="soon" data-name="${c.name.toLowerCase()}">
+    <div class="poster">${LOCK_ICON}</div>
+    <div class="t">${c.name}</div><div class="m">Coming soon</div>
+  </div>`;
 }
-document.getElementById("q").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); renderShelves(); });
-renderShelves();
-document.addEventListener("click", e => {
-  const j = e.target.closest("[data-jump]"); if (!j) return;
-  e.preventDefault(); document.getElementById(j.dataset.jump).scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
-});
+function renderGrid() {
+  const term = query.trim().toLowerCase();
+  const showSoon = filter === "all" || filter === "soon";
+  const games = filter === "soon" ? [] : GAMES.filter(g => (filter === "all" || g.genre === filter) && g.name.toLowerCase().includes(term));
+  const soon = showSoon && !term ? COMING : [];
+  gridEl.innerHTML = games.map(gameCard).join("") + soon.map(soonCard).join("");
+  emptyEl.hidden = games.length + soon.length > 0;
+  emptyEl.textContent = term ? `No games match “${query}” yet. Try another name or clear the search.` : "No games in this category yet.";
+}
+document.getElementById("q").addEventListener("input", e => { query = e.target.value; renderGrid(); });
+renderGrid();
 
 /* ---------- 3D tilt on poster cards ---------- */
 if (!reduced) {
@@ -1186,11 +653,4 @@ if (!reduced) {
   });
 }
 
-/* ---------- boot ---------- */
-let rt;
-addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(resize, 60); });
-resize();
-if (mode === "bank") { if (!("createImageBitmap" in window) || !window.fetch) useVideo(); else fetchBank(); }
-requestAnimationFrame(() => document.body.classList.add("loaded"));
-requestAnimationFrame(frame);
 </script>
