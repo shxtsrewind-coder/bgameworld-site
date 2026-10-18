@@ -10,11 +10,14 @@
 //
 //   3. TikTok drafts (src/tiktok.js): at each TikTok puzzle's time it sends the
 //      slideshow to the connected account's TikTok inbox, ready to post.
+//   4. Pinterest RSS feeds at /feed/pins/<board>.xml (src/pins.js) that
+//      Pinterest's auto-publish turns into Pins, a few a day.
 //
 // To pause posting: in the SOCIAL KV namespace, set the key PAUSED to 1.
 // Delete the key (or set it to 0) to resume.
 import posts from "./posts.json";
 import { tiktokRoute, tiktokDue, tiktokStatus } from "./tiktok.js";
+import { pinFeed } from "./pins.js";
 
 const GRAPH = "https://graph.facebook.com/v26.0";
 const SITE = "https://bgameworld.com";
@@ -28,6 +31,10 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/api/social/status") return status(env);
     if (url.pathname.startsWith("/api/tiktok/")) return tiktokRoute(request, env, url);
+    if (url.pathname.startsWith("/feed/pins/")) {
+      const feed = pinFeed(url, Date.now());
+      if (feed) return feed;
+    }
     return env.ASSETS.fetch(request);
   },
 
