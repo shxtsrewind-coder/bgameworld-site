@@ -10,11 +10,20 @@
 //
 //   3. TikTok drafts (src/tiktok.js): at each TikTok puzzle's time it sends the
 //      slideshow to the connected account's TikTok inbox, ready to post.
+//   4. Pinterest RSS feeds at /feed/pins/<board>.xml (src/pins.js) that
+//      Pinterest's auto-publish turns into Pins, a few a day.
+//   5. Facebook Reels (src/reels.js): gameplay videos from /social/reels/,
+//      posted to the Page on the schedule in src/reels.json.
+//   6. Pinterest video Pins (src/pinterest.js): one gameplay video a day via
+//      the Pinterest API, once the app is connected.
 //
 // To pause posting: in the SOCIAL KV namespace, set the key PAUSED to 1.
 // Delete the key (or set it to 0) to resume.
 import posts from "./posts.json";
 import { tiktokRoute, tiktokDue, tiktokStatus } from "./tiktok.js";
+import { pinFeed } from "./pins.js";
+import { reelsDue, reelsStatus } from "./reels.js";
+import { pinterestRoute, pinterestDue, pinterestStatus } from "./pinterest.js";
 
 const GRAPH = "https://graph.facebook.com/v26.0";
 const SITE = "https://bgameworld.com";
@@ -28,12 +37,17 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/api/social/status") return status(env);
     if (url.pathname.startsWith("/api/tiktok/")) return tiktokRoute(request, env, url);
+    if (url.pathname.startsWith("/api/pinterest/")) return pinterestRoute(request, env, url);
+    if (url.pathname.startsWith("/feed/pins/")) {
+      const feed = pinFeed(url, Date.now());
+      if (feed) return feed;
+    }
     return env.ASSETS.fetch(request);
   },
 
   async scheduled(event, env, ctx) {
     const now = Date.now();
-    ctx.waitUntil(Promise.all([postDue(env, now), tiktokDue(env, now)]));
+    ctx.waitUntil(Promise.all([postDue(env, now), tiktokDue(env, now), reelsDue(env, now), pinterestDue(env, now)]));
   },
 };
 
@@ -110,6 +124,8 @@ async function status(env) {
     if (err) row.last_error = JSON.parse(err);
     out.posts.push(row);
   }
+  out.reels = await reelsStatus(env, now);
+  out.pinterest = await pinterestStatus(env);
   out.tiktok = await tiktokStatus(env, now);
   return new Response(JSON.stringify(out, null, 2), {
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },

@@ -11,6 +11,7 @@
   //   FB_PAGE_TOKEN  the never-expiring Page access token
   //   TIKTOK_CLIENT_KEY, TIKTOK_CLIENT_SECRET  from the TikTok developer app
   //   TIKTOK_SETUP_KEY  a password for /api/tiktok/connect (see src/tiktok.js)
+  //   PINTEREST_APP_ID, PINTEREST_APP_SECRET, PINTEREST_SETUP_KEY  (see src/pinterest.js)
   //
   // Build step (run by Cloudflare before deploy): none.
   // Deploy step: `npx wrangler deploy`
@@ -20,6 +21,10 @@
   "assets": {
     "directory": "./",
     "binding": "ASSETS"
+  },
+  // "sandbox" while the Pinterest app has Trial access, "production" after Standard access.
+  "vars": {
+    "PINTEREST_ENV": "sandbox"
   },
   "triggers": {
     "crons": ["*/30 * * * *"]
