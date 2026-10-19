@@ -3,8 +3,8 @@
 // Uses the Page Reels API in three steps, the same Page token as the photo
 // posts (FB_PAGE_ID, FB_PAGE_TOKEN):
 //   1. start   POST /{page}/video_reels upload_phase=start      -> video_id
-//   2. upload  POST rupload.facebook.com/video-upload/...  header file_url
-//              (Facebook downloads the MP4 from bgameworld.com/social/reels/)
+//   2. upload  POST rupload.facebook.com/video-upload/...  with the MP4 bytes
+//              (read from this site's /social/reels/ files)
 //   3. finish  POST /{page}/video_reels upload_phase=finish video_state=PUBLISHED
 // If Facebook is still processing the video at step 3, the next run (30 min
 // later) tries step 3 again, inside the 6-hour window.
@@ -42,9 +42,14 @@ export async function reelsDue(env, now) {
         await env.SOCIAL.put(key, JSON.stringify({ stage: "working", t: now }), { expirationTtl: 3600 });
         const s = await post(`${GRAPH}/${env.FB_PAGE_ID}/video_reels`, { upload_phase: "start", access_token: token });
         if (!s.data.video_id) { await env.SOCIAL.delete(key); await fail(env, r.id, "start", s, now); continue; }
+        // Send the file itself (Facebook couldn't fetch it from a file_url: 422 on Oct 19).
+        const file = await env.ASSETS.fetch(new Request(`${SITE}/social/reels/${r.video}`));
+        if (!file.ok) { await env.SOCIAL.delete(key); await fail(env, r.id, "read video", { status: file.status, data: { error: { message: "video file missing" } } }, now); continue; }
+        const bytes = await file.arrayBuffer();
         const up = await fetch(s.data.upload_url || `${RUPLOAD}/${s.data.video_id}`, {
           method: "POST",
-          headers: { authorization: `OAuth ${token}`, file_url: `${SITE}/social/reels/${r.video}` },
+          headers: { authorization: `OAuth ${token}`, offset: "0", file_size: String(bytes.byteLength), "content-type": "application/octet-stream" },
+          body: bytes,
         });
         const upData = await up.json().catch(() => ({}));
         if (!up.ok || !upData.success) { await env.SOCIAL.delete(key); await fail(env, r.id, "upload", { status: up.status, data: upData }, now); continue; }
@@ -86,9 +91,9 @@ async function post(url, fields) {
 }
 
 async function fail(env, id, step, r, now) {
-  const e = (r.data && r.data.error) || {};
+  const e = (r.data && (r.data.error || r.data.debug_info)) || {};   // rupload errors come back as debug_info
   await env.SOCIAL.put(`rlerr:${id}`, JSON.stringify({
-    at: new Date(now).toISOString(), step, status: r.status, message: e.message || "Unexpected response from Facebook", code: e.code, type: e.type,
+    at: new Date(now).toISOString(), step, status: r.status, message: e.message || JSON.stringify(r.data || {}).slice(0, 300) || "Unexpected response from Facebook", code: e.code, type: e.type,
   }), { expirationTtl: ERROR_TTL });
 }
 
