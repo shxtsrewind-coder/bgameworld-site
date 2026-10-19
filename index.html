@@ -213,6 +213,17 @@ img{max-width:100%}
 .tagline i{font-style:normal;color:var(--yellow);margin:0 .5em}
 
 /* ---------- mission ---------- */
+.marquee{position:relative;padding:26px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.marquee-track{display:flex;gap:16px;width:max-content;animation:marquee-scroll 46s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-item{position:relative;flex:none;width:116px;aspect-ratio:400/560;border-radius:12px;overflow:hidden;background:#141A42;opacity:.8;transition:opacity .2s,transform .2s}
+.marquee-item:hover{opacity:1;transform:translateY(-3px)}
+.marquee-item svg{position:absolute;inset:0;width:100%;height:100%}
+@keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.marquee-track{animation:none}}
+@media (max-width:720px){.marquee-item{width:88px}}
 .game-list{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px 32px}
 .game-list li{padding-bottom:18px;border-bottom:1px solid var(--line)}
 .game-list a{display:block}
@@ -349,6 +360,10 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
   <div class="chips" id="chips" role="toolbar" aria-label="Filter games"></div>
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden></p>
+</section>
+
+<section class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack"></div>
 </section>
 
 <section id="mission" aria-label="Mission">
@@ -672,6 +687,14 @@ function renderGrid() {
 }
 document.getElementById("q").addEventListener("input", e => { query = e.target.value; renderGrid(); });
 renderGrid();
+
+/* ---------- decorative poster marquee, under the grid ---------- */
+(function initMarquee() {
+  const track = document.getElementById("marqueeTrack");
+  if (!track) return;
+  const tiles = GAMES.map(g => `<div class="marquee-item">${art(g.art, "poster")}</div>`).join("");
+  track.innerHTML = tiles + tiles; // doubled for a seamless loop
+})();
 
 /* ---------- 3D tilt on poster cards ---------- */
 if (!reduced) {
