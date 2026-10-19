@@ -233,7 +233,12 @@ function randomHex(n) {
   return Array.from(b, (x) => x.toString(16).padStart(2, "0")).join("");
 }
 
+// Setup keys are typed by hand (often on a phone), so stray spaces and an
+// auto-capitalised first letter don't count.
 async function sameText(a, b) {
+  const norm = (s) => String(s || "").trim().toLowerCase();
+  a = norm(a); b = norm(b);
+  if (!b) return false;
   const enc = new TextEncoder();
   const [x, y] = (await Promise.all([crypto.subtle.digest("SHA-256", enc.encode(a)), crypto.subtle.digest("SHA-256", enc.encode(b))])).map((h) => new Uint8Array(h));
   let diff = 0;
