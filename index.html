@@ -270,6 +270,71 @@ footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));borde
 #close:hover{border-color:var(--cyan)}
 @media (min-width:640px){#menu{padding-left:32px;padding-right:32px}#close{right:32px;top:calc(28px + var(--safe-t))}}
 
+/* ---------- daily challenge: trigger, modal, gate, board ---------- */
+.challenge-btn{display:flex;align-items:center;gap:7px;padding:9px 16px 9px 13px;border-radius:999px;
+  background:var(--g-accent);color:var(--navy);font-size:13px;font-weight:800;letter-spacing:.01em}
+.challenge-btn:hover{filter:brightness(1.06)}
+@media (max-width:480px){.challenge-btn span{display:none}}
+
+.ch-backdrop{position:fixed;inset:0;z-index:110;background:rgba(5,8,26,.72);backdrop-filter:blur(3px);
+  opacity:0;visibility:hidden;transition:opacity .3s var(--ease2),visibility 0s linear .3s}
+.ch-backdrop.open{opacity:1;visibility:visible;transition:opacity .3s var(--ease2)}
+
+.ch-modal{position:fixed;z-index:111;left:50%;top:50%;width:min(640px,calc(100vw - 32px));max-height:calc(100vh - 64px);
+  overflow-y:auto;background:#0D1438;border:1px solid var(--line);border-radius:20px;
+  padding:32px 24px calc(28px + var(--safe-b));box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
+  transform:translate(-50%,-46%) scale(.97);opacity:0;visibility:hidden;
+  transition:opacity .3s var(--ease2),transform .3s var(--ease2),visibility 0s linear .3s}
+.ch-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);transition:opacity .3s var(--ease2),transform .3s var(--ease2)}
+@media (min-width:640px){.ch-modal{padding:40px 40px 36px}}
+.ch-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--muted)}
+.ch-close:hover{border-color:var(--cyan);color:var(--gray)}
+#chDate{margin-bottom:10px}
+.ch-modal h2{font-size:clamp(1.5rem,5vw,2rem)}
+.ch-sub{margin:10px 0 0;font-size:14px;line-height:1.55;color:var(--muted);max-width:52ch}
+
+.ch-games{display:flex;gap:10px;overflow-x:auto;padding:18px 2px 4px;scrollbar-width:thin}
+.ch-games .ch-g{flex:none;width:76px;text-align:center}
+.ch-games .ch-g .th{width:76px;aspect-ratio:400/560;border-radius:10px;overflow:hidden;background:#141A42;position:relative}
+.ch-games .ch-g .th svg{position:absolute;inset:0;width:100%;height:100%}
+.ch-games .ch-g b{display:block;margin-top:6px;font-size:10.5px;font-weight:600;color:var(--muted);line-height:1.25}
+
+.ch-gate{display:grid;gap:18px;margin-top:22px;grid-template-columns:1fr}
+@media (min-width:560px){.ch-gate{grid-template-columns:1fr auto 1fr;align-items:start}}
+.ch-path{border:1px solid var(--line);border-radius:14px;padding:18px}
+.ch-path h3{font-family:var(--display);font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:.01em;margin:0 0 6px}
+.ch-path p{margin:0 0 14px;font-size:13px;line-height:1.5;color:var(--muted)}
+.ch-divider{display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+@media (max-width:559px){.ch-divider{display:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:11px 16px;border-radius:10px;
+  font-size:13.5px;font-weight:700;letter-spacing:.01em;cursor:pointer}
+.btn.ghost{background:rgba(234,239,247,.08);color:var(--gray);border:1px solid var(--line)}
+.btn.ghost:hover{background:rgba(234,239,247,.14)}
+.btn.primary{background:var(--g-primary);color:#fff;margin-top:2px}
+.btn.primary:hover{filter:brightness(1.08)}
+#chAuthForm{display:flex;flex-direction:column;gap:9px}
+#chAuthForm input{background:rgba(234,239,247,.06);border:1px solid var(--line);border-radius:9px;padding:10px 12px;
+  color:var(--gray);font:inherit;font-size:13.5px}
+#chAuthForm input::placeholder{color:var(--dim)}
+#chAuthForm input:focus{outline:2px solid var(--cyan);outline-offset:1px}
+.ch-toggle{margin:10px 0 0;font-size:12.5px;color:var(--dim)}
+.ch-toggle button{color:var(--cyan);font-weight:600}
+.ch-msg{margin:10px 0 0;font-size:12.5px;min-height:1em}
+.ch-msg.err{color:#FF8A8A}
+.ch-msg.ok{color:#6EE7B7}
+
+.ch-playing .ch-msg{font-size:14px;font-weight:700}
+
+.ch-board{margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.ch-board h3{font-family:var(--display);font-weight:400;font-size:15px;text-transform:uppercase;letter-spacing:.01em;margin:0 0 12px}
+.ch-board-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.ch-board-list li{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:8px 10px;border-radius:9px}
+.ch-board-list li:nth-child(odd){background:rgba(234,239,247,.04)}
+.ch-board-list .rank{font-family:var(--display);font-size:13px;color:var(--cyan);width:22px;flex:none}
+.ch-board-list .name{flex:1;color:var(--gray);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-board-list .score{font-weight:700;color:var(--yellow)}
+.ch-board-empty{color:var(--dim);font-size:13px;padding:8px 10px}
+
 /* ---------- game library: instant grid ---------- */
 :root{--hx:20px}
 @media (min-width:640px){:root{--hx:32px}}
@@ -346,6 +411,10 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
     </nav>
   </div>
   <div class="nav-r">
+    <button class="challenge-btn" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal">
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8v4a4 4 0 0 1-8 0V3z"/><path d="M6 4H3v1a3 3 0 0 0 3 3M14 4h3v1a3 3 0 0 1-3 3"/><path d="M10 11v3M7 17h6M8 14h4v3H8z"/></svg>
+      <span>Challenge</span>
+    </button>
     <button class="burger" id="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
   </div>
 </header>
@@ -443,6 +512,54 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
   <nav id="menuGames" aria-label="Games"></nav>
 </div>
 
+<div class="ch-backdrop" id="challengeBackdrop" hidden></div>
+<div class="ch-modal" id="challengeModal" role="dialog" aria-modal="true" aria-labelledby="chTitle" hidden>
+  <button class="ch-close" id="chClose" aria-label="Close challenge">
+    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14"/></svg>
+  </button>
+
+  <div id="chBody">
+    <p class="eyebrow" id="chDate"></p>
+    <h2 class="h-display" id="chTitle">Today's 7&#8209;game challenge</h2>
+    <p class="ch-sub">Play all seven, add up your score, see where you land on today's leaderboard.</p>
+
+    <div class="ch-games" id="chGames"></div>
+
+    <div class="ch-gate" id="chGate">
+      <div class="ch-path">
+        <h3>Play as guest</h3>
+        <p>Jump straight in. Your scores won't be saved, and you won't show up on the leaderboard.</p>
+        <button class="btn ghost" id="chGuestBtn">Continue as guest</button>
+      </div>
+      <div class="ch-divider"><span>or</span></div>
+      <div class="ch-path">
+        <h3 id="chAuthHeading">Sign up to compete</h3>
+        <p>Save your scores and get ranked on today's leaderboard against everyone else playing.</p>
+        <form id="chAuthForm" novalidate>
+          <input type="text" id="chName" placeholder="Display name" autocomplete="nickname" required>
+          <input type="email" id="chEmail" placeholder="Email" autocomplete="email" required>
+          <input type="password" id="chPassword" placeholder="Password" autocomplete="current-password" minlength="6" required>
+          <button type="submit" class="btn primary" id="chAuthSubmit">Sign up</button>
+        </form>
+        <p class="ch-toggle">Already have an account? <button type="button" id="chToggleMode">Sign in</button></p>
+        <p class="ch-msg" id="chAuthMsg" role="status"></p>
+      </div>
+    </div>
+
+    <div class="ch-playing" id="chPlaying" hidden>
+      <p class="ch-msg ok" id="chPlayingMsg"></p>
+      <p class="ch-sub">Play today's seven, then check back to see your rank:</p>
+      <div class="ch-games" id="chGamesPlaying"></div>
+    </div>
+
+    <div class="ch-board">
+      <h3>Today's leaderboard</h3>
+      <ol id="chBoard" class="ch-board-list"><li class="ch-board-empty">Loading…</li></ol>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 /* ===== Edit your games here ===== */
 const GAMES = [
@@ -715,4 +832,171 @@ if (!reduced) {
   });
 }
 
+/* ---------- daily 7-game challenge + guest/signup gate + leaderboard ---------- */
+(function initChallenge() {
+  const SB_URL = "https://hkcvtoozpeybwehqtiif.supabase.co";
+  const SB_KEY = "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
+  if (!window.supabase) return; // CDN didn't load; rest of the site still works fine without it
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+  function todayStr() { return new Date().toISOString().slice(0, 10); } // UTC date: same for every visitor
+
+  function pickDailyGames(dateStr) {
+    let seed = 0;
+    for (let i = 0; i < dateStr.length; i++) seed = (seed * 31 + dateStr.charCodeAt(i)) >>> 0;
+    const rnd = rand(seed || 1);
+    const pool = GAMES.slice();
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, 7);
+  }
+
+  const chDate = todayStr();
+  const todaysGames = pickDailyGames(chDate);
+
+  function gameChip(g) {
+    return `<a class="ch-g" href="${g.url}" target="_blank" rel="noopener">
+      <span class="th">${art(g.art, "poster")}</span><b>${g.name}</b>
+    </a>`;
+  }
+  document.getElementById("chGames").innerHTML = todaysGames.map(gameChip).join("");
+  document.getElementById("chGamesPlaying").innerHTML = todaysGames.map(gameChip).join("");
+  document.getElementById("chDate").textContent = new Date(chDate + "T00:00:00Z")
+    .toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" });
+
+  /* ---- open / close ---- */
+  const chBackdrop = document.getElementById("challengeBackdrop");
+  const chModal = document.getElementById("challengeModal");
+  const chOpenBtn = document.getElementById("openChallenge");
+  function setChallenge(open) {
+    chBackdrop.hidden = false; chModal.hidden = false;
+    requestAnimationFrame(() => { chBackdrop.classList.toggle("open", open); chModal.classList.toggle("open", open); });
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    chOpenBtn.setAttribute("aria-expanded", open);
+    if (open) document.getElementById("chClose").focus();
+    else setTimeout(() => { if (!chModal.classList.contains("open")) { chBackdrop.hidden = true; chModal.hidden = true; } }, 320);
+  }
+  chOpenBtn.addEventListener("click", () => setChallenge(true));
+  document.getElementById("chClose").addEventListener("click", () => setChallenge(false));
+  chBackdrop.addEventListener("click", () => setChallenge(false));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && chModal.classList.contains("open")) setChallenge(false); });
+
+  /* ---- auto-open once per day per browser ---- */
+  try {
+    const seenKey = "bgw_ch_seen_" + chDate;
+    if (!localStorage.getItem(seenKey)) {
+      localStorage.setItem(seenKey, "1");
+      setTimeout(() => setChallenge(true), 900);
+    }
+  } catch (e) {}
+
+  /* ---- guest path ---- */
+  function showPlaying(message) {
+    document.getElementById("chGate").hidden = true;
+    const playing = document.getElementById("chPlaying");
+    playing.hidden = false;
+    document.getElementById("chPlayingMsg").textContent = message;
+  }
+  document.getElementById("chGuestBtn").addEventListener("click", () => {
+    try { localStorage.setItem("bgw_ch_mode_" + chDate, "guest"); } catch (e) {}
+    showPlaying("Playing as guest — your scores won't be saved or ranked.");
+  });
+
+  /* ---- sign up / sign in path ---- */
+  let chMode = "signup";
+  const chForm = document.getElementById("chAuthForm");
+  const chName = document.getElementById("chName");
+  const chEmail = document.getElementById("chEmail");
+  const chPassword = document.getElementById("chPassword");
+  const chSubmit = document.getElementById("chAuthSubmit");
+  const chMsg = document.getElementById("chAuthMsg");
+  const chToggle = document.getElementById("chToggleMode");
+  const chHeading = document.getElementById("chAuthHeading");
+
+  function setChMode(next) {
+    chMode = next;
+    const signup = chMode === "signup";
+    chHeading.textContent = signup ? "Sign up to compete" : "Sign in to compete";
+    chSubmit.textContent = signup ? "Sign up" : "Sign in";
+    chName.hidden = !signup;
+    chName.required = signup;
+    chPassword.autocomplete = signup ? "new-password" : "current-password";
+    chToggle.textContent = signup ? "Sign in" : "Sign up";
+    chMsg.textContent = ""; chMsg.className = "ch-msg";
+  }
+  chToggle.addEventListener("click", () => setChMode(chMode === "signup" ? "signin" : "signup"));
+  setChMode("signup");
+
+  async function ensureProfile(user, displayName) {
+    const { data: existing } = await sb.from("portal_profiles").select("display_name").eq("id", user.id).maybeSingle();
+    if (existing) return existing.display_name;
+    const name = displayName || (user.email ? user.email.split("@")[0] : "Player");
+    await sb.from("portal_profiles").insert({ id: user.id, display_name: name });
+    return name;
+  }
+
+  chForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    chSubmit.disabled = true; chMsg.textContent = ""; chMsg.className = "ch-msg";
+    const email = chEmail.value.trim(), password = chPassword.value, name = chName.value.trim();
+    try {
+      if (chMode === "signup") {
+        const { data, error } = await sb.auth.signUp({ email, password });
+        if (error) throw error;
+        if (data.session && data.user) {
+          await ensureProfile(data.user, name || "Player");
+          showPlaying(`You're in, ${name || "Player"} — go play today's seven.`);
+        } else {
+          chMsg.textContent = "Check your email to confirm your account, then come back and sign in.";
+          chMsg.className = "ch-msg ok";
+        }
+      } else {
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        const displayName = await ensureProfile(data.user);
+        showPlaying(`Welcome back, ${displayName} — go play today's seven.`);
+      }
+    } catch (err) {
+      chMsg.textContent = (err && err.message) || "Something went wrong. Try again.";
+      chMsg.className = "ch-msg err";
+    } finally {
+      chSubmit.disabled = false;
+    }
+  });
+
+  /* ---- restore session on load ---- */
+  sb.auth.getSession().then(async ({ data }) => {
+    if (data.session && data.session.user) {
+      const displayName = await ensureProfile(data.session.user);
+      showPlaying(`You're set, ${displayName} — go play today's seven.`);
+    }
+  }).catch(() => {});
+
+  /* ---- leaderboard ---- */
+  async function loadBoard() {
+    const boardEl = document.getElementById("chBoard");
+    const { data: scores, error } = await sb
+      .from("portal_challenge_scores")
+      .select("user_id,total_score")
+      .eq("challenge_date", chDate)
+      .order("total_score", { ascending: false })
+      .limit(20);
+    if (error || !scores || !scores.length) {
+      boardEl.innerHTML = '<li class="ch-board-empty">No scores yet today — be the first to finish all seven.</li>';
+      return;
+    }
+    const ids = scores.map(s => s.user_id);
+    const { data: profiles } = await sb.from("portal_profiles").select("id,display_name").in("id", ids);
+    const names = {};
+    (profiles || []).forEach(p => { names[p.id] = p.display_name; });
+    boardEl.innerHTML = scores.map((s, i) => `<li>
+      <span class="rank">${i + 1}</span>
+      <span class="name">${names[s.user_id] || "Player"}</span>
+      <span class="score">${s.total_score}</span>
+    </li>`).join("");
+  }
+  loadBoard();
+})();
 </script>
