@@ -213,11 +213,19 @@ img{max-width:100%}
 .tagline i{font-style:normal;color:var(--yellow);margin:0 .5em}
 
 /* ---------- mission ---------- */
+.game-list{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px 32px}
+.game-list li{padding-bottom:18px;border-bottom:1px solid var(--line)}
+.game-list a{display:block}
+.game-list b{display:block;font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.01em;text-transform:uppercase;color:var(--gray);margin-bottom:5px}
+.game-list span{display:block;font-size:13.5px;line-height:1.55;color:var(--muted)}
 #mission{padding:72px var(--px) 80px;border-top:1px solid var(--line);
   background:radial-gradient(50% 60% at 85% 0%,rgba(139,92,246,.12),transparent 70%),var(--navy)}
 #mission .wrap{max-width:760px}
 #mission h2{font-size:clamp(2.2rem,4.4vw,3.6rem)}
 #mission .copy{margin:18px 0 0;font-size:16px;line-height:1.65;color:var(--muted);max-width:60ch}
+#about-games{padding:0 var(--px) 72px;border-top:1px solid var(--line)}
+#about-games .wrap{max-width:1040px;padding-top:56px}
+#about-games h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
 .pillars{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px}
 .pillar{display:flex;align-items:center;gap:12px}
 .pillar svg{flex:none}
@@ -362,6 +370,14 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
         <div><b>Explore</b><span>New worlds</span></div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="about-games" aria-label="About each game">
+  <div class="wrap">
+    <p class="eyebrow">Every game</p>
+    <h2 class="h-display">What you'll actually play</h2>
+    <ul class="game-list" id="gameList"></ul>
   </div>
 </section>
 
@@ -580,10 +596,15 @@ function art(kind, variant) {
 }
 
 /* ---------- menu & footer game links ---------- */
-const mg = document.getElementById("menuGames"), fg = document.getElementById("footGames");
+const mg = document.getElementById("menuGames"), fg = document.getElementById("footGames"), glEl = document.getElementById("gameList");
 GAMES.forEach(g => {
   const a = document.createElement("a"); a.href = g.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = g.name; mg.appendChild(a);
   const li = document.createElement("li"), b = a.cloneNode(true); li.appendChild(b); fg.appendChild(li);
+  if (glEl) {
+    const item = document.createElement("li");
+    item.innerHTML = `<a href="${g.url}" target="_blank" rel="noopener"><b>${g.name}</b><span>${g.blurb}</span></a>`;
+    glEl.appendChild(item);
+  }
 });
 
 /* ---------- elements ---------- */
@@ -630,7 +651,7 @@ CHIPS.forEach(c => {
 });
 function gameCard(g) {
   return `<div class="item" data-genre="${g.genre}" data-name="${g.name.toLowerCase()}">
-    <a class="poster" href="${g.url}" target="_blank" rel="noopener" aria-label="Play ${g.name}">${art(g.art, "poster")}<span class="pbtn">${PLAY_ICON}</span></a>
+    <a class="poster" href="${g.url}" target="_blank" rel="noopener" aria-label="Play ${g.name}" title="${g.blurb}">${art(g.art, "poster")}<span class="pbtn">${PLAY_ICON}</span></a>
     <div class="t">${g.name}</div><div class="m">${g.genre} &middot; <em>Free</em></div>
   </div>`;
 }
