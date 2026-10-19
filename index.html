@@ -856,13 +856,21 @@ if (!reduced) {
   const chDate = todayStr();
   const todaysGames = pickDailyGames(chDate);
 
-  function gameChip(g) {
-    return `<a class="ch-g" href="${g.url}" target="_blank" rel="noopener">
+  // token (when present) is the user's own Supabase access token, carried in
+  // the URL fragment only — fragments never leave the browser (no server
+  // logs, no Referer header), and each game reads it client-side to report
+  // its own score back once the round ends. Guests get plain links.
+  function gameChip(g, token) {
+    const hash = token ? `#ch=${encodeURIComponent(chDate)}|${encodeURIComponent(g.art)}|${encodeURIComponent(token)}` : "";
+    return `<a class="ch-g" href="${g.url}${hash}" target="_blank" rel="noopener">
       <span class="th">${art(g.art, "poster")}</span><b>${g.name}</b>
     </a>`;
   }
-  document.getElementById("chGames").innerHTML = todaysGames.map(gameChip).join("");
-  document.getElementById("chGamesPlaying").innerHTML = todaysGames.map(gameChip).join("");
+  document.getElementById("chGames").innerHTML = todaysGames.map(g => gameChip(g)).join("");
+  function renderPlayingLinks(token) {
+    document.getElementById("chGamesPlaying").innerHTML = todaysGames.map(g => gameChip(g, token)).join("");
+  }
+  renderPlayingLinks(null);
   document.getElementById("chDate").textContent = new Date(chDate + "T00:00:00Z")
     .toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" });
 
@@ -893,11 +901,12 @@ if (!reduced) {
   } catch (e) {}
 
   /* ---- guest path ---- */
-  function showPlaying(message) {
+  function showPlaying(message, token) {
     document.getElementById("chGate").hidden = true;
     const playing = document.getElementById("chPlaying");
     playing.hidden = false;
     document.getElementById("chPlayingMsg").textContent = message;
+    renderPlayingLinks(token || null);
   }
   document.getElementById("chGuestBtn").addEventListener("click", () => {
     try { localStorage.setItem("bgw_ch_mode_" + chDate, "guest"); } catch (e) {}
@@ -947,7 +956,7 @@ if (!reduced) {
         if (error) throw error;
         if (data.session && data.user) {
           await ensureProfile(data.user, name || "Player");
-          showPlaying(`You're in, ${name || "Player"} — go play today's seven.`);
+          showPlaying(`You're in, ${name || "Player"} — go play today's seven.`, data.session.access_token);
         } else {
           chMsg.textContent = "Check your email to confirm your account, then come back and sign in.";
           chMsg.className = "ch-msg ok";
@@ -956,7 +965,7 @@ if (!reduced) {
         const { data, error } = await sb.auth.signInWithPassword({ email, password });
         if (error) throw error;
         const displayName = await ensureProfile(data.user);
-        showPlaying(`Welcome back, ${displayName} — go play today's seven.`);
+        showPlaying(`Welcome back, ${displayName} — go play today's seven.`, data.session.access_token);
       }
     } catch (err) {
       chMsg.textContent = (err && err.message) || "Something went wrong. Try again.";
@@ -970,7 +979,7 @@ if (!reduced) {
   sb.auth.getSession().then(async ({ data }) => {
     if (data.session && data.session.user) {
       const displayName = await ensureProfile(data.session.user);
-      showPlaying(`You're set, ${displayName} — go play today's seven.`);
+      showPlaying(`You're set, ${displayName} — go play today's seven.`, data.session.access_token);
     }
   }).catch(() => {});
 
