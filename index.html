@@ -900,6 +900,15 @@ if (!reduced) {
     }
   } catch (e) {}
 
+  /* ---- bgameworld.com/#challenge (the link in social posts) opens it straight away ---- */
+  function openFromHash() {
+    if (location.hash !== "#challenge") return;
+    history.replaceState(null, "", location.pathname + location.search);   // so closing it doesn't leave #challenge behind
+    setTimeout(() => setChallenge(true), 300);
+  }
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
+
   /* ---- guest path ---- */
   function showPlaying(message, token) {
     document.getElementById("chGate").hidden = true;
