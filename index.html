@@ -384,12 +384,6 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
 .item .t{font-size:15px;font-weight:700}
 .item .m{font-size:13px;color:var(--dim);margin-top:-6px}
 .item .m em{font-style:normal;color:var(--cyan)}
-.item.soon .poster{display:flex;align-items:center;justify-content:center;
-  background:repeating-linear-gradient(135deg,rgba(234,239,247,.05) 0 10px,rgba(234,239,247,.02) 10px 20px);
-  border:1.5px dashed rgba(234,239,247,.22)}
-.item.soon .poster svg{width:30px;height:30px;opacity:.4}
-.item.soon .t{color:var(--muted)}
-.item.soon .m{color:var(--orange)}
 .empty{margin:0;padding:18px var(--hx) 0;color:var(--dim);font-size:15px}
 /* Touch screens show the button all the time, so it sits top-right, clear of the painted title. */
 @media (hover:none){.pbtn{opacity:1;transform:none;width:38px;height:38px;top:10px;right:10px;bottom:auto}}
@@ -639,12 +633,6 @@ const GAMES = [
     blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard.",
     platforms: ["Desktop", "Mobile"] }
 ];
-// Not built yet. When one goes live, move it into GAMES above with its url,
-// genre and blurb.
-const COMING = [
-  { name: "Jetpack Surge" },
-  { name: "Crossword" }
-];
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -804,19 +792,17 @@ document.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click"
 }));
 mg.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false, false); });
 /* ---------- chips, search and the instant grid ---------- */
-const LOCK_ICON = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 const CHIPS = [
   { k: "all", label: "All games", icon: '<path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z"/>' },
   { k: "Trivia", label: "Trivia", icon: '<circle cx="10" cy="10" r="7.5"/><path d="M8 8a2 2 0 1 1 3 1.7c-.7.4-1 .9-1 1.6M10 14.2v.1"/>' },
-  { k: "Puzzle", label: "Puzzle", icon: '<rect x="3" y="7.5" width="4.2" height="5" rx="1"/><rect x="7.9" y="4" width="4.2" height="12" rx="1"/><rect x="12.8" y="7.5" width="4.2" height="5" rx="1"/>' },
-  { k: "soon", label: "Coming soon", icon: '<path d="M10 2.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/>' }
+  { k: "Puzzle", label: "Puzzle", icon: '<rect x="3" y="7.5" width="4.2" height="5" rx="1"/><rect x="7.9" y="4" width="4.2" height="12" rx="1"/><rect x="12.8" y="7.5" width="4.2" height="5" rx="1"/>' }
 ];
 const chipsEl = document.getElementById("chips");
 const gridEl = document.getElementById("grid");
 const emptyEl = document.getElementById("empty");
 let filter = "all", query = "";
 CHIPS.forEach(c => {
-  const n = c.k === "all" ? GAMES.length : c.k === "soon" ? COMING.length : GAMES.filter(g => g.genre === c.k).length;
+  const n = c.k === "all" ? GAMES.length : GAMES.filter(g => g.genre === c.k).length;
   const b = document.createElement("button");
   b.className = "chip"; b.dataset.k = c.k; b.setAttribute("aria-pressed", c.k === "all");
   b.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${c.icon}</svg>${c.label}<b>${n}</b>`;
@@ -829,19 +815,11 @@ function gameCard(g) {
     <div class="t">${g.name}</div><div class="m">${g.genre} &middot; <em>Free</em></div>
   </div>`;
 }
-function soonCard(c) {
-  return `<div class="item soon" data-genre="soon" data-name="${c.name.toLowerCase()}">
-    <div class="poster">${LOCK_ICON}</div>
-    <div class="t">${c.name}</div><div class="m">Coming soon</div>
-  </div>`;
-}
 function renderGrid() {
   const term = query.trim().toLowerCase();
-  const showSoon = filter === "all" || filter === "soon";
-  const games = filter === "soon" ? [] : GAMES.filter(g => (filter === "all" || g.genre === filter) && g.name.toLowerCase().includes(term));
-  const soon = showSoon && !term ? COMING : [];
-  gridEl.innerHTML = games.map(gameCard).join("") + soon.map(soonCard).join("");
-  emptyEl.hidden = games.length + soon.length > 0;
+  const games = GAMES.filter(g => (filter === "all" || g.genre === filter) && g.name.toLowerCase().includes(term));
+  gridEl.innerHTML = games.map(gameCard).join("");
+  emptyEl.hidden = games.length > 0;
   emptyEl.textContent = term ? `No games match “${query}” yet. Try another name or clear the search.` : "No games in this category yet.";
 }
 document.getElementById("q").addEventListener("input", e => { query = e.target.value; renderGrid(); });
