@@ -338,8 +338,8 @@ Tactile and plain, like a stamped ticket.
 - **Text links in the dialog:** 600 weight, ink, underlined with a 3px offset.
 
 ### Header and Phone Sub-nav
-- A sticky paper bar, 64px tall, with a hairline underneath. On the left, the cropped `icon.webp` badge and the slab wordmark. On the right, "All games" and "FAQ" (600, 15px; hover adds a 2px underline at a 5px offset), with the outline challenge pill last as the header's one action.
-- Below 720px the links move into a 44px-tall sub-nav row (All games, FAQ, Privacy) with its own hairline, and the pill reads "Challenge".
+- A sticky paper bar, 64px tall, with a hairline underneath. On the left, the cropped `icon.webp` badge and the slab wordmark. On the right, from 1024px: "All games", "Today's question", "FAQ" and "My stats" (600, 15px, no wrapping; hover adds a 2px underline at a 5px offset), with the outline challenge pill last as the header's one action.
+- Below 1024px the links move into a 44px-tall sub-nav row (All games, Today's question, My stats) with its own hairline; below 720px the pill reads "Challenge".
 
 ### Masthead
 - The Display "Today's puzzles" H1, with the edition sitting opposite on the same baseline: the full date in 700 and "New puzzles in Xh Ym" in Soft Ink with tabular figures. Below 600px everything stacks and aligns left. The masthead closes with the 3px ink rule.
@@ -370,6 +370,12 @@ Tactile and plain, like a stamped ticket.
 - **Style:** 46px tall, with a 1.5px Field Stroke border, 8px corners, white fill, 16px Libre Franklin, and placeholders in Pencil Grey. Labels are visually hidden but present.
 - **Focus:** a 3px Focus Blue outline at a 1px offset, and the border turns to ink.
 - **Error:** a red border with `aria-invalid`, plus an Error Red message in the live status line.
+
+### Today's Question
+- Band between the game list and the FAQ, opened by a 3px ink rule like the FAQ. Section head in slab 30px with "New question at midnight UTC" in `ink-3` on the right; the question itself in slab 700, clamp(1.5–2.1rem), max 30ch.
+- Four answer buttons in a 2×2 grid (one column on phones): 60px min height, 12px radius, 1.5px inset ink outline on paper, label in Franklin 600 16px.
+- After a vote the buttons lock and become result bars: a flat fill in a tile colour (Wordezy green, Search amber, Ladder blue, Linkezy pink, in answer order) grows to the share, with the percentage in slab 700 on the right. The voter's answer gets a 3px ink outline and a "Your answer" line under its label.
+- Under the buttons, one status line: answer count, yesterday's top answer as a teaser, or a plain-language failure. "Suggest a question for another day" is a native disclosure holding one input and a black pill.
 
 ### FAQ List
 - A description list. Each item has a hairline on top and the last item also has one underneath. Questions are Title SM slab; answers are Soft Ink body. From 880px each item is a two-column question | answer row.
