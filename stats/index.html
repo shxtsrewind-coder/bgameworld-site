@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Stats | BGameWorld</title>
+<meta name="description" content="Your daily-challenge streak, best score and per-game totals across every game on BGameWorld.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://bgameworld.com/stats/">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://hkcvtoozpeybwehqtiif.supabase.co" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --navy:#0A0F2E;--gray:#EAEFF7;--muted:rgba(234,239,247,.72);--dim:rgba(234,239,247,.45);
+  --cyan:#22D3EE;--yellow:#FFD140;--orange:#FF4D4D;--purple:#8B5CF6;--pink:#EC4899;
+  --panel:rgba(16,24,66,.72);--line:rgba(34,211,238,.22);
+  --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
+  --body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--navy);color:var(--gray);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(60% 50% at 85% -5%,rgba(139,92,246,.14),transparent 70%)}
+main{max-width:720px;margin:0 auto;padding:40px 20px 80px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px}
+.top img{width:132px;height:auto;display:block}
+.top a.home{color:var(--muted);font-size:14px;font-weight:600;text-decoration:none}
+.top a.home:hover{color:var(--yellow)}
+.eyebrow{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
+h1{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1.02;letter-spacing:.01em;
+  font-size:clamp(2rem,6vw,3rem);margin:0}
+.lede{margin:12px 0 0;color:var(--muted);font-size:15px;max-width:52ch}
+
+/* ---- sign-in gate ---- */
+#gate{margin-top:44px;border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--panel)}
+#gate h2{font-family:var(--display);font-weight:400;font-size:19px;text-transform:uppercase;margin:0 0 8px}
+#gate p{margin:0 0 20px;color:var(--muted);font-size:14px;line-height:1.55}
+#authForm{display:flex;flex-direction:column;gap:10px;max-width:360px}
+#authForm input{background:rgba(234,239,247,.06);border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+  font:500 14px var(--body);color:var(--gray)}
+#authForm input::placeholder{color:var(--dim)}
+#authForm input:focus{outline:2px solid var(--cyan);outline-offset:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:12px 16px;border-radius:10px;
+  font-size:14px;font-weight:700;letter-spacing:.01em;cursor:pointer;border:none;font-family:var(--body)}
+.btn.primary{background:linear-gradient(90deg,#0B6BFF,var(--cyan));color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.primary:disabled{opacity:.6;cursor:default}
+.toggle-row{margin:12px 0 0;font-size:12.5px;color:var(--dim)}
+.toggle-row button{background:none;border:none;color:var(--cyan);font-weight:600;cursor:pointer;padding:0;font-size:12.5px;font-family:var(--body)}
+.auth-msg{margin:10px 0 0;font-size:12.5px;min-height:1em}
+.auth-msg.err{color:#FF8A8A}
+.auth-msg.ok{color:#6EE7B7}
+
+/* ---- loading / signed-in states ---- */
+#loading,#empty{margin-top:44px;color:var(--muted);font-size:14px}
+#loading{display:flex;align-items:center;gap:10px}
+.spin{width:16px;height:16px;border-radius:50%;border:2px solid rgba(34,211,238,.25);border-top-color:var(--cyan);animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+#dash{display:none}
+.who{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:40px}
+.who .name{font-size:14px;color:var(--muted)}
+.who .name b{color:var(--gray);font-weight:700}
+#signOut{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:7px 16px;
+  font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--body)}
+#signOut:hover{border-color:var(--cyan);color:var(--gray)}
+
+/* streak hero */
+.streak-hero{margin-top:22px;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.streak-num{font-family:var(--display);font-weight:400;font-size:clamp(3.4rem,14vw,5.2rem);line-height:1;color:var(--yellow)}
+.streak-label{font-size:14px;color:var(--muted);max-width:28ch;line-height:1.5}
+.streak-label b{color:var(--gray)}
+
+/* scoreboard strip */
+.scoreboard{display:flex;margin-top:30px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+.scoreboard .cell{flex:1;padding:18px 10px;text-align:center;border-left:1px solid var(--line)}
+.scoreboard .cell:first-child{border-left:none}
+.scoreboard .cell .v{font-family:var(--display);font-weight:400;font-size:clamp(1.3rem,4vw,1.8rem)}
+.scoreboard .cell .l{margin-top:4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+
+/* per-game bars */
+#gameBars{margin-top:40px}
+#gameBars h2,#history h2{font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin:0 0 16px}
+.bar-row{display:grid;grid-template-columns:110px 1fr 56px;align-items:center;gap:10px;margin-bottom:10px;font-size:13px}
+.bar-row .g-name{color:var(--gray);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:10px;border-radius:6px;background:rgba(234,239,247,.07);overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#0B6BFF,var(--cyan))}
+.bar-row .g-score{text-align:right;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* history */
+#history{margin-top:40px;padding-bottom:10px}
+.hist-list{list-style:none;margin:0;padding:0}
+.hist-list li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.hist-list .d{flex:1;color:var(--muted)}
+.hist-list .n{color:var(--dim);font-size:12px}
+.hist-list .s{font-weight:700;color:var(--yellow);font-variant-numeric:tabular-nums}
+
+footer{border-top:1px solid var(--line);margin-top:56px;padding-top:20px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a href="/" aria-label="BGameWorld home"><img src="/logo.webp" alt="BGameWorld" width="602" height="348"></a>
+    <a class="home" href="/">&larr; Back to the games</a>
+  </div>
+
+  <p class="eyebrow">Your record</p>
+  <h1>My stats</h1>
+  <p class="lede">Your streak, best score and per-game totals from the daily 7-game challenge, pulled straight from your account.</p>
+
+  <div id="gate">
+    <h2 id="gateHeading">Sign in to see your stats</h2>
+    <p>This uses the same account as the daily challenge on the homepage &mdash; sign in below, or create one if you haven't played a challenge yet.</p>
+    <form id="authForm">
+      <input type="text" id="fName" placeholder="Display name" autocomplete="name">
+      <input type="email" id="fEmail" placeholder="Email" autocomplete="email" required>
+      <input type="password" id="fPassword" placeholder="Password" autocomplete="new-password" required minlength="6">
+      <button type="submit" class="btn primary" id="authSubmit">Sign up</button>
+    </form>
+    <p class="toggle-row">Already have an account? <button type="button" id="toggleMode">Sign in</button></p>
+    <p class="auth-msg" id="authMsg" role="status"></p>
+  </div>
+
+  <div id="loading" hidden><span class="spin"></span> Loading your stats&hellip;</div>
+  <p id="empty" hidden>You're signed in, but haven't finished a daily challenge yet. Play today's seven from the homepage and your first stats will show up here.</p>
+
+  <div id="dash">
+    <div class="who">
+      <p class="name">Playing as <b id="whoName"></b></p>
+      <button id="signOut">Sign out</button>
+    </div>
+
+    <div class="streak-hero">
+      <span class="streak-num" id="streakNum">0</span>
+      <span class="streak-label"><b id="streakWord">day streak</b><br>consecutive days you've finished all seven, most recent first.</span>
+    </div>
+
+    <div class="scoreboard">
+      <div class="cell"><div class="v" id="statBest">&ndash;</div><div class="l">Best day</div></div>
+      <div class="cell"><div class="v" id="statAvg">&ndash;</div><div class="l">Average score</div></div>
+      <div class="cell"><div class="v" id="statDays">&ndash;</div><div class="l">Challenges done</div></div>
+    </div>
+
+    <div id="gameBars">
+      <h2>Lifetime total by game</h2>
+      <div id="barsList"></div>
+    </div>
+
+    <div id="history">
+      <h2>Recent challenges</h2>
+      <ul class="hist-list" id="histList"></ul>
+    </div>
+  </div>
+
+  <footer>Playing as the same account across every game on BGameWorld. <a href="/privacy/" style="color:var(--yellow)">Privacy policy</a></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  const SB_URL = "https://hkcvtoozpeybwehqtiif.supabase.co";
+  const SB_KEY = "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
+  if (!window.supabase) { document.getElementById("gate").innerHTML = "<p>Couldn't load the stats service. Refresh to try again.</p>"; return; }
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+  // Display names for each game's score key, matching the `art` slugs used
+  // as the game identifier when a score is reported (see GAMES in the
+  // homepage's index.html — that file is the source of truth for this list).
+  const GAME_NAMES = {
+    timeguess: "When & Where", wordezy: "Wordezy", wordsearch: "Wordezy Search",
+    scramble: "Wordezy Scramble", ladder: "Wordezy Ladder", sortezy: "Sortezy",
+    lingoezy: "Lingoezy", linkezy: "Linkezy", warmezy: "Warmezy",
+    letterezy: "Letterezy", mergezy: "Mergezy"
+  };
+
+  const gate = document.getElementById("gate");
+  const loading = document.getElementById("loading");
+  const empty = document.getElementById("empty");
+  const dash = document.getElementById("dash");
+
+  /* ---- auth form (same account as the homepage daily challenge) ---- */
+  let mode = "signup";
+  const form = document.getElementById("authForm");
+  const fName = document.getElementById("fName");
+  const fEmail = document.getElementById("fEmail");
+  const fPassword = document.getElementById("fPassword");
+  const submitBtn = document.getElementById("authSubmit");
+  const msg = document.getElementById("authMsg");
+  const toggle = document.getElementById("toggleMode");
+  const heading = document.getElementById("gateHeading");
+
+  function setMode(next) {
+    mode = next;
+    const signup = mode === "signup";
+    heading.textContent = signup ? "Sign up to see your stats" : "Sign in to see your stats";
+    submitBtn.textContent = signup ? "Sign up" : "Sign in";
+    fName.hidden = !signup; fName.required = signup;
+    fPassword.autocomplete = signup ? "new-password" : "current-password";
+    toggle.textContent = signup ? "Sign in" : "Sign up";
+    msg.textContent = ""; msg.className = "auth-msg";
+  }
+  toggle.addEventListener("click", () => setMode(mode === "signup" ? "signin" : "signup"));
+  setMode("signup");
+
+  async function ensureProfile(user, displayName) {
+    const { data: existing } = await sb.from("portal_profiles").select("display_name").eq("id", user.id).maybeSingle();
+    if (existing) return existing.display_name;
+    const name = displayName || (user.email ? user.email.split("@")[0] : "Player");
+    await sb.from("portal_profiles").insert({ id: user.id, display_name: name });
+    return name;
+  }
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    submitBtn.disabled = true; msg.textContent = ""; msg.className = "auth-msg";
+    const email = fEmail.value.trim(), password = fPassword.value, name = fName.value.trim();
+    try {
+      if (mode === "signup") {
+        const { data, error } = await sb.auth.signUp({ email, password });
+        if (error) throw error;
+        if (data.session && data.user) {
+          await ensureProfile(data.user, name || "Player");
+          loadStats();
+        } else {
+          msg.textContent = "Check your email to confirm your account, then come back and sign in.";
+          msg.className = "auth-msg ok";
+        }
+      } else {
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        await ensureProfile(data.user);
+        loadStats();
+      }
+    } catch (err) {
+      msg.textContent = (err && err.message) || "Something went wrong. Try again.";
+      msg.className = "auth-msg err";
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  document.getElementById("signOut").addEventListener("click", async () => {
+    await sb.auth.signOut();
+    dash.style.display = "none"; empty.hidden = true;
+    gate.style.display = "block";
+  });
+
+  /* ---- fetch + compute stats once signed in ---- */
+  function todayUTC() { return new Date(new Date().toISOString().slice(0, 10) + "T00:00:00Z"); }
+  function toISO(d) { return d.toISOString().slice(0, 10); }
+
+  function calcStreak(dateSet) {
+    let cur = todayUTC();
+    if (!dateSet.has(toISO(cur))) cur.setUTCDate(cur.getUTCDate() - 1); // not played yet today — check from yesterday
+    let streak = 0;
+    while (dateSet.has(toISO(cur))) { streak++; cur.setUTCDate(cur.getUTCDate() - 1); }
+    return streak;
+  }
+
+  async function loadStats() {
+    gate.style.display = "none";
+    loading.hidden = false;
+    const { data: sessionData } = await sb.auth.getSession();
+    const user = sessionData.session && sessionData.session.user;
+    if (!user) { loading.hidden = true; gate.style.display = "block"; return; }
+
+    const displayName = await ensureProfile(user);
+    const { data: rows } = await sb
+      .from("portal_challenge_scores")
+      .select("challenge_date,total_score,games_completed,details")
+      .eq("user_id", user.id)
+      .order("challenge_date", { ascending: false });
+
+    loading.hidden = true;
+
+    if (!rows || !rows.length) {
+      empty.hidden = false;
+      document.getElementById("whoName").textContent = displayName;
+      return;
+    }
+
+    document.getElementById("whoName").textContent = displayName;
+
+    // streak
+    const dateSet = new Set(rows.map(r => r.challenge_date));
+    const streak = calcStreak(dateSet);
+    document.getElementById("streakNum").textContent = streak;
+    document.getElementById("streakWord").textContent = streak === 1 ? "day streak" : "day streak";
+
+    // headline stats
+    const best = Math.max(...rows.map(r => r.total_score || 0));
+    const avg = Math.round(rows.reduce((s, r) => s + (r.total_score || 0), 0) / rows.length);
+    document.getElementById("statBest").textContent = best;
+    document.getElementById("statAvg").textContent = avg;
+    document.getElementById("statDays").textContent = rows.length;
+
+    // per-game lifetime totals
+    const totals = {};
+    rows.forEach(r => {
+      const d = r.details || {};
+      Object.keys(d).forEach(k => { totals[k] = (totals[k] || 0) + (Number(d[k]) || 0); });
+    });
+    const sortedGames = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+    const maxTotal = sortedGames.length ? sortedGames[0][1] : 1;
+    document.getElementById("barsList").innerHTML = sortedGames.map(([slug, total]) => `
+      <div class="bar-row">
+        <span class="g-name">${GAME_NAMES[slug] || slug}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${Math.max(4, Math.round(total / maxTotal * 100))}%"></span></span>
+        <span class="g-score">${total}</span>
+      </div>`).join("") || "<p style='color:var(--dim);font-size:13px'>No per-game scores yet.</p>";
+
+    // recent history (most recent 10)
+    document.getElementById("histList").innerHTML = rows.slice(0, 10).map(r => {
+      const date = new Date(r.challenge_date + "T00:00:00Z")
+        .toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
+      return `<li>
+        <span class="d">${date}</span>
+        <span class="n">${r.games_completed}/7 games</span>
+        <span class="s">${r.total_score} pts</span>
+      </li>`;
+    }).join("");
+
+    dash.style.display = "block";
+  }
+
+  sb.auth.getSession().then(({ data }) => {
+    if (data.session && data.session.user) loadStats();
+  }).catch(() => {});
+})();
+</script>
+</body>
+</html>
