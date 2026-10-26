@@ -125,25 +125,40 @@ img{max-width:100%;height:auto}
 .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.brand img{width:52px;height:30px;object-fit:cover;object-position:center 52%}
+.brand .mark{position:relative;display:block;width:87px;height:30px;overflow:hidden;flex:none}
+.brand .mark img{position:absolute;width:105px;height:105px;max-width:none;left:-11px;top:-37px}
 .brand b{font:700 25px/1 var(--slab);letter-spacing:-.01em}
 .top nav{display:flex;align-items:center;gap:26px}
 .top nav a{font-weight:600;font-size:15px;text-decoration:none}
 .top nav a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
 .top .btn{min-height:40px;padding:0 16px;font-size:14px}
-@media (max-width:719px){.top nav a{display:none}}
+.subnav{display:none}
+.lbl-short{display:none}
+@media (max-width:719px){.lbl-short{display:inline}}
+@media (max-width:719px){
+  .top nav a{display:none}
+  .brand b{font-size:21px}
+  .brand .mark{width:66px;height:23px}
+  .brand .mark img{width:80px;height:80px;left:-8px;top:-28px}
+  .top .wrap{gap:10px}
+  .top .btn{padding:0 14px}
+  .lbl-long{display:none}
+  .subnav{display:flex;gap:4px;border-bottom:1px solid var(--rule)}
+  .subnav a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-weight:600;font-size:15px;text-decoration:none}
+  .subnav a:first-child{padding-left:0}
+}
 
 /* ---------- masthead: today's edition ---------- */
-.mast{padding:40px 0 22px;border-bottom:3px solid var(--ink)}
-.mast .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 32px}
-.mast h1{margin:0;font:700 clamp(2.6rem,6.4vw,4.75rem)/.95 var(--slab);letter-spacing:-.02em}
+.mast{padding:24px 0 16px;border-bottom:3px solid var(--ink)}
+.mast .wrap{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 32px}
+.mast h1{margin:0;font:700 clamp(2.6rem,6vw,4.4rem)/.95 var(--slab);letter-spacing:-.02em}
 .edition{margin:0;text-align:right}
-.edition .date{display:block;font-weight:700;font-size:18px}
-.edition .reset{display:block;margin-top:4px;font-size:15px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.edition .date{display:block;font-weight:700;font-size:18px;line-height:1.2}
+.edition .reset{display:block;margin-top:2px;line-height:1.2;font-size:15px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 @media (max-width:599px){.mast{padding:22px 0 16px}.edition{text-align:left}.edition .date{font-size:16px}.seven{padding:18px 0}.seven .wrap{gap:14px}.seven h2{font-size:23px}.seven p{font-size:15px}.games{padding-top:28px}}
 
 /* ---------- the daily seven ---------- */
-.seven{padding:22px 0;border-bottom:1px solid var(--rule)}
+.seven{padding:14px 0;border-bottom:1px solid var(--rule)}
 .seven .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:20px 32px}
 .seven h2{margin:0;font:700 26px/1.1 var(--slab)}
 .seven p{margin:6px 0 0;color:var(--ink-2);max-width:52ch}
@@ -153,8 +168,8 @@ img{max-width:100%;height:auto}
 @media (max-width:959px){.seven .wrap{grid-template-columns:1fr}.seven .btn{justify-self:start}}
 
 /* ---------- game cards ---------- */
-.games{padding:36px 0 56px}
-.games-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:20px}
+.games{padding:20px 0 56px}
+.games-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px}
 .games h2{margin:0;font:700 30px/1.1 var(--slab)}
 .games-head span{color:var(--ink-3);font-size:15px}
 .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
@@ -162,30 +177,35 @@ img{max-width:100%;height:auto}
   text-decoration:none;background:var(--paper);transition:border-color .2s,box-shadow .25s var(--ease)}
 .card:hover{border-color:#B9B9B3;box-shadow:0 10px 24px -14px rgba(18,18,18,.35)}
 .card:focus-visible{outline-offset:2px}
-.card .tile{display:grid;place-items:center;aspect-ratio:16/10;max-height:180px;background:var(--tile)}
-.card .tile svg{width:42%;max-width:112px;height:auto;overflow:visible}
-.card-body{display:flex;flex-direction:column;gap:8px;flex:1;padding:16px 18px 18px}
+.card .tile{display:grid;place-items:center;height:96px;background:var(--tile)}
+.card .tile svg{width:66px;height:66px;overflow:visible}
+.card-body{display:flex;flex-direction:column;gap:6px;flex:1;padding:14px 18px 16px}
 .card h3{margin:0;font:700 23px/1.1 var(--slab)}
-.card p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.5;flex:1}
+.card-text{display:flex;flex-direction:column;gap:6px;flex:1}
+.card p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.45;flex:1}
 .card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
 .card-foot .btn{min-height:40px;padding:0 20px;font-size:14px}
 .cat{font-size:13px;font-weight:600;color:var(--ink-3)}
-.today{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
+.today{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;align-self:flex-start}
+.cat{align-self:flex-start}
 .today::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink)}
 .soon{margin:22px 0 0;color:var(--ink-2);font-size:15px}
 .soon b{color:var(--ink)}
 
-/* phones: each game is a row (colour square, name and line, play) */
+/* phones: each game is a row (colour square | name, line, badge | play) */
 @media (max-width:559px){
   .grid{grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule)}
-  .card{flex-direction:row;align-items:flex-start;gap:14px;border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:16px 0}
+  .card{display:grid;grid-template-columns:64px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:14px;border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:12px 0;height:auto}
   .card:hover{box-shadow:none}
-  .card .tile{flex:none;width:72px;aspect-ratio:1;border-radius:10px}
-  .card .tile svg{width:60%}
-  .card-body{padding:0;gap:4px}
-  .card h3{font-size:21px}
-  .card p{font-size:14.5px}
-  .card-foot{margin-top:8px}
+  .card .tile{grid-row:1/3;width:64px;height:64px;border-radius:10px}
+  .card .tile svg{width:42px;height:42px}
+  .card-body{display:contents}
+  .card-text{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+  .card h3{font-size:20px}
+  .card p{font-size:14.5px;line-height:1.35}
+  .card-foot{display:contents}
+  .card-foot .btn{grid-column:3;grid-row:1/3;min-height:44px;padding:0 18px}
+  .card .today,.card .cat{grid-column:2;grid-row:2;margin-top:4px}
 }
 
 /* signature: each icon performs its game's move once on hover / focus */
@@ -198,7 +218,7 @@ img{max-width:100%;height:auto}
 @keyframes flip{0%,100%{transform:scaleY(1)}45%{transform:scaleY(.05)}55%{transform:scaleY(.05)}}
 @keyframes bob{0%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}70%{transform:translateY(1px)}}
 @keyframes tip{0%,100%{transform:rotate(0)}45%{transform:rotate(24deg)}}
-@keyframes climb{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes climb{0%,100%{transform:translateY(0);stroke-width:2.5}50%{transform:translateY(-12px);stroke-width:6}}
 @keyframes sweep{0%,100%{transform:rotate(0)}50%{transform:rotate(-90deg)}}
 @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
 @keyframes rise{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.45)}}
@@ -244,11 +264,12 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
 .ch-modal h2{margin:0;padding-right:44px;font:700 clamp(1.7rem,5vw,2.2rem)/1.05 var(--slab)}
 .ch-date{margin:6px 0 0;font-weight:700}
 .ch-sub{margin:8px 0 0;color:var(--ink-2);max-width:56ch}
-.ch-games{display:flex;gap:10px;overflow-x:auto;padding:18px 2px 6px;scrollbar-width:thin}
+.ch-games{display:flex;flex-wrap:wrap;gap:12px 10px;padding:18px 2px 6px}
 .ch-g{flex:none;width:76px;text-align:center;text-decoration:none}
 .ch-g .th{display:grid;place-items:center;width:76px;height:76px;border-radius:10px;background:var(--tile)}
 .ch-g .th svg{width:46px;height:46px}
 .ch-g b{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.25}
+@media (max-width:599px){.ch-games{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.ch-g,.ch-g .th{width:100%}.ch-g .th{height:auto;aspect-ratio:1}.ch-g .th svg{width:62%;height:auto}}
 .ch-gate{display:grid;gap:16px;margin-top:20px;grid-template-columns:1fr;align-items:start}
 @media (min-width:600px){.ch-gate{grid-template-columns:1fr 1fr}}
 .ch-path{border:1px solid var(--rule);border-radius:12px;padding:18px}
@@ -265,6 +286,8 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
 .ch-msg.err{color:#B3261E}
 .ch-msg.ok{color:#1E6B3A}
 .ch-fine{margin:12px 0 0;font-size:13px;color:var(--ink-3)}
+.ch-note{margin:0 0 14px;padding:10px 12px;border-radius:8px;background:var(--paper-2);color:var(--ink);font-size:14px}
+.ch-toggle button:disabled{opacity:.45;cursor:not-allowed;text-decoration:none}
 .ch-playing .ch-msg{font-size:16px;font-weight:700}
 .ch-link{margin-top:14px;font-size:15px;min-height:44px}
 .ch-board{margin-top:24px;padding-top:18px;border-top:3px solid var(--ink)}
@@ -288,15 +311,16 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
 <header class="top">
   <div class="wrap">
     <a href="/" class="brand" aria-label="BGameWorld home">
-      <img src="icon.webp" alt="" width="52" height="30"><b>BGameWorld</b>
+      <span class="mark"><img src="icon.webp" alt="" width="105" height="105"></span><b>BGameWorld</b>
     </a>
     <nav aria-label="Site">
       <a href="#games">All games</a>
       <a href="#faq">FAQ</a>
-      <button class="btn btn-outline" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false">Today's challenge</button>
+      <button class="btn btn-outline" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false"><span class="lbl-long">Today's challenge</span><span class="lbl-short">Challenge</span></button>
     </nav>
   </div>
 </header>
+<nav class="subnav wrap" aria-label="Sections"><a href="#games">All games</a><a href="#faq">FAQ</a><a href="/privacy/">Privacy</a></nav>
 
 <main>
   <section class="mast" aria-labelledby="todayTitle">
@@ -417,6 +441,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
       </div>
       <div class="ch-path">
         <h3 id="chAuthHeading">Sign up to compete</h3>
+        <p class="ch-note" id="chOffline" hidden>Sign-in is unavailable right now. You can still play today's seven as a guest.</p>
         <p>Save your scores and get ranked on today's leaderboard against everyone else playing.</p>
         <form id="chAuthForm" novalidate aria-describedby="chAuthMsg">
           <label class="sr-only" for="chName">Display name</label>
@@ -450,29 +475,29 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
 <script>
 /* ===== Edit your games here =====
    art: the game's id (also used by each game to report its challenge score; don't rename).
-   cat: Word, Logic or Trivia. color: the game's flat tile colour (ink #121212 sits on it). */
+   line: the one-line description on its card. cat: Word, Logic or Trivia. color: the game's flat tile colour (ink #121212 sits on it). */
 const GAMES = [
-  { name: "Wordezy", cat: "Word", art: "wordezy", color: "#7CC4A4", url: "https://wordezy.bgameworld.com",
+  { name: "Wordezy", line: "Guess the daily word in six tries.", cat: "Word", art: "wordezy", color: "#7CC4A4", url: "https://wordezy.bgameworld.com",
     blurb: "Guess the daily word in six tries, warm up first with a free practice round, and race the clock for a spot on the speed leaderboard." },
-  { name: "Wordezy Search", cat: "Word", art: "wordsearch", color: "#F5C54A", url: "https://wordezysearch.bgameworld.com",
+  { name: "Wordezy Search", line: "Find 24 hidden words on today's board.", cat: "Word", art: "wordsearch", color: "#F5C54A", url: "https://wordezysearch.bgameworld.com",
     blurb: "Hunt 24 hidden words a day across 22 themes, race the clock on the shared daily board, or pick your difficulty and go unlimited." },
-  { name: "Wordezy Scramble", cat: "Word", art: "scramble", color: "#F4977A", url: "https://wordezyscramble.bgameworld.com",
+  { name: "Wordezy Scramble", line: "Unscramble five words, 4 to 8 letters.", cat: "Word", art: "scramble", color: "#F4977A", url: "https://wordezyscramble.bgameworld.com",
     blurb: "Unscramble five words a day, from 4 letters up to 8, shuffle the tiles and race the clock for a spot on the daily leaderboard." },
-  { name: "Wordezy Ladder", cat: "Word", art: "ladder", color: "#9CC3F0", url: "https://wordezyladder.bgameworld.com",
+  { name: "Wordezy Ladder", line: "Change one letter at a time to climb.", cat: "Word", art: "ladder", color: "#9CC3F0", url: "https://wordezyladder.bgameworld.com",
     blurb: "Climb from one word to another by changing a single letter at a time, every step a real word, and try to reach the top in par." },
-  { name: "Warmezy", cat: "Word", art: "warmezy", color: "#F7A35C", url: "https://warmezy.bgameworld.com",
+  { name: "Warmezy", line: "Find the secret word by meaning.", cat: "Word", art: "warmezy", color: "#F7A35C", url: "https://warmezy.bgameworld.com",
     blurb: "Find the secret word by meaning: every guess gets a rank, and the lower the number, the hotter you are. One word a day for everyone." },
-  { name: "Letterezy", cat: "Word", art: "letterezy", color: "#D9C792", url: "https://letterezy.bgameworld.com",
+  { name: "Letterezy", line: "Spell words from a bag of 25 letters.", cat: "Word", art: "letterezy", color: "#D9C792", url: "https://letterezy.bgameworld.com",
     blurb: "Spell words from today's bag of 25 letters to score points, reach the bonus squares with long words, and try to use every letter." },
-  { name: "Lingoezy", cat: "Word", art: "lingoezy", color: "#79D0CF", url: "https://lingoezy.bgameworld.com",
+  { name: "Lingoezy", line: "Pick the right translation, dodge false friends.", cat: "Word", art: "lingoezy", color: "#79D0CF", url: "https://lingoezy.bgameworld.com",
     blurb: "Pick the right translation from four look-alike words and dodge the false friends, with ten new words a day in five languages." },
-  { name: "Sortezy", cat: "Logic", art: "sortezy", color: "#C9A8EC", url: "https://sortezy.bgameworld.com",
+  { name: "Sortezy", line: "Pour until every tube holds one colour.", cat: "Logic", art: "sortezy", color: "#C9A8EC", url: "https://sortezy.bgameworld.com",
     blurb: "Pour coloured water until every tube holds one colour, with a new puzzle every day and levels that grow from 3 colours to 12." },
-  { name: "Linkezy", cat: "Logic", art: "linkezy", color: "#F28FA2", url: "https://linkezy.bgameworld.com",
+  { name: "Linkezy", line: "Join the dots without crossing lines.", cat: "Logic", art: "linkezy", color: "#F28FA2", url: "https://linkezy.bgameworld.com",
     blurb: "Join each pair of dots without crossing a line and fill every square, with a new board every day and 100 levels to climb." },
-  { name: "Mergezy", cat: "Logic", art: "mergezy", color: "#8FA9F5", url: "https://mergezy.bgameworld.com",
+  { name: "Mergezy", line: "Join three of a kind to merge them up.", cat: "Logic", art: "mergezy", color: "#8FA9F5", url: "https://mergezy.bgameworld.com",
     blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard." },
-  { name: "When & Where", cat: "Trivia", art: "timeguess", color: "#E8B96A", url: "https://whenandwhere.bgameworld.com",
+  { name: "When & Where", line: "Date and place a real archival photo.", cat: "Trivia", art: "timeguess", color: "#E8B96A", url: "https://whenandwhere.bgameworld.com",
     blurb: "Look at a real archival photo, then guess the year, the place and even the day of the week it was taken." }
 ];
 // Not built yet. When one goes live, move it into GAMES above with its url,
@@ -496,13 +521,13 @@ const ICONS = {
       <rect x="4" y="27" width="10" height="10" rx="1.5" fill="${INK}"/><rect x="16" y="27" width="10" height="10" rx="1.5" fill="${INK}"/><rect class="mv" style="--move:flip" x="28" y="27" width="10" height="10" rx="1.5" fill="#fff"/><rect x="40" y="27" width="10" height="10" rx="1.5"/><rect x="52" y="27" width="10" height="10" rx="1.5"/>
       <rect x="4" y="42" width="10" height="10" rx="1.5"/><rect x="16" y="42" width="10" height="10" rx="1.5"/><rect x="28" y="42" width="10" height="10" rx="1.5"/><rect x="40" y="42" width="10" height="10" rx="1.5"/><rect x="52" y="42" width="10" height="10" rx="1.5"/></g>`,
   wordsearch: `<g fill="${INK}">${[0, 1, 2, 3].map(r => [0, 1, 2, 3].map(c => `<circle cx="${11 + c * 14}" cy="${11 + r * 14}" r="2.6"/>`).join("")).join("")}</g>
-      <g class="mv" style="--move:sweep"><rect x="2" y="25.5" width="60" height="13" rx="6.5" transform="rotate(45 32 32)" fill="none" stroke="${INK}" stroke-width="3"/></g>`,
+      <g class="mv" style="--move:sweep"><rect x="2" y="25.5" width="60" height="13" rx="6.5" transform="rotate(45 32 32)" fill="none" stroke="${INK}" stroke-width="2.5"/></g>`,
   scramble: `<g ${SLAB} font-size="17">
       <g transform="rotate(-12 13 34)"><rect x="3" y="24" width="20" height="20" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="13" y="40" fill="${INK}">R</text></g>
       <g class="mv" style="--move:spin"><rect x="22" y="18" width="20" height="20" rx="3" fill="${INK}"/><text x="32" y="34" fill="#fff">A</text></g>
       <g transform="rotate(10 51 36)"><rect x="41" y="26" width="20" height="20" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="51" y="42" fill="${INK}">W</text></g></g>`,
-  ladder: `<g stroke="${INK}" stroke-width="3" stroke-linecap="round"><path d="M20 4v56M44 4v56M20 14h24M20 26h24M20 50h24"/></g>
-      <rect class="mv" style="--move:climb" x="16" y="34" width="32" height="9" rx="4.5" fill="${INK}"/>`,
+  ladder: `<g stroke="${INK}" stroke-width="2.5" stroke-linecap="round"><path d="M20 4v56M44 4v56M20 14h24M20 26h24M20 50h24"/>
+      <path class="mv" style="--move:climb" d="M20 38h24"/></g>`,
   sortezy: `<g fill="none" stroke="${INK}" stroke-width="2.5">
       <path d="M8 10v38a6 6 0 0 0 12 0V10"/><path d="M8 34h12v14a6 6 0 0 1-12 0z" fill="${INK}"/>
       <g class="mv" style="--move:tip"><path d="M26 10v38a6 6 0 0 0 12 0V10" fill="#fff"/><path d="M26 40h12v8a6 6 0 0 1-12 0z" fill="${INK}"/></g>
@@ -511,11 +536,11 @@ const ICONS = {
       <text x="22" y="26" ${SLAB} font-size="14" fill="#fff">Hi</text>
       <g class="mv" style="--move:pop"><path d="M28 30h28a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4h-4v7l-8-7H28a4 4 0 0 1-4-4V34a4 4 0 0 1 4-4z" fill="#fff" stroke="${INK}" stroke-width="2.5"/>
       <text x="42" y="46" ${SLAB} font-size="13" fill="${INK}">Hola</text></g>`,
-  linkezy: `<path class="mv draw" style="--move:draw" d="M12 12V52H52" fill="none" stroke="${INK}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M32 12H52V32" fill="none" stroke="${INK}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  linkezy: `<path class="mv draw" style="--move:draw" d="M12 12V52H52" fill="none" stroke="${INK}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M32 12H52V32" fill="none" stroke="${INK}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       <g fill="${INK}"><circle cx="12" cy="12" r="6"/><circle cx="52" cy="52" r="6"/><circle cx="32" cy="32" r="2.5"/></g>
       <g fill="#fff" stroke="${INK}" stroke-width="2.5"><circle cx="32" cy="12" r="5.5"/><circle cx="52" cy="32" r="5.5"/></g>`,
-  warmezy: `<rect x="25" y="4" width="14" height="40" rx="7" fill="#fff" stroke="${INK}" stroke-width="3"/>
+  warmezy: `<rect x="25" y="4" width="14" height="40" rx="7" fill="#fff" stroke="${INK}" stroke-width="2.5"/>
       <circle cx="32" cy="50" r="10" fill="${INK}"/>
       <rect class="mv rise" style="--move:rise" x="29" y="24" width="6" height="22" rx="3" fill="${INK}"/>
       <g stroke="${INK}" stroke-width="2.5" stroke-linecap="round"><path d="M44 10h7M44 18h5M44 26h7M44 34h5"/></g>`,
@@ -572,11 +597,13 @@ $("sevenTiles").innerHTML = todaysGames.map(g => `<li style="--tile:${g.color}" 
 
 /* ---------- game cards ---------- */
 function gameCard(g) {
-  return `<li><a class="card" href="${g.url}" style="--tile:${g.color}">
+  return `<li><a class="card" href="${g.url}" style="--tile:${g.color}" title="${g.blurb}">
     <span class="tile">${icon(g.art)}</span>
     <span class="card-body">
-      <h3>${g.name}</h3>
-      <p>${g.blurb}</p>
+      <span class="card-text">
+        <h3>${g.name}</h3>
+        <p>${g.line}</p>
+      </span>
       <span class="card-foot">
         ${inToday.has(g.art) ? '<span class="today">In today\'s seven</span>' : `<span class="cat">${g.cat}</span>`}
         <span class="btn btn-primary" aria-hidden="true">Play</span>
@@ -751,8 +778,10 @@ $("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a><
   function setOffline() {
     if (sbState === "ready") return;
     sbState = "offline";
-    say("Sign-in is unavailable right now. You can still play today's seven as a guest.", "err");
+    $("chOffline").hidden = false;
+    say("");
     chSubmit.disabled = true;
+    chToggle.disabled = true;
     renderBoardMessage("The leaderboard can't load right now. Try again later.");
   }
 
@@ -768,7 +797,7 @@ $("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a><
   chForm.addEventListener("submit", async e => {
     e.preventDefault();
     if (sbState === "loading") return say("Still connecting — try again in a second.", "err");
-    if (sbState === "offline") return setOffline();
+    if (sbState === "offline") return;
     const v = validate();
     if (!v) return;
     chSubmit.disabled = true; say(chMode === "signup" ? "Creating your account…" : "Signing you in…");
