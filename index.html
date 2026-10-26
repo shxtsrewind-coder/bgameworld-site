@@ -237,6 +237,15 @@ img{max-width:100%}
 #about-games{padding:0 var(--px) 72px;border-top:1px solid var(--line)}
 #about-games .wrap{max-width:1040px;padding-top:56px}
 #about-games h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+#faq{padding:0 var(--px) 72px;border-top:1px solid var(--line)}
+#faq .wrap{max-width:760px;padding-top:56px}
+#faq h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.faq-list{margin:32px 0 0}
+.faq-item{padding:22px 0;border-bottom:1px solid var(--line)}
+.faq-item:first-child{padding-top:0}
+.faq-item dt{font-family:var(--display);font-weight:400;font-size:17px;letter-spacing:.01em;text-transform:uppercase;color:var(--gray);margin:0 0 8px}
+.faq-item dd{margin:0;font-size:14.5px;line-height:1.65;color:var(--muted);max-width:62ch}
+.faq-item dd a{color:var(--cyan)}
 .pillars{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px}
 .pillar{display:flex;align-items:center;gap:12px}
 .pillar svg{flex:none}
@@ -462,6 +471,39 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
     <p class="eyebrow">Every game</p>
     <h2 class="h-display">What you'll actually play</h2>
     <ul class="game-list" id="gameList"></ul>
+  </div>
+</section>
+
+<section id="faq" aria-label="Frequently asked questions">
+  <div class="wrap">
+    <p class="eyebrow">Good to know</p>
+    <h2 class="h-display">Questions people actually ask</h2>
+    <dl class="faq-list">
+      <div class="faq-item">
+        <dt>Do I need an account to play?</dt>
+        <dd>No. Every game on BGameWorld opens straight into the browser, free, with nothing to install and no sign-up wall. An account only matters if you want your progress, streaks or daily-challenge score saved and shown on a leaderboard &mdash; playing without one works exactly the same, you just won't be ranked.</dd>
+      </div>
+      <div class="faq-item">
+        <dt>What's the daily 7-game challenge?</dt>
+        <dd>Each day the site picks 7 of the 11 games at random, the same 7 for every player that day, so everyone is comparing the same set. Play them from the "Challenge" button in the header, add up your score across all seven, and see where you land against everyone else who signed up that day. It's entirely optional &mdash; the rest of the site works the same with or without it.</dd>
+      </div>
+      <div class="faq-item">
+        <dt>Do the daily puzzles reset at the same time for everyone?</dt>
+        <dd>Yes. Each game's daily puzzle (Wordezy's word, Sortezy's tube layout, Wordezy Search's word list, and so on) is shared across every player and resets at midnight UTC, so the whole site is solving the same puzzle on the same day no matter where you're playing from.</dd>
+      </div>
+      <div class="faq-item">
+        <dt>Are the games actually free?</dt>
+        <dd>Yes &mdash; every game is free to play, with no purchases, subscriptions or paywalled levels. The site is supported by ads rather than charging players.</dd>
+      </div>
+      <div class="faq-item">
+        <dt>Can I play on my phone?</dt>
+        <dd>Yes. Every game is built to run in a mobile browser at the same URL as the desktop version &mdash; there's no separate app to download.</dd>
+      </div>
+      <div class="faq-item">
+        <dt>What happens to my information if I sign up?</dt>
+        <dd>Signing up only needs an email, password and the display name shown on leaderboards. You can read exactly what's collected and how to delete it on the <a href="/privacy/">privacy policy</a>.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
@@ -891,16 +933,10 @@ if (!reduced) {
   chBackdrop.addEventListener("click", () => setChallenge(false));
   document.addEventListener("keydown", e => { if (e.key === "Escape" && chModal.classList.contains("open")) setChallenge(false); });
 
-  /* ---- auto-open once per day per browser ---- */
-  try {
-    const seenKey = "bgw_ch_seen_" + chDate;
-    if (!localStorage.getItem(seenKey)) {
-      localStorage.setItem(seenKey, "1");
-      setTimeout(() => setChallenge(true), 900);
-    }
-  } catch (e) {}
-
-  /* ---- bgameworld.com/#challenge (the link in social posts) opens it straight away ---- */
+  /* ---- bgameworld.com/#challenge (the link in social posts) opens it straight away.
+     No longer auto-opens on an ordinary visit — an unprompted pop-up gating
+     content behind a sign-up form is exactly the kind of thing AdSense review
+     flags, so it's opt-in only now: the header button, or this deep link. ---- */
   function openFromHash() {
     if (location.hash !== "#challenge") return;
     history.replaceState(null, "", location.pathname + location.search);   // so closing it doesn't leave #challenge behind
