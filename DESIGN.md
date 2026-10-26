@@ -372,10 +372,11 @@ Tactile and plain, like a stamped ticket.
 - **Error:** a red border with `aria-invalid`, plus an Error Red message in the live status line.
 
 ### Today's Question
-- Band between the game list and the FAQ, opened by a 3px ink rule like the FAQ. Section head in slab 30px with "New question at midnight UTC" in `ink-3` on the right; the question itself in slab 700, clamp(1.5–2.1rem), max 30ch.
-- Four answer buttons in a 2×2 grid (one column on phones): 60px min height, 12px radius, 1.5px inset ink outline on paper, label in Franklin 600 16px.
-- After a vote the buttons lock and become result bars: a flat fill in a tile colour (Wordezy green, Search amber, Ladder blue, Linkezy pink, in answer order) grows to the share, with the percentage in slab 700 on the right. The voter's answer gets a 3px ink outline and a "Your answer" line under its label.
-- Under the buttons, one status line: answer count, yesterday's top answer as a teaser, or a plain-language failure. "Suggest a question for another day" is a native disclosure holding one input and a black pill.
+- **Homepage teaser** (band between the games and the FAQ, opened by a 3px ink rule): section head in slab 30px with "See everyone's answers →" on the right; the question in slab 700, clamp(1.5–2.1rem), max 30ch; four answer links in a 2×2 grid (one column on phones), 60px min height, 12px radius, 1.5px inset ink outline, hover fills with the answer's tile colour. Tapping one opens `/question/` and records that answer.
+- **`/question/` page**: legal-page frame (logo row, slab H1 over a 3px rule, date and countdown on the right). Answer buttons become result bars after voting: a flat fill in a tile colour (Wordezy green, Search amber, Ladder blue, Linkezy pink, in answer order) with the percentage in slab 700 on the right; the voter's answer gets a 3px ink outline and a "Your answer" line. Then "Play today's puzzles" (black pill) and "Share this question" (outline pill), "The past week" as labelled bar rows (30px tracks on `paper-2`, top answer marked "most picked"), and "Suggest a question" (one input and a black pill).
+
+### A Look Inside the Games
+- Under the game grid, after a hairline: slab 26px head with a one-line note on the right, then a horizontal snap-scrolling row of real phone screenshots (`art/shots/<id>.webp`, 390×650), each set in a frame of its game's tile colour (6px padding, 14px radius), with the name in slab 17px and the category in `ink-3` below. Hover lifts the frame 4px with the soft card shadow. The row bleeds to the viewport edge and aligns its first card with the page gutter.
 
 ### FAQ List
 - A description list. Each item has a hairline on top and the last item also has one underneath. Questions are Title SM slab; answers are Soft Ink body. From 880px each item is a two-column question | answer row.
