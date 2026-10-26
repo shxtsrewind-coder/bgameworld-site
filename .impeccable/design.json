@@ -1,0 +1,669 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T20:09:47+00:00",
+  "title": "Design System: BGameWorld",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Newsprint Ink",
+        "canonical": "#121212",
+        "oklch": "oklch(18.2% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#4A4A4A",
+        "oklch": "oklch(40.9% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Pencil Grey",
+        "canonical": "#6B6B6B",
+        "oklch": "oklch(52.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#FFFFFF",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Second Paper",
+        "canonical": "#F4F4F1",
+        "oklch": "oklch(96.6% 0.004 106.5)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242423",
+          "#40403E",
+          "#5E5E5C",
+          "#80807E",
+          "#A5A5A3",
+          "#CACAC9",
+          "#EEEEEE"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Grey",
+        "canonical": "#DCDCD7",
+        "oklch": "oklch(89.3% 0.007 106.5)",
+        "tonalRamp": [
+          "#0B0B0A",
+          "#242422",
+          "#40403D",
+          "#5E5E5A",
+          "#80807C",
+          "#A5A5A1",
+          "#CBCBC8",
+          "#EEEEED"
+        ]
+      },
+      "field-stroke": {
+        "role": "neutral",
+        "displayName": "Field Stroke",
+        "canonical": "#8A8A8A",
+        "oklch": "oklch(63.3% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "focus": {
+        "role": "functional",
+        "displayName": "Focus Blue",
+        "canonical": "#2860D8",
+        "oklch": "oklch(52.6% 0.194 262.8)",
+        "tonalRamp": [
+          "#020A1F",
+          "#0C214C",
+          "#1B3B7E",
+          "#2B57B4",
+          "#3D78F2",
+          "#74A3FD",
+          "#ABCBFF",
+          "#DFEFFF"
+        ]
+      },
+      "error": {
+        "role": "functional",
+        "displayName": "Error Red",
+        "canonical": "#B3261E",
+        "oklch": "oklch(50.1% 0.178 28.7)",
+        "tonalRamp": [
+          "#1A0302",
+          "#42110C",
+          "#6E221B",
+          "#9E342B",
+          "#D64A3D",
+          "#EB8375",
+          "#FCB6AC",
+          "#FFE5E0"
+        ]
+      },
+      "success": {
+        "role": "functional",
+        "displayName": "Success Green",
+        "canonical": "#1E6B3A",
+        "oklch": "oklch(46.9% 0.108 151.5)",
+        "tonalRamp": [
+          "#030E06",
+          "#112A18",
+          "#224A2D",
+          "#346B44",
+          "#49925F",
+          "#7FB38C",
+          "#B3D4BA",
+          "#E3F3E7"
+        ]
+      },
+      "tile-wordezy": {
+        "role": "game-tile",
+        "displayName": "Sage Green (Wordezy)",
+        "canonical": "#7CC4A4",
+        "oklch": "oklch(76.4% 0.086 164.4)",
+        "tonalRamp": [
+          "#030E09",
+          "#112A1F",
+          "#224938",
+          "#346A53",
+          "#499173",
+          "#7FB29A",
+          "#B3D3C4",
+          "#E3F3EB"
+        ]
+      },
+      "tile-wordezy-search": {
+        "role": "game-tile",
+        "displayName": "Yolk Yellow (Wordezy Search)",
+        "canonical": "#F5C54A",
+        "oklch": "oklch(84.5% 0.146 87.0)",
+        "tonalRamp": [
+          "#120A00",
+          "#312100",
+          "#543B00",
+          "#7A5700",
+          "#A67800",
+          "#C2A04F",
+          "#DEC898",
+          "#F8EED6"
+        ]
+      },
+      "tile-wordezy-scramble": {
+        "role": "game-tile",
+        "displayName": "Salmon (Wordezy Scramble)",
+        "canonical": "#F4977A",
+        "oklch": "oklch(76.5% 0.120 38.1)",
+        "tonalRamp": [
+          "#160703",
+          "#391A11",
+          "#603021",
+          "#8B4834",
+          "#BC6449",
+          "#D5917C",
+          "#ECBFB1",
+          "#FFE9E2"
+        ]
+      },
+      "tile-wordezy-ladder": {
+        "role": "game-tile",
+        "displayName": "Sky Blue (Wordezy Ladder)",
+        "canonical": "#9CC3F0",
+        "oklch": "oklch(80.5% 0.077 252.3)",
+        "tonalRamp": [
+          "#060C13",
+          "#182534",
+          "#2D4158",
+          "#446080",
+          "#5E83AD",
+          "#8CA7C7",
+          "#BACDE2",
+          "#E7F0FA"
+        ]
+      },
+      "tile-warmezy": {
+        "role": "game-tile",
+        "displayName": "Tangerine (Warmezy)",
+        "canonical": "#F7A35C",
+        "oklch": "oklch(78.5% 0.132 59.3)",
+        "tonalRamp": [
+          "#150701",
+          "#381C03",
+          "#5F3308",
+          "#884D10",
+          "#B96A1A",
+          "#D29665",
+          "#EAC2A3",
+          "#FEEADB"
+        ]
+      },
+      "tile-letterezy": {
+        "role": "game-tile",
+        "displayName": "Parchment Tan (Letterezy)",
+        "canonical": "#D9C792",
+        "oklch": "oklch(83.2% 0.072 91.5)",
+        "tonalRamp": [
+          "#0E0B04",
+          "#2A2412",
+          "#483F23",
+          "#6A5D36",
+          "#907F4C",
+          "#B1A47F",
+          "#D2CAB2",
+          "#F2EEE3"
+        ]
+      },
+      "tile-lingoezy": {
+        "role": "game-tile",
+        "displayName": "Aqua (Lingoezy)",
+        "canonical": "#79D0CF",
+        "oklch": "oklch(80.3% 0.084 194.6)",
+        "tonalRamp": [
+          "#020E0E",
+          "#0A2A29",
+          "#174848",
+          "#256969",
+          "#35908F",
+          "#75B1B0",
+          "#AED3D2",
+          "#E1F3F2"
+        ]
+      },
+      "tile-sortezy": {
+        "role": "game-tile",
+        "displayName": "Lilac (Sortezy)",
+        "canonical": "#C9A8EC",
+        "oklch": "oklch(78.4% 0.101 306.4)",
+        "tonalRamp": [
+          "#0E0814",
+          "#291E35",
+          "#48375A",
+          "#695182",
+          "#8F70B0",
+          "#B099CA",
+          "#D2C3E3",
+          "#F2EBFB"
+        ]
+      },
+      "tile-linkezy": {
+        "role": "game-tile",
+        "displayName": "Rose (Linkezy)",
+        "canonical": "#F28FA2",
+        "oklch": "oklch(75.9% 0.121 8.0)",
+        "tonalRamp": [
+          "#160609",
+          "#39181F",
+          "#602D38",
+          "#8B4453",
+          "#BC5E72",
+          "#D58D9A",
+          "#ECBCC3",
+          "#FFE7EB"
+        ]
+      },
+      "tile-mergezy": {
+        "role": "game-tile",
+        "displayName": "Periwinkle (Mergezy)",
+        "canonical": "#8FA9F5",
+        "oklch": "oklch(74.5% 0.114 269.1)",
+        "tonalRamp": [
+          "#070A17",
+          "#1A233C",
+          "#313D65",
+          "#495A91",
+          "#647CC4",
+          "#8FA3DA",
+          "#BCCAEE",
+          "#E7EEFF"
+        ]
+      },
+      "tile-when-and-where": {
+        "role": "game-tile",
+        "displayName": "Honey (When & Where)",
+        "canonical": "#E8B96A",
+        "oklch": "oklch(81.2% 0.111 79.2)",
+        "tonalRamp": [
+          "#110A01",
+          "#302104",
+          "#533B0D",
+          "#785717",
+          "#A37723",
+          "#C09F69",
+          "#DDC7A5",
+          "#F8EDDC"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Homepage masthead H1, 'Today's puzzles', baseline-shared with the edition date."
+      },
+      "display-page": {
+        "displayName": "Display Page",
+        "purpose": "H1 on privacy and terms."
+      },
+      "headline-dialog": {
+        "displayName": "Headline Dialog",
+        "purpose": "Challenge dialog title."
+      },
+      "headline-lg": {
+        "displayName": "Headline LG",
+        "purpose": "FAQ section heading."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "'All games' section heading."
+      },
+      "headline-sm": {
+        "displayName": "Headline SM",
+        "purpose": "Daily Seven heading (23px below 600px)."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "Set 'BGameWorld' beside the badge; 21px below 720px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Game names on cards; 20px in phone rows."
+      },
+      "title-sm": {
+        "displayName": "Title SM",
+        "purpose": "FAQ questions, dialog panel heads; footer heads at 18px."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default copy; FAQ answers capped at 34em."
+      },
+      "body-reading": {
+        "displayName": "Body Reading",
+        "purpose": "Long-form legal pages in a 720px column."
+      },
+      "body-sm": {
+        "displayName": "Body SM",
+        "purpose": "Card lines, countdown, counts, footer links."
+      },
+      "date": {
+        "displayName": "Date",
+        "purpose": "Masthead edition date; 16px below 600px."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pill labels; 14px in compact pills."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Header and phone sub-nav links."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Category and 'In today's seven' badge (700); sentence case, never tracked uppercase."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-lift",
+        "value": "0 10px 24px -14px rgba(18,18,18,.35)",
+        "purpose": "Desktop card hover only, with border to #B9B9B3; off in phone rows."
+      },
+      {
+        "name": "dialog",
+        "value": "0 24px 60px -20px rgba(0,0,0,.45)",
+        "purpose": "Challenge dialog over the backdrop."
+      },
+      {
+        "name": "dialog-backdrop",
+        "value": "rgba(18,18,18,.5)",
+        "purpose": "Dims the page behind the dialog."
+      },
+      {
+        "name": "rule-section",
+        "value": "3px solid #121212",
+        "purpose": "Starts a new part of the edition (masthead, FAQ, leaderboard, legal 'updated' line)."
+      },
+      {
+        "name": "rule-hairline",
+        "value": "1px solid #DCDCD7",
+        "purpose": "Separates items within a part."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid #2860D8; outline-offset: 3px",
+        "purpose": "Every interactive element (2px offset on cards, 1px on inputs)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "House ease: icon moves, card lift, dialog entrance."
+      },
+      {
+        "name": "icon-move",
+        "value": "animation: var(--move) .9s var(--ease) 1",
+        "purpose": "The signature: the .mv part performs its game's move once on card hover/focus; gated by prefers-reduced-motion: no-preference."
+      },
+      {
+        "name": "state-transition",
+        "value": "background-color .2s, color .2s, box-shadow .2s",
+        "purpose": "Pill hovers."
+      },
+      {
+        "name": "card-lift-transition",
+        "value": "border-color .2s, box-shadow .25s var(--ease)",
+        "purpose": "Card hover."
+      },
+      {
+        "name": "dialog-enter",
+        "value": "opacity .25s, transform .3s var(--ease) (translate -47% to -50%)",
+        "purpose": "Dialog open/close; backdrop fades .25s."
+      },
+      {
+        "name": "keyframes",
+        "value": "flip (Wordezy), sweep (Search), spin (Scramble), climb (Ladder), tip (Sortezy), pop (Lingoezy), draw (Linkezy), rise (Warmezy), lift (Letterezy), gather+bob (Mergezy), bob (When & Where)",
+        "purpose": "One per game; named via --move on the .mv part."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition-duration:.01ms; animation:none",
+        "purpose": "Under prefers-reduced-motion: reduce nothing moves."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-rows",
+        "value": "max-width: 559px"
+      },
+      {
+        "name": "masthead-stack",
+        "value": "max-width: 599px"
+      },
+      {
+        "name": "dialog-gate-2col",
+        "value": "min-width: 600px"
+      },
+      {
+        "name": "dialog-pad",
+        "value": "min-width: 640px"
+      },
+      {
+        "name": "header-subnav",
+        "value": "max-width: 719px"
+      },
+      {
+        "name": "gutter-40",
+        "value": "min-width: 768px"
+      },
+      {
+        "name": "faq-2col",
+        "value": "min-width: 880px"
+      },
+      {
+        "name": "seven-stack",
+        "value": "max-width: 959px"
+      },
+      {
+        "name": "gutter-64",
+        "value": "min-width: 1200px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single action in a band: Start today's challenge, Play, Sign up.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Start today's challenge</button>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border-radius:999px;border:0;font:600 15px/1 var(--sans);text-decoration:none;cursor:pointer;transition:background-color .2s,color .2s,box-shadow .2s}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.ds-btn-primary{background:var(--ink);color:#fff}.ds-btn-primary:hover{background:#333}.ds-btn-primary:disabled{opacity:.45;cursor:not-allowed}"
+    },
+    {
+      "name": "Outline Pill",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "The alternative action: header challenge pill, Continue as guest.",
+      "html": "<button class=\"ds-btn ds-btn-outline\">Today's challenge</button>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border-radius:999px;border:0;font:600 15px/1 var(--sans);text-decoration:none;cursor:pointer;transition:background-color .2s,color .2s,box-shadow .2s}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.ds-btn-outline{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}.ds-btn-outline:hover{background:var(--paper-2)}"
+    },
+    {
+      "name": "Header",
+      "kind": "nav",
+      "refersTo": "header",
+      "description": "Sticky paper bar: badge and slab wordmark left, text links and the outline pill right.",
+      "html": "<header class=\"ds-top\"><a class=\"ds-brand\" href=\"#\">BGameWorld</a><nav class=\"ds-nav\"><a href=\"#\">All games</a><a href=\"#\">FAQ</a><button class=\"ds-pill\">Today's challenge</button></nav></header>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-top{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;padding:0 20px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule);color:var(--ink);font-family:var(--sans)}.ds-brand{font:700 25px/1 var(--slab);letter-spacing:-.01em;color:var(--ink);text-decoration:none}.ds-nav{display:flex;align-items:center;gap:26px}.ds-nav a{font-weight:600;font-size:15px;color:var(--ink);text-decoration:none}.ds-nav a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}.ds-nav a:focus-visible,.ds-pill:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.ds-pill{min-height:40px;padding:0 16px;border-radius:999px;border:0;background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink);font:600 14px/1 var(--sans);cursor:pointer}.ds-pill:hover{background:var(--paper-2)}"
+    },
+    {
+      "name": "Game Card",
+      "kind": "card",
+      "refersTo": "game-card",
+      "description": "Desktop card: 96px flat tile-colour band with the ink icon, slab name, one line, badge and Play pill. The icon performs its move once on hover/focus.",
+      "html": "<a class=\"ds-card\" href=\"#\" style=\"--tile:#7CC4A4\"><span class=\"ds-band\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#121212\" stroke-width=\"2.5\"><rect x=\"4\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"16\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"28\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"40\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"4\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"16\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect class=\"ds-mv\" x=\"28\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#fff\"/><rect x=\"40\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"4\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"16\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"28\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"40\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/></g></svg></span><span class=\"ds-body\"><b class=\"ds-name\">Wordezy</b><span class=\"ds-line\">Guess the daily word in six tries.</span><span class=\"ds-foot\"><span class=\"ds-today\">In today's seven</span><span class=\"ds-play\">Play</span></span></span></a>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-card{display:flex;flex-direction:column;width:260px;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--paper);color:var(--ink);text-decoration:none;font-family:var(--sans);transition:border-color .2s,box-shadow .25s var(--ease)}.ds-card:hover{border-color:#B9B9B3;box-shadow:0 10px 24px -14px rgba(18,18,18,.35)}.ds-card:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.ds-band{display:grid;place-items:center;height:96px;background:var(--tile)}.ds-band svg{width:66px;height:66px;overflow:visible}.ds-body{display:flex;flex-direction:column;gap:6px;padding:14px 18px 16px}.ds-name{font:700 23px/1.1 var(--slab)}.ds-line{color:var(--ink-2);font-size:15px;line-height:1.45}.ds-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px}.ds-today{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700}.ds-today::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--ink)}.ds-play{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:999px;background:var(--ink);color:#fff;font:600 14px/1 var(--sans)}.ds-mv{transform-box:fill-box;transform-origin:center}@media (prefers-reduced-motion:no-preference){.ds-card:hover .ds-mv,.ds-card:focus-visible .ds-mv{animation:ds-flip .9s var(--ease) 1}}@keyframes ds-flip{0%,100%{transform:scaleY(1)}45%,55%{transform:scaleY(.05)}}"
+    },
+    {
+      "name": "Game Row (phone)",
+      "kind": "card",
+      "refersTo": "game-card-row-tile",
+      "description": "Below 560px: 64px colour square | name, line, badge | 44px Play pill, rows divided by hairlines.",
+      "html": "<a class=\"ds-row\" href=\"#\" style=\"--tile:#9CC3F0\"><span class=\"ds-sq\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g stroke=\"#121212\" stroke-width=\"2.5\" stroke-linecap=\"round\"><path d=\"M20 4v56M44 4v56M20 14h24M20 26h24M20 50h24\"/><path class=\"ds-mv\" d=\"M20 38h24\"/></g></svg></span><span class=\"ds-txt\"><b>Wordezy Ladder</b><span>Change one letter at a time to climb.</span><em>Word</em></span><span class=\"ds-play\">Play</span></a>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-row{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;column-gap:14px;width:360px;padding:12px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;font-family:var(--sans)}.ds-row:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.ds-sq{display:grid;place-items:center;width:64px;height:64px;border-radius:10px;background:var(--tile)}.ds-sq svg{width:42px;height:42px;overflow:visible}.ds-txt{display:flex;flex-direction:column;gap:2px;min-width:0}.ds-txt b{font:700 20px/1.1 var(--slab)}.ds-txt span{color:var(--ink-2);font-size:14.5px;line-height:1.35}.ds-txt em{font-style:normal;font-size:13px;font-weight:600;color:var(--ink-3);margin-top:4px}.ds-play{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:#fff;font:600 15px/1 var(--sans)}.ds-mv{transform-box:fill-box;transform-origin:center}@media (prefers-reduced-motion:no-preference){.ds-row:hover .ds-mv,.ds-row:focus-visible .ds-mv{animation:ds-climb .9s var(--ease) 1}}@keyframes ds-climb{0%,100%{transform:translateY(0);stroke-width:2.5}50%{transform:translateY(-12px);stroke-width:6}}"
+    },
+    {
+      "name": "Daily Seven Squares",
+      "kind": "custom",
+      "refersTo": "daily-seven-tile",
+      "description": "Today's seven games as 40px tile-colour squares with 28px ink icons.",
+      "html": "<ul class=\"ds-seven\"><li style=\"--tile:#7CC4A4\" aria-label=\"Wordezy\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#121212\" stroke-width=\"2.5\"><rect x=\"4\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"16\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"28\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"40\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"4\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"16\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect class=\"ds-mv\" x=\"28\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#fff\"/><rect x=\"40\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"4\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"16\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"28\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"40\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/></g></svg></li><li style=\"--tile:#9CC3F0\" aria-label=\"Wordezy Ladder\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g stroke=\"#121212\" stroke-width=\"2.5\" stroke-linecap=\"round\"><path d=\"M20 4v56M44 4v56M20 14h24M20 26h24M20 50h24\"/><path class=\"ds-mv\" d=\"M20 38h24\"/></g></svg></li><li style=\"--tile:#F5C54A\"></li><li style=\"--tile:#C9A8EC\"></li><li style=\"--tile:#F28FA2\"></li><li style=\"--tile:#8FA9F5\"></li><li style=\"--tile:#E8B96A\"></li></ul>",
+      "css": ".ds-seven{display:flex;gap:6px;list-style:none;margin:0;padding:0}.ds-seven li{width:40px;height:40px;border-radius:6px;background:var(--tile);display:grid;place-items:center}.ds-seven svg{width:28px;height:28px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Dialog sign-up field: 1.5px grey stroke, 8px corners, ink border and blue outline on focus, red border when invalid.",
+      "html": "<input class=\"ds-input\" type=\"email\" placeholder=\"Email\"><input class=\"ds-input\" aria-invalid=\"true\" value=\"not-an-email\">",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-input{display:block;width:280px;margin:0 0 10px;min-height:46px;border:1.5px solid #8A8A8A;border-radius:8px;padding:0 12px;font:16px var(--sans);color:var(--ink);background:#fff}.ds-input::placeholder{color:var(--ink-3)}.ds-input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--ink)}.ds-input[aria-invalid=true]{border-color:#B3261E}"
+    },
+    {
+      "name": "Challenge Thumbnail",
+      "kind": "custom",
+      "refersTo": "challenge-thumb",
+      "description": "76px tile-colour thumbnail with a 12px name below, used inside the challenge dialog.",
+      "html": "<a class=\"ds-th\" href=\"#\" style=\"--tile:#7CC4A4\"><span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#121212\" stroke-width=\"2.5\"><rect x=\"4\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"16\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"28\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"40\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"12\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"4\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect x=\"16\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#121212\"/><rect class=\"ds-mv\" x=\"28\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"#fff\"/><rect x=\"40\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"27\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"4\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"16\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"28\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"40\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/><rect x=\"52\" y=\"42\" width=\"10\" height=\"10\" rx=\"1.5\"/></g></svg></span><b>Wordezy</b></a>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-th{display:block;width:76px;text-align:center;text-decoration:none;color:var(--ink);font-family:var(--sans)}.ds-th:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.ds-th span{display:grid;place-items:center;width:76px;height:76px;border-radius:10px;background:var(--tile)}.ds-th svg{width:46px;height:46px}.ds-th b{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.25}"
+    },
+    {
+      "name": "FAQ Item",
+      "kind": "custom",
+      "refersTo": "faq-item",
+      "description": "Hairline-topped question/answer pair; slab question, Soft Ink answer.",
+      "html": "<dl class=\"ds-faq\"><div><dt>Are the games actually free?</dt><dd>Yes. Every game is free to play, with no purchases, subscriptions or paywalled levels.</dd></div></dl>",
+      "css": ":host{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--slab:'Zilla Slab',Rockwell,'Roboto Slab',Georgia,serif;--sans:'Libre Franklin','Franklin Gothic Medium','Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.16,1,.3,1)}.ds-faq{margin:0;font-family:var(--sans);color:var(--ink)}.ds-faq div{display:grid;gap:6px;padding:20px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.ds-faq dt{font:700 20px/1.3 var(--slab)}.ds-faq dd{margin:0;color:var(--ink-2);font-size:16px;line-height:1.5;max-width:34em}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Today's Edition",
+    "overview": "BGameWorld reads like the day's puzzle page of a good newspaper: one calm, light sheet, dated at the top, where every game is a flat colour tile carrying its own drawn icon. \"Today\" is the headline. The date, the reset countdown and the Daily Seven sit above the games because the shared daily puzzle is the reason to come back. Everything else is paper, ink and hairline rules.\n\nThe density is a broadsheet's, not a dashboard's. Sections are separated by printed rules instead of boxes and backgrounds. Colour lives almost entirely in the game tiles, so the page's colour is the games themselves; the chrome around them stays black and white. Motion is held back to one signature: on hover or keyboard focus, a tile's icon performs a tiny version of its game's move, once, then rests.\n\nThe owner pinned the feel of the New York Times games hub, carried out entirely in BGameWorld's own materials: its own name, badge and logo, its own self-hosted faces (Zilla Slab and Libre Franklin, both SIL OFL), and its own authored icons. The dark neon game-portal template is rejected: no glows, gradient headlines, poster carousels or letter-spaced labels above headings.",
+    "keyCharacteristics": [
+      "White paper ground, near-black ink, warm hairline grey rules.",
+      "One flat, light, saturated colour per game; ink icons sit on it.",
+      "Slab headlines and game names; a sturdy grotesque for everything else.",
+      "Black pill for the action, ink-outlined pill for the alternative.",
+      "Flat at rest; a soft lift on card hover and a shadow under the dialog are the only depth.",
+      "One tiny, game-specific icon move on hover or focus; nothing under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The One Colour Per Game Rule",
+        "body": "A tile colour belongs to exactly one game and appears only where that game appears. A new game gets a new flat colour, light enough that #121212 ink reads on it. Chrome, buttons and headings never borrow a tile colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Second Paper Rule",
+        "body": "#F4F4F1 is the only off-white. Use it for quieter sheets (footer, notes, boxed asides) and for hover fills on paper-coloured controls, never as the main page ground.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Gloss Rule",
+        "body": "Every colour is flat: no gradients, glows or glass, on tiles or anywhere else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Slab Names Things Rule",
+        "body": "Zilla Slab is for titles and names only: the page title, section heads, game names, the wordmark, leaderboard ranks, and letters drawn inside icons. Body, buttons, labels and navigation are always Libre Franklin.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "Labels stay in sentence case at normal tracking. No uppercase, letter-spaced labels anywhere, and nothing set above a heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two Rules Rule",
+        "body": "A 3px ink rule starts a new part of the edition: under the masthead, above the FAQ, above the dialog leaderboard, and under the \"last updated\" line on legal pages. A 1px hairline separates items within a part. Never use any other rule weight.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Flat By Default Rule",
+        "body": "Surfaces rest flat. A shadow appears only as a response (card hover) or for a true overlay (the dialog).",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Move Rule",
+        "body": "An icon moves only in answer to hover or focus, performs its own game's move once, and stops. It never loops, never plays on load, and never moves under reduced motion.",
+        "section": "components"
+      },
+      {
+        "name": "The Ink On Colour Rule",
+        "body": "Game art is always drawn in ink on its flat tile colour. Never use photos, painted posters, emoji or glyph characters as game tiles.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** give each game exactly one flat tile colour and draw its icon in #121212 on a 64-unit viewBox at a 2.5 stroke.",
+      "**Do** set titles and game names in Zilla Slab 700, and everything else in Libre Franklin, both self-hosted.",
+      "**Do** use a black pill (999px) for the single action in a band, and an ink-outlined pill for the alternative.",
+      "**Do** separate parts of the page with the 3px ink rule and items within a part with the 1px #DCDCD7 hairline.",
+      "**Do** use #F4F4F1 as the second paper for the footer, notes and hover fills.",
+      "**Do** keep every tap target at least 44px on phones, and keep the 3px #2860D8 focus outline on everything interactive.",
+      "**Do** keep the BGameWorld name, badge and logo, and the \"-ezy\" game names."
+    ],
+    "donts": [
+      "**Don't** use the New York Times name, logo or \"T\" mark, or its licensed typefaces (Cheltenham, Karnak, NYT Franklin), and don't copy NYT game art, code, word lists or puzzles.",
+      "**Don't** use gradients, glows, glass, neon or dark portal grounds.",
+      "**Don't** put letter-spaced uppercase labels or any text above a heading.",
+      "**Don't** reuse a game's tile colour on chrome, buttons or another game.",
+      "**Don't** put the painted posters from `art/` back onto homepage tiles. They are for social only.",
+      "**Don't** loop icon motion, play it on load, or run it under reduced motion.",
+      "**Don't** add shadows to surfaces at rest."
+    ]
+  }
+}
