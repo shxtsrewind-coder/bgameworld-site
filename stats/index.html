@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Stats | BGameWorld</title>
+<meta name="description" content="Your daily-challenge streak, best score and per-game totals across every game on BGameWorld.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://bgameworld.com/stats/">
+<link rel="icon" href="/favicon.ico">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="preconnect" href="https://hkcvtoozpeybwehqtiif.supabase.co" crossorigin>
+<link rel="preload" href="/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Zilla Slab";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/zilla-slab-700.woff2) format("woff2")}
+@font-face{font-family:"Libre Franklin";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/libre-franklin.woff2) format("woff2")}
+:root{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;--error:#B3261E;--ok:#1E6B3A;
+  --slab:"Zilla Slab",Rockwell,"Roboto Slab",Georgia,serif;--sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+::selection{background:#F5C54A;color:var(--ink)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+main{max-width:720px;margin:0 auto;padding:28px 20px 72px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.top img{width:120px;height:auto;display:block}
+.top a.home{color:var(--ink);font-size:15px;font-weight:600;text-decoration:none}
+.top a.home:hover{text-decoration:underline;text-underline-offset:4px}
+h1{font:700 clamp(40px,9vw,60px)/1 var(--slab);letter-spacing:-.02em;margin:0}
+.lede{margin:10px 0 0;padding-bottom:20px;border-bottom:3px solid var(--ink);color:var(--ink-2);max-width:56ch}
+h2{font:700 24px/1.2 var(--slab);margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:999px;border:0;
+  font:600 15px/1 var(--sans);cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#333}
+.btn-outline{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-outline:hover{background:var(--paper-2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* sign-in gate */
+#gate{margin-top:32px;border:1px solid var(--rule);border-radius:12px;padding:24px}
+#gate p{margin:0 0 18px;color:var(--ink-2)}
+#authForm{display:flex;flex-direction:column;gap:10px;max-width:380px}
+#authForm input{min-height:46px;border:1.5px solid #8A8A8A;border-radius:8px;padding:0 12px;font:16px var(--sans);color:var(--ink);background:#fff}
+#authForm input::placeholder{color:var(--ink-3)}
+#authForm input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--ink)}
+#authForm input[aria-invalid="true"]{border-color:var(--error)}
+.toggle-row{margin:12px 0 0;font-size:14px;color:var(--ink-2)}
+.toggle-row button{background:none;border:0;padding:0;font:600 14px var(--sans);color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.toggle-row button:disabled{opacity:.45;cursor:not-allowed;text-decoration:none}
+.auth-msg{margin:10px 0 0;font-size:14px}
+.auth-msg:empty{margin:0}
+.auth-msg.err{color:var(--error)}
+.auth-msg.ok{color:var(--ok)}
+.note{margin:0 0 16px;padding:10px 12px;border-radius:8px;background:var(--paper-2);font-size:14px}
+
+/* loading / empty */
+#loading,#empty{margin-top:32px;color:var(--ink-2)}
+
+/* dashboard */
+.who{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px}
+.who p{margin:0;color:var(--ink-2)}
+.who b{color:var(--ink)}
+.who .btn{min-height:40px;padding:0 16px;font-size:14px}
+.streak{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-top:24px}
+.streak-num{font:700 clamp(4rem,16vw,6rem)/.9 var(--slab);letter-spacing:-.03em}
+.streak-label{color:var(--ink-2);max-width:30ch}
+.streak-label b{display:block;color:var(--ink);font:700 22px/1.2 var(--slab)}
+.board{display:grid;grid-template-columns:repeat(3,1fr);margin:28px 0 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--rule)}
+.board div{padding:16px 6px;text-align:center;border-left:1px solid var(--rule)}
+.board div:first-child{border-left:0}
+.board dd{margin:0;font:700 clamp(1.6rem,5vw,2.2rem)/1 var(--slab);font-variant-numeric:tabular-nums}
+.board dt{margin-top:6px;font-size:13px;font-weight:600;color:var(--ink-3)}
+section{margin-top:40px}
+.bar-row{display:grid;grid-template-columns:minmax(0,9.5rem) 1fr 3.5rem;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.bar-row .g-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:12px;border-radius:6px;background:var(--paper-2);overflow:hidden}
+.bar-fill{display:block;height:100%;border-radius:6px;background:var(--tile,#121212)}
+.bar-row .g-score{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.hist{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.hist li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.hist .d{flex:1}
+.hist .n{color:var(--ink-3);font-size:14px}
+.hist .s{font-weight:700;font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-3)}
+footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;color:var(--ink-3);font-size:15px}
+footer a{color:var(--ink);text-underline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a href="/" aria-label="BGameWorld home"><img src="/logo.webp" alt="BGameWorld" width="602" height="348"></a>
+    <a class="home" href="/">&larr; Back to the games</a>
+  </div>
+
+  <h1>My stats</h1>
+  <p class="lede">Your streak, best score and per-game totals from the daily 7-game challenge, pulled straight from your account.</p>
+
+  <div id="gate">
+    <h2 id="gateHeading">Sign in to see your stats</h2>
+    <p class="note" id="offline" hidden>Sign-in is unavailable right now. Check your connection and refresh to try again.</p>
+    <p>This uses the same account as the daily challenge on the homepage &mdash; sign in below, or create one if you haven't played a challenge yet.</p>
+    <form id="authForm" novalidate aria-describedby="authMsg">
+      <label class="sr-only" for="fName">Display name</label>
+      <input type="text" id="fName" placeholder="Display name" autocomplete="nickname" maxlength="24" spellcheck="false">
+      <label class="sr-only" for="fEmail">Email</label>
+      <input type="email" id="fEmail" placeholder="Email" autocomplete="email" inputmode="email">
+      <label class="sr-only" for="fPassword">Password</label>
+      <input type="password" id="fPassword" placeholder="Password (6+ characters)" autocomplete="new-password">
+      <button type="submit" class="btn btn-primary" id="authSubmit">Sign up</button>
+    </form>
+    <p class="toggle-row"><span id="toggleLead">Already have an account?</span> <button type="button" id="toggleMode">Sign in</button></p>
+    <p class="auth-msg" id="authMsg" role="status" aria-live="polite"></p>
+  </div>
+
+  <p id="loading" hidden role="status">Loading your stats&hellip;</p>
+  <p id="empty" hidden>You're signed in, but haven't finished a daily challenge yet. Play today's seven from the <a href="/">homepage</a> and your first stats will show up here.</p>
+
+  <div id="dash" hidden>
+    <div class="who">
+      <p>Playing as <b id="whoName"></b></p>
+      <button class="btn btn-outline" id="signOut">Sign out</button>
+    </div>
+
+    <div class="streak">
+      <span class="streak-num" id="streakNum">0</span>
+      <span class="streak-label"><b>day streak</b>Days in a row you've finished a daily challenge, counting back from today.</span>
+    </div>
+
+    <dl class="board">
+      <div><dd id="statBest">&ndash;</dd><dt>Best day</dt></div>
+      <div><dd id="statAvg">&ndash;</dd><dt>Average score</dt></div>
+      <div><dd id="statDays">&ndash;</dd><dt>Challenges done</dt></div>
+    </dl>
+
+    <section aria-labelledby="barsTitle">
+      <h2 id="barsTitle">Lifetime total by game</h2>
+      <div id="barsList"></div>
+    </section>
+
+    <section aria-labelledby="histTitle">
+      <h2 id="histTitle">Recent challenges</h2>
+      <ul class="hist" id="histList"></ul>
+    </section>
+  </div>
+
+  <footer>One account works across every game on BGameWorld. <a href="/privacy/">Privacy policy</a></footer>
+</main>
+
+<script>
+(function () {
+  const SB_URL = "https://hkcvtoozpeybwehqtiif.supabase.co";
+  const SB_KEY = "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
+  const SB_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
+  const $ = id => document.getElementById(id);
+
+  // Name and tile colour for each game's score key, matching the `art` ids in
+  // the homepage's GAMES list (index.html is the source of truth).
+  const GAMES = {
+    timeguess: ["When & Where", "#E8B96A"], wordezy: ["Wordezy", "#7CC4A4"], wordsearch: ["Wordezy Search", "#F5C54A"],
+    scramble: ["Wordezy Scramble", "#F4977A"], ladder: ["Wordezy Ladder", "#9CC3F0"], sortezy: ["Sortezy", "#C9A8EC"],
+    lingoezy: ["Lingoezy", "#79D0CF"], linkezy: ["Linkezy", "#F28FA2"], warmezy: ["Warmezy", "#F7A35C"],
+    letterezy: ["Letterezy", "#D9C792"], mergezy: ["Mergezy", "#8FA9F5"]
+  };
+  // Same rule as the homepage: names are public on the leaderboard.
+  const NAME_RE = /^[\p{L}\p{N}][\p{L}\p{N} ._'-]{1,23}$/u;
+  const cleanName = s => String(s || "").normalize("NFC").replace(/\s+/g, " ").trim();
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = String(text); return n; };
+
+  const gate = $("gate"), loading = $("loading"), empty = $("empty"), dash = $("dash");
+  const form = $("authForm"), fName = $("fName"), fEmail = $("fEmail"), fPassword = $("fPassword");
+  const submitBtn = $("authSubmit"), msg = $("authMsg"), toggle = $("toggleMode");
+  let sb = null, mode = "signup";
+
+  function say(text, kind) { msg.textContent = text; msg.className = "auth-msg" + (kind ? " " + kind : ""); }
+  function fieldError(input, text) {
+    [fName, fEmail, fPassword].forEach(i => i.removeAttribute("aria-invalid"));
+    input.setAttribute("aria-invalid", "true"); input.focus(); say(text, "err");
+  }
+  function setMode(next) {
+    mode = next;
+    const signup = mode === "signup";
+    $("gateHeading").textContent = signup ? "Sign up to see your stats" : "Sign in to see your stats";
+    submitBtn.textContent = signup ? "Sign up" : "Sign in";
+    fName.hidden = !signup;
+    fPassword.autocomplete = signup ? "new-password" : "current-password";
+    toggle.textContent = signup ? "Sign in" : "Sign up";
+    $("toggleLead").textContent = signup ? "Already have an account?" : "New here?";
+    say("");
+  }
+  toggle.addEventListener("click", () => setMode(mode === "signup" ? "signin" : "signup"));
+  setMode("signin");
+
+  function friendly(err) {
+    const m = String((err && err.message) || "");
+    if (/invalid login credentials/i.test(m)) return "That email and password don't match. Check them, or sign up instead.";
+    if (/already registered|already exists/i.test(m)) { setMode("signin"); return "There's already an account with that email — sign in instead."; }
+    if (/email not confirmed/i.test(m)) return "Confirm your email first: open the link we sent, then sign in here.";
+    if (/rate limit|too many/i.test(m)) return "Too many attempts. Wait a minute, then try again.";
+    if (/fetch|network|failed to/i.test(m)) return "Couldn't reach the server. Check your connection and try again.";
+    return "Something went wrong signing you in. Try again in a moment.";
+  }
+
+  async function ensureProfile(user, displayName) {
+    const { data: existing } = await sb.from("portal_profiles").select("display_name").eq("id", user.id).maybeSingle();
+    if (existing) return existing.display_name;
+    let name = cleanName(displayName);
+    if (!NAME_RE.test(name)) name = "Player";
+    await sb.from("portal_profiles").insert({ id: user.id, display_name: name });
+    return name;
+  }
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (!sb) return;
+    const name = cleanName(fName.value), email = fEmail.value.trim(), password = fPassword.value;
+    if (mode === "signup" && !NAME_RE.test(name)) return fieldError(fName, "Pick a display name of 2–24 letters or numbers (spaces, . _ ' - are fine).");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fieldError(fEmail, "Enter your email address, like name@example.com.");
+    if (password.length < 6) return fieldError(fPassword, "Use a password of at least 6 characters.");
+    submitBtn.disabled = true; say(mode === "signup" ? "Creating your account…" : "Signing you in…");
+    try {
+      if (mode === "signup") {
+        const { data, error } = await sb.auth.signUp({ email, password });
+        if (error) throw error;
+        if (data.session && data.user) { await ensureProfile(data.user, name); return loadStats(); }
+        try { localStorage.setItem("bgw_pending_name", name); } catch (e) {}
+        setMode("signin"); fEmail.value = email;
+        say("Check your email and open the confirmation link, then sign in here with the same password.", "ok");
+      } else {
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        let pending = null;
+        try { pending = localStorage.getItem("bgw_pending_name"); localStorage.removeItem("bgw_pending_name"); } catch (e) {}
+        await ensureProfile(data.user, pending);
+        loadStats();
+      }
+    } catch (err) {
+      say(friendly(err), "err");
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  $("signOut").addEventListener("click", async () => {
+    await sb.auth.signOut();
+    dash.hidden = true; empty.hidden = true; gate.hidden = false;
+  });
+
+  /* ---- stats ---- */
+  const toISO = d => d.toISOString().slice(0, 10);
+  function calcStreak(dateSet) {
+    const cur = new Date(toISO(new Date()) + "T00:00:00Z");
+    if (!dateSet.has(toISO(cur))) cur.setUTCDate(cur.getUTCDate() - 1); // not played yet today — count from yesterday
+    let streak = 0;
+    while (dateSet.has(toISO(cur))) { streak++; cur.setUTCDate(cur.getUTCDate() - 1); }
+    return streak;
+  }
+
+  async function loadStats() {
+    gate.hidden = true; loading.hidden = false;
+    const { data: sessionData } = await sb.auth.getSession();
+    const user = sessionData.session && sessionData.session.user;
+    if (!user) { loading.hidden = true; gate.hidden = false; return; }
+
+    const displayName = await ensureProfile(user);
+    const { data: rows, error } = await sb
+      .from("portal_challenge_scores")
+      .select("challenge_date,total_score,games_completed,details")
+      .eq("user_id", user.id)
+      .order("challenge_date", { ascending: false });
+    loading.hidden = true;
+    $("whoName").textContent = displayName;
+    if (error) { empty.hidden = false; empty.textContent = "Couldn't load your stats right now. Refresh to try again."; return; }
+    if (!rows || !rows.length) { empty.hidden = false; return; }
+
+    $("streakNum").textContent = calcStreak(new Set(rows.map(r => r.challenge_date)));
+    const scores = rows.map(r => Number(r.total_score) || 0);
+    $("statBest").textContent = Math.max(...scores);
+    $("statAvg").textContent = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+    $("statDays").textContent = rows.length;
+
+    // per-game lifetime totals (keys come from score reports, so they're shown as text only)
+    const totals = {};
+    rows.forEach(r => Object.entries(r.details || {}).forEach(([k, v]) => { totals[k] = (totals[k] || 0) + (Number(v) || 0); }));
+    const sorted = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+    const max = sorted.length ? Math.max(1, sorted[0][1]) : 1;
+    const bars = $("barsList");
+    bars.replaceChildren(...sorted.map(([slug, total]) => {
+      const [name, color] = GAMES[slug] || [slug, "#121212"];
+      const row = el("div", "bar-row");
+      const track = el("span", "bar-track");
+      const fill = el("span", "bar-fill");
+      fill.style.width = Math.max(4, Math.round(total / max * 100)) + "%";
+      fill.style.setProperty("--tile", color);
+      track.append(fill);
+      row.append(el("span", "g-name", name), track, el("span", "g-score", total));
+      return row;
+    }));
+    if (!sorted.length) bars.append(el("p", "muted", "No per-game scores yet."));
+
+    // most recent 10
+    $("histList").replaceChildren(...rows.slice(0, 10).map(r => {
+      const li = el("li");
+      const date = new Date(r.challenge_date + "T00:00:00Z").toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
+      li.append(el("span", "d", date), el("span", "n", `${Number(r.games_completed) || 0}/7 games`), el("span", "s", `${Number(r.total_score) || 0} pts`));
+      return li;
+    }));
+    dash.hidden = false;
+  }
+
+  /* ---- Supabase loads without blocking the page; failure says so ---- */
+  function offline() {
+    $("offline").hidden = false;
+    submitBtn.disabled = true; toggle.disabled = true;
+  }
+  const timer = setTimeout(() => { if (!sb) offline(); }, 10000);
+  const s = document.createElement("script");
+  s.src = SB_JS; s.async = true;
+  s.onerror = () => { clearTimeout(timer); offline(); };
+  s.onload = () => {
+    clearTimeout(timer);
+    if (!window.supabase) return offline();
+    sb = window.supabase.createClient(SB_URL, SB_KEY);
+    sb.auth.getSession().then(({ data }) => { if (data.session && data.session.user) loadStats(); }).catch(() => {});
+  };
+  document.head.append(s);
+})();
+</script>
+</body>
+</html>

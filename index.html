@@ -188,8 +188,6 @@ img{max-width:100%;height:auto}
 .cat{font-size:13px;font-weight:600;color:var(--ink-3)}
 .today{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;align-self:flex-start}
 .today::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink)}
-.soon{margin:22px 0 0;color:var(--ink-2);font-size:15px}
-.soon b{color:var(--ink)}
 
 /* phones: each game is a row (colour square | name, line, badge | play) */
 @media (max-width:559px){
@@ -316,11 +314,12 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
     <nav aria-label="Site">
       <a href="#games">All games</a>
       <a href="#faq">FAQ</a>
+      <a href="/stats/">My stats</a>
       <button class="btn btn-outline" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false"><span class="lbl-long">Today's challenge</span><span class="lbl-short">Challenge</span></button>
     </nav>
   </div>
 </header>
-<nav class="subnav wrap" aria-label="Sections"><a href="#games">All games</a><a href="#faq">FAQ</a><a href="/privacy/">Privacy</a></nav>
+<nav class="subnav wrap" aria-label="Sections"><a href="#games">All games</a><a href="#faq">FAQ</a><a href="/stats/">My stats</a></nav>
 
 <main>
   <section class="mast" aria-labelledby="todayTitle">
@@ -345,7 +344,6 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
     <div class="wrap">
       <div class="games-head"><h2 id="gamesTitle">All games</h2><span id="gamesCount"></span></div>
       <ul class="grid" id="grid"></ul>
-      <p class="soon" id="soon"></p>
     </div>
   </section>
 
@@ -411,6 +409,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
         <ul>
           <li><a href="#games">All games</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li><a href="/stats/">My stats</a></li>
           <li><a href="/privacy/">Privacy</a></li>
           <li><a href="/terms/">Terms</a></li>
         </ul>
@@ -499,12 +498,6 @@ const GAMES = [
     blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard." },
   { name: "When & Where", line: "Date and place a real archival photo.", cat: "Trivia", art: "timeguess", color: "#E8B96A", url: "https://whenandwhere.bgameworld.com",
     blurb: "Look at a real archival photo, then guess the year, the place and even the day of the week it was taken." }
-];
-// Not built yet. When one goes live, move it into GAMES above with its url,
-// cat, color, blurb and an icon below.
-const COMING = [
-  { name: "Jetpack Surge" },
-  { name: "Crossword" }
 ];
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -613,7 +606,6 @@ function gameCard(g) {
 }
 $("grid").innerHTML = GAMES.map(gameCard).join("");
 $("gamesCount").textContent = `${GAMES.length} games, all free`;
-$("soon").innerHTML = COMING.length ? `<b>Coming soon:</b> ${COMING.map(c => c.name).join(", ")}.` : "";
 $("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a></li>`).join("");
 
 /* ---------- daily 7-game challenge + guest/signup gate + leaderboard ----------
