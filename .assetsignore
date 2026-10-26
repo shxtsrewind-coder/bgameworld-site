@@ -4,3 +4,6 @@
 .DS_Store
 wrangler.jsonc
 src
+PRODUCT.md
+DESIGN.md
+.impeccable

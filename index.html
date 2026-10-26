@@ -1,17 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BGameWorld — Free Browser Games</title>
+<title>BGameWorld — Free Daily Puzzles &amp; Browser Games</title>
 <meta name="p:domain_verify" content="888d77e580618931b0673b0990e886e6"/>
-<meta name="description" content="BGameWorld — free browser games: When & Where, the Wordezy word games, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
+<meta name="description" content="BGameWorld — free daily puzzles in your browser: When & Where, the Wordezy word games, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more. New puzzles every day, the same for everyone.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bgameworld.com/">
-<meta name="theme-color" content="#0A0F2E">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light">
 <meta name="author" content="bgameworld.com">
 
 <!-- Open Graph (Facebook, LinkedIn, Discord, WhatsApp, ...) -->
 <meta property="og:site_name" content="BGameWorld">
-<meta property="og:title" content="BGameWorld — Free Browser Games">
-<meta property="og:description" content="A growing arcade of free browser games — When & Where, Wordezy, Wordezy Search, Scramble and Ladder, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more. Play · Connect · Explore.">
+<meta property="og:title" content="BGameWorld — Free Daily Puzzles">
+<meta property="og:description" content="Free daily puzzles in your browser — When & Where, Wordezy, Wordezy Search, Scramble and Ladder, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more. New puzzles every day.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bgameworld.com/">
 <meta property="og:image" content="https://bgameworld.com/og-image.jpg">
@@ -23,17 +27,16 @@
 
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BGameWorld — Free Browser Games">
-<meta name="twitter:description" content="A growing arcade of free browser games — When & Where, the Wordezy word games, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more.">
+<meta name="twitter:title" content="BGameWorld — Free Daily Puzzles">
+<meta name="twitter:description" content="Free daily puzzles in your browser — When & Where, the Wordezy word games, Warmezy, Letterezy, Mergezy, Sortezy, Linkezy, Lingoezy and more.">
 <meta name="twitter:image" content="https://bgameworld.com/og-image.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preload" href="/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Google AdSense verification / auto ads -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3551074498139485" crossorigin="anonymous"></script>
@@ -45,7 +48,7 @@
   "@type": "WebSite",
   "name": "BGameWorld",
   "url": "https://bgameworld.com/",
-  "description": "A growing arcade of free browser games.",
+  "description": "Free daily puzzles and browser games, new every day.",
   "publisher": {
     "@type": "Organization",
     "name": "BGameWorld",
@@ -53,523 +56,355 @@
     "logo": "https://bgameworld.com/logo.webp"
   },
   "hasPart": [
-    {
-      "@type": "VideoGame",
-      "name": "When & Where",
-      "url": "https://whenandwhere.bgameworld.com",
-      "genre": "Trivia",
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Wordezy",
-      "url": "https://wordezy.bgameworld.com",
-      "genre": ["Puzzle", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Wordezy Search",
-      "url": "https://wordezysearch.bgameworld.com",
-      "genre": ["Puzzle", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Wordezy Scramble",
-      "url": "https://wordezyscramble.bgameworld.com",
-      "genre": ["Puzzle", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Wordezy Ladder",
-      "url": "https://wordezyladder.bgameworld.com",
-      "genre": ["Puzzle", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Sortezy",
-      "url": "https://sortezy.bgameworld.com",
-      "genre": "Puzzle",
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Lingoezy",
-      "url": "https://lingoezy.bgameworld.com",
-      "genre": ["Quiz", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Linkezy",
-      "url": "https://linkezy.bgameworld.com",
-      "genre": "Puzzle",
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Warmezy",
-      "url": "https://warmezy.bgameworld.com",
-      "genre": ["Puzzle", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Letterezy",
-      "url": "https://letterezy.bgameworld.com",
-      "genre": ["Puzzle", "Word Game"],
-      "isAccessibleForFree": true
-    },
-    {
-      "@type": "VideoGame",
-      "name": "Mergezy",
-      "url": "https://mergezy.bgameworld.com",
-      "genre": "Puzzle",
-      "isAccessibleForFree": true
-    }
+    { "@type": "VideoGame", "name": "When & Where", "url": "https://whenandwhere.bgameworld.com", "genre": "Trivia", "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Wordezy", "url": "https://wordezy.bgameworld.com", "genre": ["Puzzle", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Wordezy Search", "url": "https://wordezysearch.bgameworld.com", "genre": ["Puzzle", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Wordezy Scramble", "url": "https://wordezyscramble.bgameworld.com", "genre": ["Puzzle", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Wordezy Ladder", "url": "https://wordezyladder.bgameworld.com", "genre": ["Puzzle", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Sortezy", "url": "https://sortezy.bgameworld.com", "genre": "Puzzle", "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Lingoezy", "url": "https://lingoezy.bgameworld.com", "genre": ["Trivia", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Linkezy", "url": "https://linkezy.bgameworld.com", "genre": "Puzzle", "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Warmezy", "url": "https://warmezy.bgameworld.com", "genre": ["Puzzle", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Letterezy", "url": "https://letterezy.bgameworld.com", "genre": ["Puzzle", "Word Game"], "isAccessibleForFree": true },
+    { "@type": "VideoGame", "name": "Mergezy", "url": "https://mergezy.bgameworld.com", "genre": "Puzzle", "isAccessibleForFree": true }
   ]
 }
 </script>
 
 <style>
-/* Layout: a sticky header, then the full game grid immediately below it — every game is one click away
-   with nothing to scroll past first. A short brand-mission section sits further down. Single dark brand look. */
+/* Light, editorial puzzle page: white paper, black ink, one flat colour per game.
+   Faces are self-hosted (fonts/, SIL Open Font License). */
+@font-face{font-family:"Zilla Slab";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/zilla-slab-600.woff2) format("woff2")}
+@font-face{font-family:"Zilla Slab";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/zilla-slab-700.woff2) format("woff2")}
+@font-face{font-family:"Libre Franklin";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/libre-franklin.woff2) format("woff2")}
+
 :root{
-  color-scheme:dark;
-  --blue:#0B6BFF;
-  --yellow:#FFD140;
-  --orange:#FF4D4D;
-  --navy:#0A0F2E;
-  --cyan:#22D3EE;
-  --gray:#EAEFF7;
-  --purple:#8B5CF6;
-  --pink:#EC4899;
-  --panel:rgba(16,24,66,.72);
-  --line:rgba(34,211,238,.22);
-  --muted:rgba(234,239,247,.7);
-  --dim:rgba(234,239,247,.45);
-  --g-primary:linear-gradient(90deg,var(--blue),var(--cyan));
-  --g-accent:linear-gradient(90deg,var(--yellow),var(--orange));
-  --g-highlight:linear-gradient(90deg,var(--purple),var(--pink));
-  --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
-  --body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --ink:#121212;
+  --ink-2:#4A4A4A;     /* secondary text: 8.9:1 on white */
+  --ink-3:#6B6B6B;     /* tertiary text: 5.3:1 on white */
+  --paper:#FFFFFF;
+  --paper-2:#F4F4F1;
+  --rule:#DCDCD7;
+  --focus:#2860D8;
+  --slab:"Zilla Slab",Rockwell,"Roboto Slab",Georgia,serif;
+  --sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
+  --gx:20px;
   --ease:cubic-bezier(.16,1,.3,1);
-  --ease2:cubic-bezier(.4,0,.2,1);
-  --px:24px;
-  --safe-t:env(safe-area-inset-top,0px);
   --safe-b:env(safe-area-inset-bottom,0px);
 }
-@media (min-width:640px){:root{--px:32px}}
-@media (min-width:768px){:root{--px:64px}}
-@media (min-width:1024px){:root{--px:104px}}
+@media (min-width:768px){:root{--gx:40px}}
+@media (min-width:1200px){:root{--gx:64px}}
 
+*,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
-html,body{background:var(--navy);color:var(--gray)}
-html{scroll-behavior:smooth}
-body{margin:0;overflow-x:hidden;font-family:var(--body);font-weight:400;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;caret-color:var(--ink)}
+::selection{background:#F5C54A;color:var(--ink)}
+a{color:inherit}
+p,dd,h1,h2,h3{text-wrap:pretty}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
-:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 svg{display:block}
-img{max-width:100%}
+img{max-width:100%;height:auto}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gx)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--ink);color:#fff;padding:10px 14px;border-radius:6px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
 
-/* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 28px;border-radius:999px;
-  font-weight:800;font-size:14px;letter-spacing:.12em;text-transform:uppercase;transition:transform .25s var(--ease),box-shadow .25s var(--ease2),border-color .25s}
-.btn-accent{background:var(--g-accent);color:var(--navy);box-shadow:0 8px 28px -8px rgba(255,77,77,.6)}
-.btn-accent:hover{transform:translateY(-2px);box-shadow:0 12px 36px -8px rgba(255,140,64,.75)}
-.btn-ghost{border:1.5px solid var(--line);color:var(--gray)}
-.btn-ghost:hover{border-color:var(--cyan)}
-.btn-sm{height:40px;padding:0 18px;font-size:12px}
+/* ---------- buttons: black pill primary, ink outline secondary ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 22px;border-radius:999px;
+  font:600 15px/1 var(--sans);text-decoration:none;white-space:nowrap;transition:background-color .2s,color .2s,box-shadow .2s}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#333}
+.btn-outline{box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink);background:var(--paper)}
+.btn-outline:hover{background:var(--paper-2)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-block{width:100%}
 
-/* ---------- nav ---------- */
-.nav{position:sticky;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:24px;
-  padding:calc(16px + var(--safe-t)) 24px 16px;background:rgba(10,15,46,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(34,211,238,.12)}
-@media (min-width:768px){.nav{padding-left:48px;padding-right:48px}}
-.nav-l,.nav-r{display:flex;align-items:center;gap:36px}
-.brand{display:flex;align-items:center;gap:12px}
-.brand img{width:36px;height:36px;border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 6px 20px -6px rgba(11,107,255,.8)}
-.brand b{font-family:var(--display);font-weight:400;font-size:19px;letter-spacing:.02em}
-.brand b span{background:var(--g-accent);-webkit-background-clip:text;background-clip:text;color:transparent}
-.links{display:none;gap:28px}
-@media (min-width:1024px){.links{display:flex}}
-.links a{position:relative;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);transition:color .25s}
-.links a:hover,.links a.active{color:var(--gray)}
-.links a::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:2px;border-radius:2px;background:var(--g-primary);opacity:0;transition:opacity .25s}
-.links a.active::after{opacity:1}
-.burger{width:40px;height:40px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px}
-.burger i{display:block;height:2px;width:24px;border-radius:2px;background:var(--gray)}
-.burger i:last-child{width:16px;background:var(--yellow)}
-@media (min-width:1024px){.burger{display:none}}
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{width:52px;height:30px;object-fit:cover;object-position:center 52%}
+.brand b{font:700 25px/1 var(--slab);letter-spacing:-.01em}
+.top nav{display:flex;align-items:center;gap:26px}
+.top nav a{font-weight:600;font-size:15px;text-decoration:none}
+.top nav a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
+.top .btn{min-height:40px;padding:0 16px;font-size:14px}
+@media (max-width:719px){.top nav a{display:none}}
 
-.eyebrow{margin:0 0 16px;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
-.h-display{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1.02;letter-spacing:.01em;margin:0;text-wrap:balance}
-.grad-accent{background:var(--g-accent);-webkit-background-clip:text;background-clip:text;color:transparent}
-.tagline{margin:0;font-size:14px;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:var(--muted)}
-.tagline i{font-style:normal;color:var(--yellow);margin:0 .5em}
+/* ---------- masthead: today's edition ---------- */
+.mast{padding:40px 0 22px;border-bottom:3px solid var(--ink)}
+.mast .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 32px}
+.mast h1{margin:0;font:700 clamp(2.6rem,6.4vw,4.75rem)/.95 var(--slab);letter-spacing:-.02em}
+.edition{margin:0;text-align:right}
+.edition .date{display:block;font-weight:700;font-size:18px}
+.edition .reset{display:block;margin-top:4px;font-size:15px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+@media (max-width:599px){.mast{padding:22px 0 16px}.edition{text-align:left}.edition .date{font-size:16px}.seven{padding:18px 0}.seven .wrap{gap:14px}.seven h2{font-size:23px}.seven p{font-size:15px}.games{padding-top:28px}}
 
-/* ---------- mission ---------- */
-.marquee{position:relative;padding:26px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.marquee-track{display:flex;gap:16px;width:max-content;animation:marquee-scroll 46s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-item{position:relative;flex:none;width:116px;aspect-ratio:400/560;border-radius:12px;overflow:hidden;background:#141A42;opacity:.8;transition:opacity .2s,transform .2s}
-.marquee-item:hover{opacity:1;transform:translateY(-3px)}
-.marquee-item svg{position:absolute;inset:0;width:100%;height:100%}
-@keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion: reduce){.marquee-track{animation:none}}
-@media (max-width:720px){.marquee-item{width:88px}}
-.game-list{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px 32px}
-.game-list li{padding-bottom:18px;border-bottom:1px solid var(--line)}
-.game-list a{display:block}
-.game-list b{display:block;font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.01em;text-transform:uppercase;color:var(--gray);margin-bottom:5px}
-.game-list span{display:block;font-size:13.5px;line-height:1.55;color:var(--muted)}
-#mission{padding:72px var(--px) 80px;border-top:1px solid var(--line);
-  background:radial-gradient(50% 60% at 85% 0%,rgba(139,92,246,.12),transparent 70%),var(--navy)}
-#mission .wrap{max-width:760px}
-#mission h2{font-size:clamp(2.2rem,4.4vw,3.6rem)}
-#mission .copy{margin:18px 0 0;font-size:16px;line-height:1.65;color:var(--muted);max-width:60ch}
-#about-games{padding:0 var(--px) 72px;border-top:1px solid var(--line)}
-#about-games .wrap{max-width:1040px;padding-top:56px}
-#about-games h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
-#faq{padding:0 var(--px) 72px;border-top:1px solid var(--line)}
-#faq .wrap{max-width:760px;padding-top:56px}
-#faq h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
-.faq-list{margin:32px 0 0}
-.faq-item{padding:22px 0;border-bottom:1px solid var(--line)}
-.faq-item:first-child{padding-top:0}
-.faq-item dt{font-family:var(--display);font-weight:400;font-size:17px;letter-spacing:.01em;text-transform:uppercase;color:var(--gray);margin:0 0 8px}
-.faq-item dd{margin:0;font-size:14.5px;line-height:1.65;color:var(--muted);max-width:62ch}
-.faq-item dd a{color:var(--cyan)}
-.pillars{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px}
-.pillar{display:flex;align-items:center;gap:12px}
-.pillar svg{flex:none}
-.pillar b{display:block;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.pillar span{display:block;font-size:12px;color:var(--dim);margin-top:2px}
+/* ---------- the daily seven ---------- */
+.seven{padding:22px 0;border-bottom:1px solid var(--rule)}
+.seven .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:20px 32px}
+.seven h2{margin:0;font:700 26px/1.1 var(--slab)}
+.seven p{margin:6px 0 0;color:var(--ink-2);max-width:52ch}
+.seven-tiles{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.seven-tiles li{width:40px;height:40px;border-radius:6px;background:var(--tile);display:grid;place-items:center}
+.seven-tiles svg{width:28px;height:28px}
+@media (max-width:959px){.seven .wrap{grid-template-columns:1fr}.seven .btn{justify-self:start}}
+
+/* ---------- game cards ---------- */
+.games{padding:36px 0 56px}
+.games-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:20px}
+.games h2{margin:0;font:700 30px/1.1 var(--slab)}
+.games-head span{color:var(--ink-3);font-size:15px}
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{position:relative;display:flex;flex-direction:column;height:100%;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  text-decoration:none;background:var(--paper);transition:border-color .2s,box-shadow .25s var(--ease)}
+.card:hover{border-color:#B9B9B3;box-shadow:0 10px 24px -14px rgba(18,18,18,.35)}
+.card:focus-visible{outline-offset:2px}
+.card .tile{display:grid;place-items:center;aspect-ratio:16/10;max-height:180px;background:var(--tile)}
+.card .tile svg{width:42%;max-width:112px;height:auto;overflow:visible}
+.card-body{display:flex;flex-direction:column;gap:8px;flex:1;padding:16px 18px 18px}
+.card h3{margin:0;font:700 23px/1.1 var(--slab)}
+.card p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.5;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.card-foot .btn{min-height:40px;padding:0 20px;font-size:14px}
+.cat{font-size:13px;font-weight:600;color:var(--ink-3)}
+.today{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
+.today::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.soon{margin:22px 0 0;color:var(--ink-2);font-size:15px}
+.soon b{color:var(--ink)}
+
+/* phones: each game is a row (colour square, name and line, play) */
+@media (max-width:559px){
+  .grid{grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule)}
+  .card{flex-direction:row;align-items:flex-start;gap:14px;border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:16px 0}
+  .card:hover{box-shadow:none}
+  .card .tile{flex:none;width:72px;aspect-ratio:1;border-radius:10px}
+  .card .tile svg{width:60%}
+  .card-body{padding:0;gap:4px}
+  .card h3{font-size:21px}
+  .card p{font-size:14.5px}
+  .card-foot{margin-top:8px}
+}
+
+/* signature: each icon performs its game's move once on hover / focus */
+.card .mv{transform-box:fill-box;transform-origin:center}
+.mv.rise{transform-origin:bottom}
+.mv.draw{stroke-dasharray:120}
+@media (prefers-reduced-motion:no-preference){
+  .card:hover .mv,.card:focus-visible .mv{animation:var(--move) .9s var(--ease) 1}
+}
+@keyframes flip{0%,100%{transform:scaleY(1)}45%{transform:scaleY(.05)}55%{transform:scaleY(.05)}}
+@keyframes bob{0%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}70%{transform:translateY(1px)}}
+@keyframes tip{0%,100%{transform:rotate(0)}45%{transform:rotate(24deg)}}
+@keyframes climb{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes sweep{0%,100%{transform:rotate(0)}50%{transform:rotate(-90deg)}}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes rise{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.45)}}
+@keyframes pop{0%,100%{transform:scale(1)}40%{transform:scale(1.18)}}
+@keyframes draw{0%{stroke-dashoffset:120}100%{stroke-dashoffset:0}}
+@keyframes lift{0%,100%{transform:translateY(0) rotate(0)}45%{transform:translateY(-6px) rotate(-6deg)}}
+@keyframes gather{0%,100%{transform:translateX(0)}50%{transform:translateX(var(--dx,0))}}
+
+/* ---------- FAQ ---------- */
+.faq{padding:52px 0 64px;border-top:3px solid var(--ink)}
+.faq h2{margin:0 0 8px;font:700 34px/1.1 var(--slab)}
+.faq-list{margin:24px 0 0}
+.faq-item{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:20px 0;border-top:1px solid var(--rule)}
+.faq-item:last-child{border-bottom:1px solid var(--rule)}
+.faq dt{font:700 20px/1.3 var(--slab)}
+.faq dd{margin:0;color:var(--ink-2);max-width:34em}
+.faq dd a{text-underline-offset:3px}
+@media (min-width:880px){.faq-item{grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:32px}}
 
 /* ---------- footer ---------- */
-footer{position:relative;padding:72px var(--px) calc(40px + var(--safe-b));border-top:1px solid var(--line);
-  background:radial-gradient(60% 120% at 50% 0%,rgba(11,107,255,.18),transparent 70%),var(--navy)}
-.foot{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:48px}
-.foot .logo{width:220px;height:auto}
-.foot h3{margin:0 0 16px;font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
-.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
-.foot a{color:var(--muted);transition:color .2s}
-.foot a:hover{color:var(--yellow)}
-.foot .tagline{margin-top:20px;font-size:12px}
-.legal{max-width:1200px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(234,239,247,.08);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:13px;color:var(--dim)}
-@media (max-width:767px){.foot{grid-template-columns:1fr;gap:32px}}
+footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0 calc(32px + var(--safe-b))}
+.foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);gap:32px}
+.foot .logo{width:160px}
+.foot h3{margin:0 0 12px;font:700 18px/1.2 var(--slab)}
+.foot ul{list-style:none;margin:0;padding:0}
+.foot-games{columns:2;column-gap:24px}
+.foot li{margin:0 0 9px;break-inside:avoid}
+.foot a{text-decoration:none;color:var(--ink-2)}
+.foot a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:36px;padding-top:18px;border-top:1px solid var(--rule);font-size:14px;color:var(--ink-3)}
+@media (max-width:767px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}.foot-games{columns:1}}
 
-/* ---------- menu ---------- */
-#menu{position:fixed;inset:0;z-index:100;background:var(--navy);display:flex;flex-direction:column;justify-content:flex-start;gap:12px;overflow-y:auto;overscroll-behavior:contain;
-  padding:calc(96px + var(--safe-t)) 24px calc(48px + var(--safe-b));opacity:0;visibility:hidden;transform:translateY(-32px);
-  transition:opacity .5s var(--ease2),transform .5s var(--ease2),visibility 0s linear .5s}
-#menu.open{opacity:1;visibility:visible;transform:none;transition:opacity .5s var(--ease2),transform .5s var(--ease2)}
-#menu nav{display:flex;flex-direction:column;gap:14px}
-#menu nav a{font-family:var(--display);font-size:clamp(2rem,9vw,2.6rem);text-transform:uppercase;letter-spacing:.02em;color:var(--dim);transition:color .2s}
-#menu nav a:hover,#menu nav a.active{color:var(--gray)}
-#menu .sub{margin:28px 0 4px;font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
-#menuGames a{color:var(--yellow)}
-#close{position:absolute;top:calc(20px + var(--safe-t));right:24px;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center}
-#close:hover{border-color:var(--cyan)}
-@media (min-width:640px){#menu{padding-left:32px;padding-right:32px}#close{right:32px;top:calc(28px + var(--safe-t))}}
-
-/* ---------- daily challenge: trigger, modal, gate, board ---------- */
-.challenge-btn{display:flex;align-items:center;gap:7px;padding:9px 16px 9px 13px;border-radius:999px;
-  background:var(--g-accent);color:var(--navy);font-size:13px;font-weight:800;letter-spacing:.01em}
-.challenge-btn:hover{filter:brightness(1.06)}
-@media (max-width:480px){.challenge-btn span{display:none}}
-
-.ch-backdrop{position:fixed;inset:0;z-index:110;background:rgba(5,8,26,.72);backdrop-filter:blur(3px);
-  opacity:0;visibility:hidden;transition:opacity .3s var(--ease2),visibility 0s linear .3s}
-.ch-backdrop.open{opacity:1;visibility:visible;transition:opacity .3s var(--ease2)}
-
-.ch-modal{position:fixed;z-index:111;left:50%;top:50%;width:min(640px,calc(100vw - 32px));max-height:calc(100vh - 64px);
-  overflow-y:auto;background:#0D1438;border:1px solid var(--line);border-radius:20px;
-  padding:32px 24px calc(28px + var(--safe-b));box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
-  transform:translate(-50%,-46%) scale(.97);opacity:0;visibility:hidden;
-  transition:opacity .3s var(--ease2),transform .3s var(--ease2),visibility 0s linear .3s}
-.ch-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);transition:opacity .3s var(--ease2),transform .3s var(--ease2)}
-@media (min-width:640px){.ch-modal{padding:40px 40px 36px}}
-.ch-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--muted)}
-.ch-close:hover{border-color:var(--cyan);color:var(--gray)}
-#chDate{margin-bottom:10px}
-.ch-modal h2{font-size:clamp(1.5rem,5vw,2rem)}
-.ch-sub{margin:10px 0 0;font-size:14px;line-height:1.55;color:var(--muted);max-width:52ch}
-
-.ch-games{display:flex;gap:10px;overflow-x:auto;padding:18px 2px 4px;scrollbar-width:thin}
-.ch-games .ch-g{flex:none;width:76px;text-align:center}
-.ch-games .ch-g .th{display:block;width:76px;aspect-ratio:400/560;border-radius:10px;overflow:hidden;background:#141A42;position:relative}
-.ch-games .ch-g .th svg{position:absolute;inset:0;width:100%;height:100%}
-.ch-games .ch-g b{display:block;margin-top:6px;font-size:10.5px;font-weight:600;color:var(--muted);line-height:1.25}
-
-.ch-gate{display:grid;gap:18px;margin-top:22px;grid-template-columns:1fr}
-@media (min-width:560px){.ch-gate{grid-template-columns:1fr auto 1fr;align-items:start}}
-.ch-path{border:1px solid var(--line);border-radius:14px;padding:18px}
-.ch-path h3{font-family:var(--display);font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:.01em;margin:0 0 6px}
-.ch-path p{margin:0 0 14px;font-size:13px;line-height:1.5;color:var(--muted)}
-.ch-divider{display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
-@media (max-width:559px){.ch-divider{display:none}}
-.btn{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:11px 16px;border-radius:10px;
-  font-size:13.5px;font-weight:700;letter-spacing:.01em;cursor:pointer}
-.btn.ghost{background:rgba(234,239,247,.08);color:var(--gray);border:1px solid var(--line)}
-.btn.ghost:hover{background:rgba(234,239,247,.14)}
-.btn.primary{background:var(--g-primary);color:#fff;margin-top:2px}
-.btn.primary:hover{filter:brightness(1.08)}
-#chAuthForm{display:flex;flex-direction:column;gap:9px}
-#chAuthForm input{background:rgba(234,239,247,.06);border:1px solid var(--line);border-radius:9px;padding:10px 12px;
-  color:var(--gray);font:inherit;font-size:13.5px}
-#chAuthForm input::placeholder{color:var(--dim)}
-#chAuthForm input:focus{outline:2px solid var(--cyan);outline-offset:1px}
-.ch-toggle{margin:10px 0 0;font-size:12.5px;color:var(--dim)}
-.ch-toggle button{color:var(--cyan);font-weight:600}
-.ch-msg{margin:10px 0 0;font-size:12.5px;min-height:1em}
-.ch-msg.err{color:#FF8A8A}
-.ch-msg.ok{color:#6EE7B7}
-
-.ch-playing .ch-msg{font-size:14px;font-weight:700}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-#chAuthForm input[aria-invalid="true"]{border-color:#FF8A8A}
-.ch-fine{margin:12px 0 0;font-size:12px;line-height:1.5;color:var(--muted)}
-.ch-fine a,.ch-link,.ch-retry{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
-.ch-link{margin-top:16px;font-size:13.5px;font-weight:600}
-.ch-retry{font-weight:600}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-
-.ch-board{margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
-.ch-board h3{font-family:var(--display);font-weight:400;font-size:15px;text-transform:uppercase;letter-spacing:.01em;margin:0 0 12px}
-.ch-board-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-.ch-board-list li{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:8px 10px;border-radius:9px}
-.ch-board-list li:nth-child(odd){background:rgba(234,239,247,.04)}
-.ch-board-list .rank{font-family:var(--display);font-size:13px;color:var(--cyan);width:22px;flex:none}
-.ch-board-list .name{flex:1;color:var(--gray);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ch-board-list .score{font-weight:700;color:var(--yellow)}
-.ch-board-empty{color:var(--dim);font-size:13px;padding:8px 10px}
-
-/* ---------- game library: instant grid ---------- */
-:root{--hx:20px}
-@media (min-width:640px){:root{--hx:32px}}
-@media (min-width:1024px){:root{--hx:56px}}
-#hub{position:relative;overflow:hidden;padding:36px 0 56px;background:var(--navy)}
-#hub > *{position:relative}
-#hub > .hub-glow{position:absolute;pointer-events:none;inset:0;
-  background:radial-gradient(50% 36% at 82% 0%,rgba(11,107,255,.22),transparent 70%),radial-gradient(40% 30% at 6% 50%,rgba(139,92,246,.12),transparent 70%)}
-.hub-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;padding:0 var(--hx);margin-bottom:22px}
-.hub-head h1{font-size:clamp(2.2rem,4.2vw,3.4rem)}
-.hub-head .eyebrow{margin-bottom:10px}
-.search{display:flex;align-items:center;gap:10px;height:50px;padding:0 18px;border-radius:999px;background:var(--panel);border:1px solid var(--line);width:min(360px,100%);color:var(--dim);transition:border-color .2s}
-.search:focus-within{border-color:var(--cyan)}
-.search input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--gray);font:inherit;font-size:15px}
-.search input::placeholder{color:var(--dim)}
-.search input::-webkit-search-cancel-button{filter:invert(1)}
-
-/* chips */
-.chips{display:flex;gap:10px;overflow-x:auto;padding:4px var(--hx) 8px;margin-bottom:24px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border-radius:14px;background:var(--panel);border:1px solid rgba(234,239,247,.08);font-size:14px;font-weight:600;color:var(--muted);transition:color .2s,border-color .2s,background .2s}
-.chip:hover{color:var(--gray);border-color:var(--line)}
-.chip[aria-pressed="true"]{background:rgba(11,107,255,.22);border-color:var(--cyan);color:var(--gray)}
-.chip b{font-weight:600;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
-
-/* grid of poster cards: every game is one click away, nothing to scroll past first */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px;padding:0 var(--hx)}
-.item{display:flex;flex-direction:column;gap:10px;min-width:0}
-.poster{position:relative;display:block;aspect-ratio:5/7;border-radius:16px;overflow:hidden;background:var(--panel);
-  transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));transition:transform .5s var(--ease),box-shadow .35s;
-  box-shadow:0 18px 40px -20px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.07)}
-.poster.tracking{transition:transform .12s linear,box-shadow .35s}
-.poster::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.24),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
-a.poster:hover,a.poster:focus-visible{--ty:-8px;box-shadow:0 28px 50px -18px rgba(11,107,255,.8),0 0 0 2px var(--cyan)}
-a.poster:hover::after{opacity:1}
-.pbtn{position:absolute;right:12px;bottom:12px;width:44px;height:44px;border-radius:50%;background:var(--yellow);color:var(--navy);display:grid;place-items:center;opacity:0;transform:translateY(8px) scale(.9);transition:opacity .3s,transform .3s var(--ease);box-shadow:0 8px 20px -6px rgba(255,209,64,.7)}
-a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
-.item .t{font-size:15px;font-weight:700}
-.item .m{font-size:13px;color:var(--dim);margin-top:-6px}
-.item .m em{font-style:normal;color:var(--cyan)}
-.item.soon .poster{display:flex;align-items:center;justify-content:center;
-  background:repeating-linear-gradient(135deg,rgba(234,239,247,.05) 0 10px,rgba(234,239,247,.02) 10px 20px);
-  border:1.5px dashed rgba(234,239,247,.22)}
-.item.soon .poster svg{width:30px;height:30px;opacity:.4}
-.item.soon .t{color:var(--muted)}
-.item.soon .m{color:var(--orange)}
-.empty{margin:0;padding:18px var(--hx) 0;color:var(--dim);font-size:15px}
-/* Touch screens show the button all the time, so it sits top-right, clear of the painted title. */
-@media (hover:none){.pbtn{opacity:1;transform:none;width:38px;height:38px;top:10px;right:10px;bottom:auto}}
-
-@media (max-width:767px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px}
-  .hub-head{margin-bottom:18px}
-  #mission{padding:52px var(--px) 60px}
-  #mission .pillars{gap:16px 20px;margin-top:18px}
-  #mission .pillar svg{width:24px;height:24px}
-  #mission .pillar span{display:none}
-}
+/* ---------- challenge dialog ---------- */
+.ch-backdrop{position:fixed;inset:0;z-index:110;background:rgba(18,18,18,.5);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s linear .25s}
+.ch-backdrop.open{opacity:1;visibility:visible;transition:opacity .25s}
+.ch-modal{position:fixed;z-index:111;left:50%;top:50%;width:min(680px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;
+  background:var(--paper);border-radius:14px;padding:28px 22px calc(24px + var(--safe-b));box-shadow:0 24px 60px -20px rgba(0,0,0,.45);
+  transform:translate(-50%,-47%);opacity:0;visibility:hidden;transition:opacity .25s,transform .3s var(--ease),visibility 0s linear .3s}
+.ch-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%);transition:opacity .25s,transform .3s var(--ease)}
+@media (min-width:640px){.ch-modal{padding:36px 36px 32px}}
+.ch-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+.ch-close:hover{background:var(--paper-2)}
+.ch-modal h2{margin:0;padding-right:44px;font:700 clamp(1.7rem,5vw,2.2rem)/1.05 var(--slab)}
+.ch-date{margin:6px 0 0;font-weight:700}
+.ch-sub{margin:8px 0 0;color:var(--ink-2);max-width:56ch}
+.ch-games{display:flex;gap:10px;overflow-x:auto;padding:18px 2px 6px;scrollbar-width:thin}
+.ch-g{flex:none;width:76px;text-align:center;text-decoration:none}
+.ch-g .th{display:grid;place-items:center;width:76px;height:76px;border-radius:10px;background:var(--tile)}
+.ch-g .th svg{width:46px;height:46px}
+.ch-g b{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.25}
+.ch-gate{display:grid;gap:16px;margin-top:20px;grid-template-columns:1fr;align-items:start}
+@media (min-width:600px){.ch-gate{grid-template-columns:1fr 1fr}}
+.ch-path{border:1px solid var(--rule);border-radius:12px;padding:18px}
+.ch-path h3{margin:0 0 6px;font:700 20px/1.15 var(--slab)}
+.ch-path p{margin:0 0 14px;font-size:14.5px;color:var(--ink-2)}
+#chAuthForm{display:flex;flex-direction:column;gap:10px}
+#chAuthForm input{min-height:46px;border:1.5px solid #8A8A8A;border-radius:8px;padding:0 12px;font:16px var(--sans);color:var(--ink);background:#fff}
+#chAuthForm input::placeholder{color:var(--ink-3)}
+#chAuthForm input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--ink)}
+#chAuthForm input[aria-invalid="true"]{border-color:#C0262D}
+.ch-toggle{margin:12px 0 0;font-size:14px;color:var(--ink-2)}
+.ch-toggle button,.ch-link,.ch-retry,.ch-fine a{font-weight:600;text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
+.ch-msg{margin:10px 0 0;font-size:14px;min-height:1.2em}
+.ch-msg.err{color:#B3261E}
+.ch-msg.ok{color:#1E6B3A}
+.ch-fine{margin:12px 0 0;font-size:13px;color:var(--ink-3)}
+.ch-playing .ch-msg{font-size:16px;font-weight:700}
+.ch-link{margin-top:14px;font-size:15px;min-height:44px}
+.ch-board{margin-top:24px;padding-top:18px;border-top:3px solid var(--ink)}
+.ch-board h3{margin:0 0 8px;font:700 20px/1.15 var(--slab)}
+.ch-board-list{list-style:none;margin:0;padding:0}
+.ch-board-list li{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--rule);font-size:15px}
+.ch-board-list .rank{width:24px;flex:none;font:700 17px var(--slab);font-variant-numeric:tabular-nums}
+.ch-board-list .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-board-list .score{font-weight:700;font-variant-numeric:tabular-nums}
+.ch-board-list .ch-board-empty{color:var(--ink-2);display:block}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0ms!important}
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
 }
 </style>
+</head>
+<body>
+<a class="skip" href="#games">Skip to the games</a>
 
-<header class="nav">
-  <div class="nav-l">
-    <a href="#" class="brand" data-go="hub" aria-label="BGameWorld home">
-      <img src="icon.webp" alt="" width="36" height="36"><b>B<span>Game</span>World</b>
+<header class="top">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label="BGameWorld home">
+      <img src="icon.webp" alt="" width="52" height="30"><b>BGameWorld</b>
     </a>
-    <nav class="links" aria-label="Sections">
-      <a href="#hub" class="active" data-go="hub">Games</a>
-      <a href="#mission" data-go="mission">Mission</a>
+    <nav aria-label="Site">
+      <a href="#games">All games</a>
+      <a href="#faq">FAQ</a>
+      <button class="btn btn-outline" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false">Today's challenge</button>
     </nav>
-  </div>
-  <div class="nav-r">
-    <button class="challenge-btn" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false" aria-label="Today's challenge">
-      <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8v4a4 4 0 0 1-8 0V3z"/><path d="M6 4H3v1a3 3 0 0 0 3 3M14 4h3v1a3 3 0 0 1-3 3"/><path d="M10 11v3M7 17h6M8 14h4v3H8z"/></svg>
-      <span>Challenge</span>
-    </button>
-    <button class="burger" id="openMenu" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
   </div>
 </header>
 
-<section id="hub" aria-label="Game library">
-  <div class="hub-glow"></div>
-  <div class="hub-head">
-    <div><p class="eyebrow">Game library</p><h1 class="h-display">Pick a game, <span class="grad-accent">play instantly</span></h1></div>
-    <label class="search"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
-      <input id="q" type="search" placeholder="Search games" aria-label="Search games" autocomplete="off"></label>
-  </div>
-  <div class="chips" id="chips" role="toolbar" aria-label="Filter games"></div>
-  <div class="grid" id="grid"></div>
-  <p class="empty" id="empty" hidden></p>
-</section>
-
-<section class="marquee" aria-hidden="true">
-  <div class="marquee-track" id="marqueeTrack"></div>
-</section>
-
-<section id="mission" aria-label="Mission">
-  <div class="wrap">
-    <p class="eyebrow">Brand mission</p>
-    <h2 class="h-display">More than games.<br>It&rsquo;s a <span class="grad-accent">world.</span></h2>
-    <p class="copy">BGameWorld is a vibrant gaming platform built for players, creators and communities. We bring people together through the power of games, turning passion into real experiences.</p>
-    <div class="pillars">
-      <div class="pillar">
-        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h14a6 6 0 0 1 6 6v3a5 5 0 0 1-9 3l-1-1h-6l-1 1a5 5 0 0 1-9-3v-3a6 6 0 0 1 6-6z"/><path d="M10 14v4M8 16h4"/><circle cx="21" cy="15" r="1" fill="#22D3EE"/><circle cx="23.5" cy="17.5" r="1" fill="#22D3EE"/></svg>
-        <div><b>Play</b><span>Without limits</span></div>
-      </div>
-      <div class="pillar">
-        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#0B6BFF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="11" r="4.5"/><path d="M4 26a8 8 0 0 1 16 0"/><circle cx="22" cy="12" r="3.5"/><path d="M21 18a7 7 0 0 1 8 7"/></svg>
-        <div><b>Connect</b><span>With others</span></div>
-      </div>
-      <div class="pillar">
-        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#EC4899" stroke-width="2" stroke-linejoin="round"><path d="M16 4l3.6 7.4 8.1 1.2-5.9 5.7 1.4 8.1L16 22.6l-7.2 3.8 1.4-8.1-5.9-5.7 8.1-1.2z"/></svg>
-        <div><b>Explore</b><span>New worlds</span></div>
-      </div>
+<main>
+  <section class="mast" aria-labelledby="todayTitle">
+    <div class="wrap">
+      <h1 id="todayTitle">Today's puzzles</h1>
+      <p class="edition"><span class="date" id="todayDate"></span><span class="reset" id="resetIn"></span></p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="about-games" aria-label="About each game">
-  <div class="wrap">
-    <p class="eyebrow">Every game</p>
-    <h2 class="h-display">What you'll actually play</h2>
-    <ul class="game-list" id="gameList"></ul>
-  </div>
-</section>
+  <section class="seven" aria-labelledby="sevenTitle">
+    <div class="wrap">
+      <div>
+        <h2 id="sevenTitle">The Daily Seven</h2>
+        <p>Seven of today's games, the same seven for everyone. Play them all, add up your scores, and see where you rank.</p>
+      </div>
+      <ul class="seven-tiles" id="sevenTiles"></ul>
+      <button class="btn btn-primary" id="startChallenge" aria-haspopup="dialog" aria-controls="challengeModal">Start today's challenge</button>
+    </div>
+  </section>
 
-<section id="faq" aria-label="Frequently asked questions">
-  <div class="wrap">
-    <p class="eyebrow">Good to know</p>
-    <h2 class="h-display">Questions people actually ask</h2>
-    <dl class="faq-list">
-      <div class="faq-item">
-        <dt>Do I need an account to play?</dt>
-        <dd>No. Every game on BGameWorld opens straight into the browser, free, with nothing to install and no sign-up wall. An account only matters if you want your progress, streaks or daily-challenge score saved and shown on a leaderboard &mdash; playing without one works exactly the same, you just won't be ranked.</dd>
-      </div>
-      <div class="faq-item">
-        <dt>What's the daily 7-game challenge?</dt>
-        <dd>Each day the site picks 7 of the 11 games at random, the same 7 for every player that day, so everyone is comparing the same set. Play them from the "Challenge" button in the header, add up your score across all seven, and see where you land against everyone else who signed up that day. It's entirely optional &mdash; the rest of the site works the same with or without it.</dd>
-      </div>
-      <div class="faq-item">
-        <dt>Do the daily puzzles reset at the same time for everyone?</dt>
-        <dd>Yes. Each game's daily puzzle (Wordezy's word, Sortezy's tube layout, Wordezy Search's word list, and so on) is shared across every player and resets at midnight UTC, so the whole site is solving the same puzzle on the same day no matter where you're playing from.</dd>
-      </div>
-      <div class="faq-item">
-        <dt>Are the games actually free?</dt>
-        <dd>Yes &mdash; every game is free to play, with no purchases, subscriptions or paywalled levels. The site is supported by ads rather than charging players.</dd>
-      </div>
-      <div class="faq-item">
-        <dt>Can I play on my phone?</dt>
-        <dd>Yes. Every game is built to run in a mobile browser at the same URL as the desktop version &mdash; there's no separate app to download.</dd>
-      </div>
-      <div class="faq-item">
-        <dt>What happens to my information if I sign up?</dt>
-        <dd>Signing up only needs an email, password and the display name shown on leaderboards. You can read exactly what's collected and how to delete it on the <a href="/privacy/">privacy policy</a>.</dd>
-      </div>
-    </dl>
-  </div>
-</section>
+  <section class="games" id="games" aria-labelledby="gamesTitle">
+    <div class="wrap">
+      <div class="games-head"><h2 id="gamesTitle">All games</h2><span id="gamesCount"></span></div>
+      <ul class="grid" id="grid"></ul>
+      <p class="soon" id="soon"></p>
+    </div>
+  </section>
 
-<!-- Ad slot — sits below the mission section, clear of the instant game grid above.
-     Uncomment once AdSense is approved and fill in the real client/slot IDs. -->
-<!--
-<div class="ad-slot" style="max-width:970px;margin:0 auto;padding:0 20px 20px;text-align:center">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-       data-ad-slot="XXXXXXXXXX"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
--->
+  <!-- Ad slot — sits below the game grid, never above it.
+       Uncomment once AdSense is approved and fill in the real client/slot IDs. -->
+  <!--
+  <div class="ad-slot" style="max-width:970px;margin:0 auto;padding:0 20px 24px;text-align:center">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  -->
+
+  <section class="faq" id="faq" aria-labelledby="faqTitle">
+    <div class="wrap">
+      <h2 id="faqTitle">Questions people actually ask</h2>
+      <dl class="faq-list">
+        <div class="faq-item">
+          <dt>Do I need an account to play?</dt>
+          <dd>No. Every game on BGameWorld opens straight into the browser, free, with nothing to install and no sign-up wall. An account only matters if you want your progress, streaks or daily-challenge score saved and shown on a leaderboard &mdash; playing without one works exactly the same, you just won't be ranked.</dd>
+        </div>
+        <div class="faq-item">
+          <dt>What's the daily 7-game challenge?</dt>
+          <dd>Each day the site picks 7 of the 11 games at random, the same 7 for every player that day, so everyone is comparing the same set. Play them from the "Today's challenge" button, add up your score across all seven, and see where you land against everyone else who signed up that day. It's entirely optional &mdash; the rest of the site works the same with or without it.</dd>
+        </div>
+        <div class="faq-item">
+          <dt>Do the daily puzzles reset at the same time for everyone?</dt>
+          <dd>Yes. Each game's daily puzzle (Wordezy's word, Sortezy's tube layout, Wordezy Search's word list, and so on) is shared across every player and resets at midnight UTC, so the whole site is solving the same puzzle on the same day no matter where you're playing from.</dd>
+        </div>
+        <div class="faq-item">
+          <dt>Are the games actually free?</dt>
+          <dd>Yes &mdash; every game is free to play, with no purchases, subscriptions or paywalled levels. The site is supported by ads rather than charging players.</dd>
+        </div>
+        <div class="faq-item">
+          <dt>Can I play on my phone?</dt>
+          <dd>Yes. Every game is built to run in a mobile browser at the same URL as the desktop version &mdash; there's no separate app to download.</dd>
+        </div>
+        <div class="faq-item">
+          <dt>What happens to my information if I sign up?</dt>
+          <dd>Signing up only needs an email, password and the display name shown on leaderboards. You can read exactly what's collected and how to delete it on the <a href="/privacy/">privacy policy</a>.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <div class="foot">
-    <div>
-      <img class="logo" src="logo.webp" alt="BGameWorld" width="602" height="348" loading="lazy">
-      <p class="tagline">Play<i>&bull;</i>Connect<i>&bull;</i>Explore</p>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <img class="logo" src="logo.webp" alt="BGameWorld" width="602" height="348" loading="lazy">
+      </div>
+      <div>
+        <h3>Games</h3>
+        <ul class="foot-games" id="footGames"></ul>
+      </div>
+      <div>
+        <h3>BGameWorld</h3>
+        <ul>
+          <li><a href="#games">All games</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms</a></li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <h3>Games</h3>
-      <ul id="footGames"></ul>
-    </div>
-    <div>
-      <h3>BGameWorld</h3>
-      <ul>
-        <li><a href="#hub" data-go="hub">All games</a></li>
-        <li><a href="#mission" data-go="mission">Mission</a></li>
-        <li><a href="/privacy/">Privacy</a></li>
-        <li><a href="/terms/">Terms</a></li>
-      </ul>
-    </div>
+    <div class="legal"><span>&copy; 2026 BGameWorld</span><span>Free daily puzzles, right in your browser.</span></div>
   </div>
-  <div class="legal"><span>&copy; 2026 BGameWorld</span><span>Free games, right in your browser.</span></div>
 </footer>
-
-<div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
-  <button id="close" aria-label="Close menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14"/></svg></button>
-  <nav aria-label="Sections">
-    <a href="#hub" data-go="hub" class="active">Games</a>
-    <a href="#mission" data-go="mission">Mission</a>
-  </nav>
-  <p class="sub">Play now</p>
-  <nav id="menuGames" aria-label="Games"></nav>
-</div>
 
 <div class="ch-backdrop" id="challengeBackdrop" hidden></div>
 <div class="ch-modal" id="challengeModal" role="dialog" aria-modal="true" aria-labelledby="chTitle" hidden>
   <button class="ch-close" id="chClose" aria-label="Close challenge">
-    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14"/></svg>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14"/></svg>
   </button>
 
   <div id="chBody">
-    <p class="eyebrow" id="chDate"></p>
-    <h2 class="h-display" id="chTitle">Today's 7&#8209;game challenge</h2>
+    <h2 id="chTitle">The Daily Seven</h2>
+    <p class="ch-date" id="chDate"></p>
     <p class="ch-sub">Play all seven, add up your score, see where you land on today's leaderboard.</p>
 
     <div class="ch-games" id="chGames"></div>
@@ -578,9 +413,8 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
       <div class="ch-path">
         <h3>Play as guest</h3>
         <p>Jump straight in. Your scores won't be saved, and you won't show up on the leaderboard.</p>
-        <button class="btn ghost" id="chGuestBtn">Continue as guest</button>
+        <button class="btn btn-outline btn-block" id="chGuestBtn">Continue as guest</button>
       </div>
-      <div class="ch-divider"><span>or</span></div>
       <div class="ch-path">
         <h3 id="chAuthHeading">Sign up to compete</h3>
         <p>Save your scores and get ranked on today's leaderboard against everyone else playing.</p>
@@ -591,17 +425,17 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
           <input type="email" id="chEmail" placeholder="Email" autocomplete="email" inputmode="email">
           <label class="sr-only" for="chPassword">Password</label>
           <input type="password" id="chPassword" placeholder="Password (6+ characters)" autocomplete="new-password">
-          <button type="submit" class="btn primary" id="chAuthSubmit">Sign up</button>
+          <button type="submit" class="btn btn-primary btn-block" id="chAuthSubmit">Sign up</button>
         </form>
         <p class="ch-toggle"><span id="chToggleLead">Already have an account?</span> <button type="button" id="chToggleMode">Sign in</button></p>
         <p class="ch-msg" id="chAuthMsg" role="status" aria-live="polite"></p>
-        <p class="ch-fine">Scores and your display name appear on the public leaderboard. <a href="/privacy/">Privacy</a> · <a href="#faq" id="chFaqLink">How scoring works</a></p>
+        <p class="ch-fine">Your display name and score appear on the public leaderboard. <a href="/privacy/">Privacy</a> · <a href="#faq" id="chFaqLink">How scoring works</a></p>
       </div>
     </div>
 
     <div class="ch-playing" id="chPlaying" hidden>
       <p class="ch-msg ok" id="chPlayingMsg" role="status"></p>
-      <p class="ch-sub">Play today's seven, then check back to see your rank:</p>
+      <p class="ch-sub">Play today's seven (each opens in a new tab), then check back to see your rank:</p>
       <div class="ch-games" id="chGamesPlaying"></div>
       <button type="button" class="ch-link" id="chSwitchToAccount" hidden>Want your scores ranked? Sign up or sign in</button>
     </div>
@@ -614,305 +448,157 @@ a.poster:hover .pbtn,a.poster:focus-visible .pbtn{opacity:1;transform:none}
 </div>
 
 <script>
-/* ===== Edit your games here ===== */
+/* ===== Edit your games here =====
+   art: the game's id (also used by each game to report its challenge score; don't rename).
+   cat: Word, Logic or Trivia. color: the game's flat tile colour (ink #121212 sits on it). */
 const GAMES = [
-  { name: "When & Where", genre: "Trivia", art: "timeguess", url: "https://whenandwhere.bgameworld.com",
-    blurb: "Look at a real archival photo, then guess the year, the place and even the day of the week it was taken.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Wordezy", genre: "Puzzle", art: "wordezy", url: "https://wordezy.bgameworld.com",
-    blurb: "Guess the daily word in six tries, warm up first with a free practice round, and race the clock for a spot on the speed leaderboard.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Wordezy Search", genre: "Puzzle", art: "wordsearch", url: "https://wordezysearch.bgameworld.com",
-    blurb: "Hunt 24 hidden words a day across 22 themes, race the clock on the shared daily board, or pick your difficulty and go unlimited.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Wordezy Scramble", genre: "Puzzle", art: "scramble", url: "https://wordezyscramble.bgameworld.com",
-    blurb: "Unscramble five words a day, from 4 letters up to 8, shuffle the tiles and race the clock for a spot on the daily leaderboard.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Wordezy Ladder", genre: "Puzzle", art: "ladder", url: "https://wordezyladder.bgameworld.com",
-    blurb: "Climb from one word to another by changing a single letter at a time, every step a real word, and try to reach the top in par.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Sortezy", genre: "Puzzle", art: "sortezy", url: "https://sortezy.bgameworld.com",
-    blurb: "Pour coloured water until every tube holds one colour, with a new puzzle every day and levels that grow from 3 colours to 12.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Lingoezy", genre: "Trivia", art: "lingoezy", url: "https://lingoezy.bgameworld.com",
-    blurb: "Pick the right translation from four look-alike words and dodge the false friends, with ten new words a day in five languages.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Linkezy", genre: "Puzzle", art: "linkezy", url: "https://linkezy.bgameworld.com",
-    blurb: "Join each pair of dots without crossing a line and fill every square, with a new board every day and 100 levels to climb.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Warmezy", genre: "Puzzle", art: "warmezy", url: "https://warmezy.bgameworld.com",
-    blurb: "Find the secret word by meaning: every guess gets a rank, and the lower the number, the hotter you are. One word a day for everyone.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Letterezy", genre: "Puzzle", art: "letterezy", url: "https://letterezy.bgameworld.com",
-    blurb: "Spell words from today's bag of 25 letters to score points, reach the bonus squares with long words, and try to use every letter.",
-    platforms: ["Desktop", "Mobile"] },
-  { name: "Mergezy", genre: "Puzzle", art: "mergezy", url: "https://mergezy.bgameworld.com",
-    blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard.",
-    platforms: ["Desktop", "Mobile"] }
+  { name: "Wordezy", cat: "Word", art: "wordezy", color: "#7CC4A4", url: "https://wordezy.bgameworld.com",
+    blurb: "Guess the daily word in six tries, warm up first with a free practice round, and race the clock for a spot on the speed leaderboard." },
+  { name: "Wordezy Search", cat: "Word", art: "wordsearch", color: "#F5C54A", url: "https://wordezysearch.bgameworld.com",
+    blurb: "Hunt 24 hidden words a day across 22 themes, race the clock on the shared daily board, or pick your difficulty and go unlimited." },
+  { name: "Wordezy Scramble", cat: "Word", art: "scramble", color: "#F4977A", url: "https://wordezyscramble.bgameworld.com",
+    blurb: "Unscramble five words a day, from 4 letters up to 8, shuffle the tiles and race the clock for a spot on the daily leaderboard." },
+  { name: "Wordezy Ladder", cat: "Word", art: "ladder", color: "#9CC3F0", url: "https://wordezyladder.bgameworld.com",
+    blurb: "Climb from one word to another by changing a single letter at a time, every step a real word, and try to reach the top in par." },
+  { name: "Warmezy", cat: "Word", art: "warmezy", color: "#F7A35C", url: "https://warmezy.bgameworld.com",
+    blurb: "Find the secret word by meaning: every guess gets a rank, and the lower the number, the hotter you are. One word a day for everyone." },
+  { name: "Letterezy", cat: "Word", art: "letterezy", color: "#D9C792", url: "https://letterezy.bgameworld.com",
+    blurb: "Spell words from today's bag of 25 letters to score points, reach the bonus squares with long words, and try to use every letter." },
+  { name: "Lingoezy", cat: "Word", art: "lingoezy", color: "#79D0CF", url: "https://lingoezy.bgameworld.com",
+    blurb: "Pick the right translation from four look-alike words and dodge the false friends, with ten new words a day in five languages." },
+  { name: "Sortezy", cat: "Logic", art: "sortezy", color: "#C9A8EC", url: "https://sortezy.bgameworld.com",
+    blurb: "Pour coloured water until every tube holds one colour, with a new puzzle every day and levels that grow from 3 colours to 12." },
+  { name: "Linkezy", cat: "Logic", art: "linkezy", color: "#F28FA2", url: "https://linkezy.bgameworld.com",
+    blurb: "Join each pair of dots without crossing a line and fill every square, with a new board every day and 100 levels to climb." },
+  { name: "Mergezy", cat: "Logic", art: "mergezy", color: "#8FA9F5", url: "https://mergezy.bgameworld.com",
+    blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard." },
+  { name: "When & Where", cat: "Trivia", art: "timeguess", color: "#E8B96A", url: "https://whenandwhere.bgameworld.com",
+    blurb: "Look at a real archival photo, then guess the year, the place and even the day of the week it was taken." }
 ];
 // Not built yet. When one goes live, move it into GAMES above with its url,
-// genre and blurb.
+// cat, color, blurb and an icon below.
 const COMING = [
   { name: "Jetpack Surge" },
   { name: "Crossword" }
 ];
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-/* ---------- poster & banner art (SVG, so it stays sharp at any size) ---------- */
-let uid = 0;
-const PLAY_ICON = '<svg width="16" height="16" viewBox="0 0 12 12" fill="currentColor"><path d="M3 1.5v9l7.5-4.5z"/></svg>';
+const $ = id => document.getElementById(id);
 function rand(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
 
-function tgMotif(u) {
-  return `
-  <circle cx="300" cy="300" r="250" fill="url(#gl${u})" stroke="rgba(34,211,238,.4)" stroke-width="2"/>
-  <g fill="none" stroke="rgba(34,211,238,.22)" stroke-width="1.5">
-    <ellipse cx="300" cy="300" rx="170" ry="250"/><ellipse cx="300" cy="300" rx="80" ry="250"/>
-    <ellipse cx="300" cy="300" rx="250" ry="90"/><path d="M50 300h500M90 180h420M90 420h420"/></g>
-  <g transform="translate(70 110) rotate(-14)">
-    <rect width="220" height="260" rx="8" fill="#F2EBDD"/><rect x="14" y="14" width="192" height="180" fill="url(#se${u})"/>
-    <path d="M14 194V140h20v-30h18v40h16v-60h22v50h20v-20h18v35h24v-45h20v60h20v64z" fill="rgba(60,35,15,.55)"/>
-    <rect x="30" y="214" width="110" height="8" rx="4" fill="#CFC3AB"/></g>
-  <g transform="translate(330 140) rotate(11)">
-    <rect width="220" height="260" rx="8" fill="#ECEFF4"/><rect x="14" y="14" width="192" height="180" fill="url(#mo${u})"/>
-    <circle cx="160" cy="60" r="16" fill="#E7E2D6"/><path d="M14 194L70 110l35 40 45-70 56 114z" fill="#2E3646"/>
-    <rect x="30" y="214" width="90" height="8" rx="4" fill="#C9D0DB"/></g>
-  <g transform="translate(180 250) rotate(-3)">
-    <rect width="240" height="280" rx="8" fill="#FFF8EC"/><rect x="14" y="14" width="212" height="196" fill="url(#wa${u})"/>
-    <circle cx="150" cy="96" r="30" fill="#FFF1C2"/>
-    <path d="M14 170q60-60 120-10t92-20v70H14z" fill="#0A0F2E" opacity=".75"/><path d="M14 190q80-40 150 0t62-6v36H14z" fill="#0A0F2E"/>
-    <rect x="30" y="232" width="120" height="9" rx="4.5" fill="#E0D3BC"/>
-    <g transform="translate(150 -22) rotate(9)"><rect width="104" height="44" rx="22" fill="#FFD140"/>
-      <text x="52" y="32" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="27" fill="#0A0F2E">19??</text></g></g>
-  <g transform="translate(470 120)"><path d="M0 0c-22 0-38 16-38 37 0 28 38 63 38 63s38-35 38-63C38 16 22 0 0 0z" fill="#FF4D4D"/><circle cy="36" r="13" fill="#FFF"/></g>`;
-}
-function tgDefs(u) {
-  return `<radialGradient id="gl${u}"><stop offset="0" stop-color="#22D3EE" stop-opacity=".28"/><stop offset="1" stop-color="#0B6BFF" stop-opacity=".04"/></radialGradient>
-  <linearGradient id="se${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9A86A"/><stop offset="1" stop-color="#7A5230"/></linearGradient>
-  <linearGradient id="mo${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AEB8C8"/><stop offset="1" stop-color="#5A6478"/></linearGradient>
-  <linearGradient id="wa${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD140"/><stop offset="1" stop-color="#FF4D4D"/></linearGradient>
-  <linearGradient id="bg${u}" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B4DC2"/><stop offset=".6" stop-color="#0A1A55"/><stop offset="1" stop-color="#0A0F2E"/></linearGradient>`;
-}
-function jpSkyline(w, base, seed, sc) {
-  const r = rand(seed); let x = 0, d = `M0 ${base}`, win = "";
-  while (x < w) {
-    const bw = (40 + r() * 70) * sc, bh = (60 + r() * 170) * sc, top = base - bh;
-    d += `V${top.toFixed(0)}H${(x + bw).toFixed(0)}`;
-    for (let wy = top + 14 * sc; wy < base - 12 * sc; wy += 22 * sc)
-      for (let wx = x + 10 * sc; wx < x + bw - 12 * sc; wx += 18 * sc)
-        if (r() > .72) win += `<rect x="${wx.toFixed(0)}" y="${wy.toFixed(0)}" width="${(7 * sc).toFixed(1)}" height="${(9 * sc).toFixed(1)}" fill="#FFD140" opacity="${(.35 + r() * .5).toFixed(2)}"/>`;
-    x += bw + 6 * sc;
-  }
-  return `<path d="${d}V${base + 400}H0z" fill="#0D0626"/>${win}`;
-}
-function jpPilot(u) {
-  return `
-  <g stroke="rgba(255,255,255,.28)" stroke-width="4" stroke-linecap="round">
-    <path d="M40 250h150M10 300h170M70 350h120M0 205h120"/></g>
-  <g fill="#FFD140" stroke="#FF9F40" stroke-width="5">
-    <circle cx="430" cy="190" r="16"/><circle cx="485" cy="160" r="16"/><circle cx="540" cy="142" r="16"/></g>
-  <g transform="translate(300 280) rotate(-14)">
-    <path d="M-44 50q4 120 14 190q12-70 16-190z" fill="url(#fo${u})"/>
-    <path d="M-38 50q4 70 10 120q8-50 10-120z" fill="url(#fi${u})"/>
-    <rect x="-50" y="-26" width="40" height="80" rx="12" fill="#3A4258"/><rect x="-46" y="-8" width="32" height="8" rx="4" fill="#22D3EE"/>
-    <g stroke="#0B6BFF" stroke-width="18" stroke-linecap="round"><path d="M2 54l-8 64M24 54l16 58"/></g>
-    <g fill="#EAEFF7"><rect x="-18" y="110" width="26" height="16" rx="7"/><rect x="28" y="104" width="26" height="16" rx="7" transform="rotate(-20 41 112)"/></g>
-    <rect x="-14" y="-34" width="48" height="94" rx="20" fill="#0B6BFF"/><rect x="-14" y="8" width="48" height="10" fill="#FFD140"/>
-    <path d="M28 -14l44 30" stroke="#0B6BFF" stroke-width="15" stroke-linecap="round"/><circle cx="76" cy="19" r="10" fill="#EAEFF7"/>
-    <circle cx="10" cy="-62" r="32" fill="#EAEFF7"/><path d="M14 -78h20a11 11 0 0 1 0 24h-20z" fill="#22D3EE"/></g>`;
-}
-function jpDefs(u) {
-  return `<linearGradient id="sk${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#160A3D"/><stop offset=".65" stop-color="#4A1450"/><stop offset="1" stop-color="#9A2F45"/></linearGradient>
-  <radialGradient id="hz${u}" cx=".75" cy="1" r=".6"><stop offset="0" stop-color="#FF7A3D" stop-opacity=".7"/><stop offset="1" stop-color="#FF4D4D" stop-opacity="0"/></radialGradient>
-  <linearGradient id="fo${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9F40"/><stop offset="1" stop-color="#FF4D4D" stop-opacity="0"/></linearGradient>
-  <linearGradient id="fi${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6C8"/><stop offset="1" stop-color="#FFD140" stop-opacity="0"/></linearGradient>`;
-}
-// Painted art in art/<file>-poster.webp (800x1120) and art/<file>-banner.webp
-// (1600x700). The poster gets its title drawn on: [white part, coloured part, colour].
-const PAINTED = {
-  timeguess:  { file: "when-and-where",   title: ["WHEN &amp; ", "WHERE", "#38D9E8"] },
-  wordezy:    { file: "wordezy",          title: ["WORD", "EZY", "#2F9E6E"] },
-  wordsearch: { file: "wordezy-search",   title: ["WORD", " SEARCH", "#FFC857"] },
-  scramble:   { file: "wordezy-scramble", title: ["WORD", " SCRAMBLE", "#2F9E6E"] },
-  ladder:     { file: "wordezy-ladder",   title: ["WORD", " LADDER", "#C9922F"] },
-  sortezy:    { file: "sortezy",          title: ["SORT", "EZY", "#8B5CF6"] },
-  lingoezy:   { file: "lingoezy",         title: ["LINGO", "EZY", "#8AA4FF"] },
-  linkezy:    { file: "linkezy",          title: ["LINK", "EZY", "#FF4D5E"] },
-  doodlezy:   { file: "doodlezy",         title: ["DOODLE", "ZY", "#E9B520"] },
-  warmezy:    { file: "warmezy",          title: ["WARM", "EZY", "#FF6A3D"] },
-  letterezy:  { file: "letterezy",        title: ["LETTER", "EZY", "#C9922F"] },
-  mergezy:    { file: "mergezy",          title: ["MERGE", "ZY", "#4FB3FF"] }
+/* ---------- game icons: authored SVG, ink on the game's colour.
+   .mv is the part that performs the game's move; --move names its keyframes. ---------- */
+const INK = "#121212";
+const SLAB = 'font-family="Zilla Slab,Georgia,serif" font-weight="700" text-anchor="middle"';
+const ICONS = {
+  wordezy: `<g fill="none" stroke="${INK}" stroke-width="2.5">
+      <rect x="4" y="12" width="10" height="10" rx="1.5" fill="${INK}"/><rect x="16" y="12" width="10" height="10" rx="1.5"/><rect x="28" y="12" width="10" height="10" rx="1.5" fill="${INK}"/><rect x="40" y="12" width="10" height="10" rx="1.5"/><rect x="52" y="12" width="10" height="10" rx="1.5"/>
+      <rect x="4" y="27" width="10" height="10" rx="1.5" fill="${INK}"/><rect x="16" y="27" width="10" height="10" rx="1.5" fill="${INK}"/><rect class="mv" style="--move:flip" x="28" y="27" width="10" height="10" rx="1.5" fill="#fff"/><rect x="40" y="27" width="10" height="10" rx="1.5"/><rect x="52" y="27" width="10" height="10" rx="1.5"/>
+      <rect x="4" y="42" width="10" height="10" rx="1.5"/><rect x="16" y="42" width="10" height="10" rx="1.5"/><rect x="28" y="42" width="10" height="10" rx="1.5"/><rect x="40" y="42" width="10" height="10" rx="1.5"/><rect x="52" y="42" width="10" height="10" rx="1.5"/></g>`,
+  wordsearch: `<g fill="${INK}">${[0, 1, 2, 3].map(r => [0, 1, 2, 3].map(c => `<circle cx="${11 + c * 14}" cy="${11 + r * 14}" r="2.6"/>`).join("")).join("")}</g>
+      <g class="mv" style="--move:sweep"><rect x="2" y="25.5" width="60" height="13" rx="6.5" transform="rotate(45 32 32)" fill="none" stroke="${INK}" stroke-width="3"/></g>`,
+  scramble: `<g ${SLAB} font-size="17">
+      <g transform="rotate(-12 13 34)"><rect x="3" y="24" width="20" height="20" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="13" y="40" fill="${INK}">R</text></g>
+      <g class="mv" style="--move:spin"><rect x="22" y="18" width="20" height="20" rx="3" fill="${INK}"/><text x="32" y="34" fill="#fff">A</text></g>
+      <g transform="rotate(10 51 36)"><rect x="41" y="26" width="20" height="20" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="51" y="42" fill="${INK}">W</text></g></g>`,
+  ladder: `<g stroke="${INK}" stroke-width="3" stroke-linecap="round"><path d="M20 4v56M44 4v56M20 14h24M20 26h24M20 50h24"/></g>
+      <rect class="mv" style="--move:climb" x="16" y="34" width="32" height="9" rx="4.5" fill="${INK}"/>`,
+  sortezy: `<g fill="none" stroke="${INK}" stroke-width="2.5">
+      <path d="M8 10v38a6 6 0 0 0 12 0V10"/><path d="M8 34h12v14a6 6 0 0 1-12 0z" fill="${INK}"/>
+      <g class="mv" style="--move:tip"><path d="M26 10v38a6 6 0 0 0 12 0V10" fill="#fff"/><path d="M26 40h12v8a6 6 0 0 1-12 0z" fill="${INK}"/></g>
+      <path d="M44 10v38a6 6 0 0 0 12 0V10"/><path d="M44 22h12v26a6 6 0 0 1-12 0z" fill="${INK}"/></g>`,
+  lingoezy: `<path d="M8 8h28a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H16l-8 7v-7a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z" fill="${INK}"/>
+      <text x="22" y="26" ${SLAB} font-size="14" fill="#fff">Hi</text>
+      <g class="mv" style="--move:pop"><path d="M28 30h28a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4h-4v7l-8-7H28a4 4 0 0 1-4-4V34a4 4 0 0 1 4-4z" fill="#fff" stroke="${INK}" stroke-width="2.5"/>
+      <text x="42" y="46" ${SLAB} font-size="13" fill="${INK}">Hola</text></g>`,
+  linkezy: `<path class="mv draw" style="--move:draw" d="M12 12V52H52" fill="none" stroke="${INK}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M32 12H52V32" fill="none" stroke="${INK}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="${INK}"><circle cx="12" cy="12" r="6"/><circle cx="52" cy="52" r="6"/><circle cx="32" cy="32" r="2.5"/></g>
+      <g fill="#fff" stroke="${INK}" stroke-width="2.5"><circle cx="32" cy="12" r="5.5"/><circle cx="52" cy="32" r="5.5"/></g>`,
+  warmezy: `<rect x="25" y="4" width="14" height="40" rx="7" fill="#fff" stroke="${INK}" stroke-width="3"/>
+      <circle cx="32" cy="50" r="10" fill="${INK}"/>
+      <rect class="mv rise" style="--move:rise" x="29" y="24" width="6" height="22" rx="3" fill="${INK}"/>
+      <g stroke="${INK}" stroke-width="2.5" stroke-linecap="round"><path d="M44 10h7M44 18h5M44 26h7M44 34h5"/></g>`,
+  letterezy: `<g ${SLAB}>
+      <rect x="4" y="30" width="22" height="22" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5" transform="rotate(-8 15 41)"/>
+      <rect x="38" y="32" width="22" height="22" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5" transform="rotate(9 49 43)"/>
+      <g class="mv" style="--move:lift"><rect x="17" y="10" width="30" height="30" rx="4" fill="${INK}"/><text x="30" y="33" font-size="22" fill="#fff">L</text><text x="41.5" y="36" font-size="8" fill="#fff">1</text></g></g>`,
+  mergezy: `<g ${SLAB}>
+      <g class="mv" style="--move:gather;--dx:9px"><rect x="2" y="6" width="16" height="16" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="10" y="19" font-size="12" fill="${INK}">2</text></g>
+      <g class="mv" style="--move:bob"><rect x="24" y="6" width="16" height="16" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="32" y="19" font-size="12" fill="${INK}">2</text></g>
+      <g class="mv" style="--move:gather;--dx:-9px"><rect x="46" y="6" width="16" height="16" rx="3" fill="#fff" stroke="${INK}" stroke-width="2.5"/><text x="54" y="19" font-size="12" fill="${INK}">2</text></g>
+      <path d="M32 26v6m-4-3l4 4 4-4" fill="none" stroke="${INK}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="19" y="36" width="26" height="26" rx="4" fill="${INK}"/><text x="32" y="56" font-size="19" fill="#fff">3</text></g>`,
+  timeguess: `<g transform="rotate(-7 26 30)"><rect x="4" y="12" width="40" height="34" rx="2" fill="#fff" stroke="${INK}" stroke-width="2.5"/>
+      <path d="M9 40l10-12 7 8 5-5 8 9z" fill="${INK}"/><circle cx="34" cy="21" r="3.5" fill="${INK}"/></g>
+      <g class="mv" style="--move:bob"><path d="M50 22c-6.6 0-12 5.2-12 11.6C38 42.4 50 54 50 54s12-11.6 12-20.4C62 27.2 56.6 22 50 22z" fill="${INK}"/><circle cx="50" cy="33" r="4.2" fill="#fff"/></g>`
 };
-function stars(w, h, n, seed) {
-  const r = rand(seed); let o = "";
-  for (let i = 0; i < n; i++) o += `<circle cx="${(r() * w).toFixed(0)}" cy="${(r() * h).toFixed(0)}" r="${(r() * 1.8 + .4).toFixed(1)}" fill="#fff" opacity="${(r() * .6 + .2).toFixed(2)}"/>`;
-  return o;
+function icon(kind, label) {
+  const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"';
+  return `<svg viewBox="0 0 64 64" ${a11y} focusable="false">${ICONS[kind] || ""}</svg>`;
 }
-const titleSvg = (a, b, col, y) => `<rect x="0" y="${y - 120}" width="400" height="${680 - y}" fill="url(#ft${uid})"/>
-  <text x="200" y="${y}" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="60" textLength="${Math.min(352, (a + b).length * 30)}" lengthAdjust="spacingAndGlyphs" fill="#fff">${a}<tspan fill="${col}">${b}</tspan></text>`;
-const fadeDef = () => `<linearGradient id="ft${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0F2E" stop-opacity="0"/><stop offset="1" stop-color="#0A0F2E" stop-opacity=".95"/></linearGradient>`;
 
-function art(kind, variant) {
-  const u = ++uid;
-  const poster = variant === "poster";
-  const vb = poster ? "0 0 400 560" : "0 0 1600 700";
-  const par = poster ? "xMidYMid slice" : "xMaxYMid slice";
-  let defs = fadeDef(), body = "";
-  if (PAINTED[kind]) {
-    const p = PAINTED[kind];
-    body = poster
-      ? `<image href="art/${p.file}-poster.webp" x="0" y="0" width="400" height="560" preserveAspectRatio="xMidYMid slice"/>${titleSvg(p.title[0], p.title[1], p.title[2], 520)}`
-      : `<image href="art/${p.file}-banner.webp" x="0" y="0" width="1600" height="700" preserveAspectRatio="xMidYMid slice"/>`;
-  } else if (kind === "jetpack") {
-    defs += jpDefs(u);
-    body = poster
-      ? `<rect width="400" height="560" fill="url(#sk${u})"/><rect width="400" height="560" fill="url(#hz${u})"/>${stars(400, 300, 26, 7)}${jpSkyline(400, 560, 11, .55)}<g transform="translate(-95 10) scale(.82)">${jpPilot(u)}</g>${titleSvg("JETPACK", " SURGE", "#FF7A3D", 520)}`
-      : `<rect width="1600" height="700" fill="url(#sk${u})"/><rect width="1600" height="700" fill="url(#hz${u})"/>${stars(1600, 420, 70, 3)}${jpSkyline(1600, 700, 5, 1)}<g transform="translate(960 30) scale(1.05)">${jpPilot(u)}</g>`;
-  } else { // coming soon
-    defs += `<radialGradient id="pk${u}" cx=".7" cy=".3" r=".8"><stop offset="0" stop-color="#EC4899" stop-opacity=".45"/><stop offset=".5" stop-color="#8B5CF6" stop-opacity=".25"/><stop offset="1" stop-color="#0A0F2E" stop-opacity="0"/></radialGradient>`;
-    body = poster
-      ? `<rect width="400" height="560" fill="#120F3A"/><rect width="400" height="560" fill="url(#pk${u})"/>
-         <text x="200" y="350" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="300" fill="none" stroke="rgba(236,72,153,.55)" stroke-width="3">?</text>
-         <g transform="translate(200 430)" fill="none" stroke="#EAEFF7" stroke-width="5" stroke-linecap="round"><rect x="-26" y="-6" width="52" height="40" rx="8" fill="rgba(234,239,247,.12)"/><path d="M-15 -6v-12a15 15 0 0 1 30 0v12"/></g>`
-      : `<rect width="1600" height="700" fill="#0F0C35"/><rect width="1600" height="700" fill="url(#pk${u})"/>${stars(1600, 700, 60, 9)}`;
+/* ---------- today: date, reset countdown, today's seven ---------- */
+function todayStr() { return new Date().toISOString().slice(0, 10); } // UTC date: same for every visitor
+function pickDailyGames(dateStr) {
+  let seed = 0;
+  for (let i = 0; i < dateStr.length; i++) seed = (seed * 31 + dateStr.charCodeAt(i)) >>> 0;
+  const rnd = rand(seed || 1);
+  const pool = GAMES.slice();
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return `<svg viewBox="${vb}" preserveAspectRatio="${par}" aria-hidden="true"><defs>${defs}</defs>${body}</svg>`;
+  return pool.slice(0, 7);
 }
+const chDate = todayStr();
+const todaysGames = pickDailyGames(chDate);
+const inToday = new Set(todaysGames.map(g => g.art));
+const longDate = new Date(chDate + "T00:00:00Z").toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+$("todayDate").textContent = longDate;
 
-/* ---------- menu & footer game links ---------- */
-const mg = document.getElementById("menuGames"), fg = document.getElementById("footGames"), glEl = document.getElementById("gameList");
-GAMES.forEach(g => {
-  const a = document.createElement("a"); a.href = g.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = g.name; mg.appendChild(a);
-  const li = document.createElement("li"), b = a.cloneNode(true); li.appendChild(b); fg.appendChild(li);
-  if (glEl) {
-    const item = document.createElement("li");
-    item.innerHTML = `<a href="${g.url}" target="_blank" rel="noopener"><b>${g.name}</b><span>${g.blurb}</span></a>`;
-    glEl.appendChild(item);
-  }
-});
-
-/* ---------- elements ---------- */
-const navLinks = [...document.querySelectorAll(".links a, #menu nav a")];
-
-/* ---------- menu & controls ---------- */
-const menu = document.getElementById("menu"), openBtn = document.getElementById("openMenu");
-function setMenu(open, refocus = true) {
-  menu.classList.toggle("open", open);
-  openBtn.setAttribute("aria-expanded", open);
-  document.documentElement.style.overflow = open ? "hidden" : "";
-  if (open) document.getElementById("close").focus(); else if (refocus) openBtn.focus();
+function updateReset() {
+  if (todayStr() !== chDate) return location.reload(); // a new day's puzzles are out
+  const d = new Date();
+  const next = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1);
+  const mins = Math.max(1, Math.ceil((next - d.getTime()) / 60000));
+  const h = Math.floor(mins / 60), m = mins % 60;
+  $("resetIn").textContent = `New puzzles in ${h ? h + "h " : ""}${m}m`;
 }
-openBtn.addEventListener("click", () => setMenu(true));
-document.getElementById("close").addEventListener("click", () => setMenu(false));
-document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.classList.contains("open")) setMenu(false); });
-document.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click", e => {
-  e.preventDefault();
-  if (menu.classList.contains("open")) setMenu(false, false);
-  const target = document.getElementById(el.dataset.go);
-  if (target) target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-  navLinks.forEach(a => a.classList.toggle("active", a.dataset.go === el.dataset.go));
-}));
-mg.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false, false); });
-/* ---------- chips, search and the instant grid ---------- */
-const LOCK_ICON = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
-const CHIPS = [
-  { k: "all", label: "All games", icon: '<path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z"/>' },
-  { k: "Trivia", label: "Trivia", icon: '<circle cx="10" cy="10" r="7.5"/><path d="M8 8a2 2 0 1 1 3 1.7c-.7.4-1 .9-1 1.6M10 14.2v.1"/>' },
-  { k: "Puzzle", label: "Puzzle", icon: '<rect x="3" y="7.5" width="4.2" height="5" rx="1"/><rect x="7.9" y="4" width="4.2" height="12" rx="1"/><rect x="12.8" y="7.5" width="4.2" height="5" rx="1"/>' },
-  { k: "soon", label: "Coming soon", icon: '<path d="M10 2.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/>' }
-];
-const chipsEl = document.getElementById("chips");
-const gridEl = document.getElementById("grid");
-const emptyEl = document.getElementById("empty");
-let filter = "all", query = "";
-CHIPS.forEach(c => {
-  const n = c.k === "all" ? GAMES.length : c.k === "soon" ? COMING.length : GAMES.filter(g => g.genre === c.k).length;
-  const b = document.createElement("button");
-  b.className = "chip"; b.dataset.k = c.k; b.setAttribute("aria-pressed", c.k === "all");
-  b.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${c.icon}</svg>${c.label}<b>${n}</b>`;
-  b.addEventListener("click", () => { filter = c.k; chipsEl.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b)); renderGrid(); });
-  chipsEl.appendChild(b);
-});
+updateReset();
+setInterval(updateReset, 30000);
+
+$("sevenTiles").innerHTML = todaysGames.map(g => `<li style="--tile:${g.color}" title="${g.name}">${icon(g.art, g.name)}</li>`).join("");
+
+/* ---------- game cards ---------- */
 function gameCard(g) {
-  return `<div class="item" data-genre="${g.genre}" data-name="${g.name.toLowerCase()}">
-    <a class="poster" href="${g.url}" target="_blank" rel="noopener" aria-label="Play ${g.name}" title="${g.blurb}">${art(g.art, "poster")}<span class="pbtn">${PLAY_ICON}</span></a>
-    <div class="t">${g.name}</div><div class="m">${g.genre} &middot; <em>Free</em></div>
-  </div>`;
+  return `<li><a class="card" href="${g.url}" style="--tile:${g.color}">
+    <span class="tile">${icon(g.art)}</span>
+    <span class="card-body">
+      <h3>${g.name}</h3>
+      <p>${g.blurb}</p>
+      <span class="card-foot">
+        ${inToday.has(g.art) ? '<span class="today">In today\'s seven</span>' : `<span class="cat">${g.cat}</span>`}
+        <span class="btn btn-primary" aria-hidden="true">Play</span>
+      </span>
+    </span>
+  </a></li>`;
 }
-function soonCard(c) {
-  return `<div class="item soon" data-genre="soon" data-name="${c.name.toLowerCase()}">
-    <div class="poster">${LOCK_ICON}</div>
-    <div class="t">${c.name}</div><div class="m">Coming soon</div>
-  </div>`;
-}
-function renderGrid() {
-  const term = query.trim().toLowerCase();
-  const showSoon = filter === "all" || filter === "soon";
-  const games = filter === "soon" ? [] : GAMES.filter(g => (filter === "all" || g.genre === filter) && (g.name + " " + g.genre + " " + g.blurb).toLowerCase().includes(term));
-  const soon = showSoon && !term ? COMING : [];
-  gridEl.innerHTML = games.map(gameCard).join("") + soon.map(soonCard).join("");
-  emptyEl.hidden = games.length + soon.length > 0;
-  emptyEl.textContent = term ? `No games match “${query}” yet. Try another name or clear the search.` : "No games in this category yet.";
-}
-document.getElementById("q").addEventListener("input", e => { query = e.target.value; renderGrid(); });
-renderGrid();
-
-/* ---------- decorative poster marquee, under the grid ---------- */
-(function initMarquee() {
-  const track = document.getElementById("marqueeTrack");
-  if (!track) return;
-  const tiles = GAMES.map(g => `<div class="marquee-item">${art(g.art, "poster")}</div>`).join("");
-  track.innerHTML = tiles + tiles; // doubled for a seamless loop
-})();
-
-/* ---------- 3D tilt on poster cards ---------- */
-if (!reduced) {
-  document.addEventListener("pointermove", e => {
-    if (e.pointerType !== "mouse") return;
-    const p = e.target.closest && e.target.closest("a.poster");
-    if (!p) return;
-    const r = p.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-    p.classList.add("tracking");
-    p.style.setProperty("--ry", ((x - .5) * 16).toFixed(2) + "deg");
-    p.style.setProperty("--rx", ((.5 - y) * 12).toFixed(2) + "deg");
-    p.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
-    p.style.setProperty("--my", (y * 100).toFixed(1) + "%");
-  });
-  document.addEventListener("pointerout", e => {
-    const p = e.target.closest && e.target.closest("a.poster");
-    if (p && !p.contains(e.relatedTarget)) { p.classList.remove("tracking"); ["--rx", "--ry"].forEach(v => p.style.removeProperty(v)); }
-  });
-}
+$("grid").innerHTML = GAMES.map(gameCard).join("");
+$("gamesCount").textContent = `${GAMES.length} games, all free`;
+$("soon").innerHTML = COMING.length ? `<b>Coming soon:</b> ${COMING.map(c => c.name).join(", ")}.` : "";
+$("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a></li>`).join("");
 
 /* ---------- daily 7-game challenge + guest/signup gate + leaderboard ----------
-   The modal, today's seven and the guest path never depend on Supabase: they
-   are wired first, and the Supabase client loads afterwards without blocking
-   the page. If it can't load (offline, ad-blocker, CDN outage) the modal still
+   The dialog, today's seven and the guest path never depend on Supabase: they
+   are wired first, and the Supabase client loads after the page without blocking
+   it. If it can't load (offline, ad-blocker, CDN outage) the dialog still
    opens, guests can still play, and sign-in/leaderboard say they're unavailable. */
 (function initChallenge() {
   const SB_URL = "https://hkcvtoozpeybwehqtiif.supabase.co";
   const SB_KEY = "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
   const SB_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
   const SB_TIMEOUT_MS = 10000;
-  const $ = id => document.getElementById(id);
-
-  function todayStr() { return new Date().toISOString().slice(0, 10); } // UTC date: same for every visitor
-
-  function pickDailyGames(dateStr) {
-    let seed = 0;
-    for (let i = 0; i < dateStr.length; i++) seed = (seed * 31 + dateStr.charCodeAt(i)) >>> 0;
-    const rnd = rand(seed || 1);
-    const pool = GAMES.slice();
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(rnd() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
-    return pool.slice(0, 7);
-  }
-
-  const chDate = todayStr();
-  const todaysGames = pickDailyGames(chDate);
   const GUEST_KEY = "bgw_ch_mode_" + chDate;
 
   // token (when present) is the user's own Supabase access token, carried in
@@ -922,7 +608,7 @@ if (!reduced) {
   function gameChip(g, token) {
     const hash = token ? `#ch=${encodeURIComponent(chDate)}|${encodeURIComponent(g.art)}|${encodeURIComponent(token)}` : "";
     return `<a class="ch-g" href="${g.url}${hash}" target="_blank" rel="noopener">
-      <span class="th">${art(g.art, "poster")}</span><b>${g.name}</b>
+      <span class="th" style="--tile:${g.color}">${icon(g.art)}</span><b>${g.name}<span class="sr-only"> (opens in a new tab)</span></b>
     </a>`;
   }
   $("chGames").innerHTML = todaysGames.map(g => gameChip(g)).join("");
@@ -930,19 +616,18 @@ if (!reduced) {
     $("chGamesPlaying").innerHTML = todaysGames.map(g => gameChip(g, token)).join("");
   }
   renderPlayingLinks(null);
-  $("chDate").textContent = new Date(chDate + "T00:00:00Z")
-    .toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" });
+  $("chDate").textContent = longDate;
 
   /* ---- open / close ---- */
   const chBackdrop = $("challengeBackdrop");
   const chModal = $("challengeModal");
-  const chOpenBtn = $("openChallenge");
+  const openers = [$("openChallenge"), $("startChallenge")];
   let returnFocus = null;
   function setChallenge(open) {
     chBackdrop.hidden = false; chModal.hidden = false;
     requestAnimationFrame(() => { chBackdrop.classList.toggle("open", open); chModal.classList.toggle("open", open); });
     document.documentElement.style.overflow = open ? "hidden" : "";
-    chOpenBtn.setAttribute("aria-expanded", open);
+    openers.forEach(b => b.setAttribute("aria-expanded", open));
     if (open) {
       returnFocus = document.activeElement;
       $("chClose").focus();
@@ -951,7 +636,7 @@ if (!reduced) {
       if (returnFocus && returnFocus.focus) returnFocus.focus();
     }
   }
-  chOpenBtn.addEventListener("click", () => setChallenge(true));
+  openers.forEach(b => b.addEventListener("click", () => setChallenge(true)));
   $("chClose").addEventListener("click", () => setChallenge(false));
   chBackdrop.addEventListener("click", () => setChallenge(false));
   document.addEventListener("keydown", e => {
@@ -959,7 +644,7 @@ if (!reduced) {
     if (e.key === "Escape") return setChallenge(false);
     if (e.key !== "Tab") return;
     // keep keyboard focus inside the open dialog
-    const f = [...chModal.querySelectorAll("a[href],button:not([disabled]),input:not([disabled]):not([hidden])")].filter(el => el.offsetParent !== null);
+    const f = [...chModal.querySelectorAll("a[href],button:not([disabled]),input:not([disabled])")].filter(el => el.offsetParent !== null);
     if (!f.length) return;
     const first = f[0], last = f[f.length - 1];
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -969,7 +654,7 @@ if (!reduced) {
   /* ---- bgameworld.com/#challenge (the link in social posts) opens it straight away.
      No longer auto-opens on an ordinary visit — an unprompted pop-up gating
      content behind a sign-up form is exactly the kind of thing AdSense review
-     flags, so it's opt-in only now: the header button, or this deep link. ---- */
+     flags, so it's opt-in only now: the challenge buttons, or this deep link. ---- */
   function openFromHash() {
     if (location.hash !== "#challenge") return;
     history.replaceState(null, "", location.pathname + location.search);   // so closing it doesn't leave #challenge behind
@@ -1181,8 +866,10 @@ if (!reduced) {
     };
     document.head.append(s);
   }
-  // after first paint, so the game grid never waits on it
+  // after first paint, so the page never waits on it
   if (document.readyState === "complete") startSupabase();
   else window.addEventListener("load", startSupabase, { once: true });
 })();
 </script>
+</body>
+</html>

@@ -1,2 +1,7 @@
 .DS_Store
 art/when-and-where-source.jpg
+.impeccable/live/
+.impeccable/review/
+.impeccable/build/
+.impeccable/mocks/
+.impeccable/config.local.json
