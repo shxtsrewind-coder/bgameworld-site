@@ -137,8 +137,9 @@ img{max-width:100%;height:auto}
 @media (max-width:719px){.lbl-short{display:inline}}
 @media (max-width:1023px){
   .top nav a{display:none}
-  .subnav{display:flex;gap:4px;border-bottom:1px solid var(--rule)}
-  .subnav a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-weight:600;font-size:15px;text-decoration:none;white-space:nowrap}
+  .subnav{display:flex;gap:2px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+  .subnav::-webkit-scrollbar{display:none}
+  .subnav a{display:flex;align-items:center;min-height:44px;padding:0 10px;font-weight:600;font-size:15px;text-decoration:none;white-space:nowrap}
   .subnav a:first-child{padding-left:0}
 }
 @media (max-width:719px){
@@ -148,6 +149,11 @@ img{max-width:100%;height:auto}
   .top .wrap{gap:10px}
   .top .btn{padding:0 14px}
   .lbl-long{display:none}
+}
+@media (max-width:359px){
+  .brand{gap:6px}
+  .brand b{font-size:19px}
+  .top .btn{padding:0 12px}
 }
 
 /* ---------- masthead: today's edition ---------- */
@@ -165,8 +171,8 @@ img{max-width:100%;height:auto}
 .seven h2{margin:0;font:700 26px/1.1 var(--slab)}
 .seven p{margin:6px 0 0;color:var(--ink-2);max-width:52ch}
 .seven-tiles{display:flex;gap:6px;list-style:none;margin:0;padding:0}
-.seven-tiles li{width:40px;height:40px;border-radius:6px;background:var(--tile);display:grid;place-items:center}
-.seven-tiles svg{width:28px;height:28px}
+.seven-tiles li{flex:0 1 40px;min-width:0;aspect-ratio:1;border-radius:6px;background:var(--tile);display:grid;place-items:center}
+.seven-tiles svg{width:70%;height:70%}
 @media (max-width:959px){.seven .wrap{grid-template-columns:1fr}.seven .btn{justify-self:start}}
 
 /* ---------- game cards ---------- */
@@ -226,7 +232,7 @@ img{max-width:100%;height:auto}
 @keyframes lift{0%,100%{transform:translateY(0) rotate(0)}45%{transform:translateY(-6px) rotate(-6deg)}}
 @keyframes gather{0%,100%{transform:translateX(0)}50%{transform:translateX(var(--dx,0))}}
 
-/* ---------- a look inside: real screenshots of each game, in a snap-scrolling row ---------- */
+/* ---------- get to know the games: a name card per game, linking to its guide ---------- */
 .peek{padding:0 0 52px}
 .peek-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding-top:24px;border-top:1px solid var(--rule)}
 .peek h2{margin:0;font:700 26px/1.15 var(--slab)}
@@ -235,11 +241,12 @@ img{max-width:100%;height:auto}
   overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 max(var(--gx),calc((100vw - 1280px)/2 + var(--gx)));scrollbar-width:thin;scrollbar-color:#B9B9B3 transparent}
 .peek-row li{flex:none;width:clamp(150px,40vw,196px);scroll-snap-align:start}
 .peek-row a{display:block;text-decoration:none}
-.shot{display:block;position:relative;aspect-ratio:3/5;border-radius:14px;overflow:hidden;background:var(--tile);padding:6px 6px 0;
+.shot{display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:4/5;border-radius:14px;background:var(--tile);padding:16px 16px 18px;color:var(--ink);
   transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;border-radius:9px 9px 0 0}
+.shot svg{width:44px;height:44px}
+.shot strong{font:700 clamp(22px,5.4vw,27px)/1.05 var(--slab);letter-spacing:-.01em;overflow-wrap:anywhere}
 .peek-row a:hover .shot,.peek-row a:focus-visible .shot{transform:translateY(-4px);box-shadow:0 14px 26px -16px rgba(18,18,18,.55)}
-.peek-row b{display:block;margin-top:8px;font:700 17px/1.2 var(--slab)}
+.peek-row b{display:block;margin-top:8px;font-size:15px;font-weight:600;color:var(--ink)}
 .peek-row small{display:block;font-size:13px;color:var(--ink-3)}
 @media (prefers-reduced-motion:reduce){.shot{transition:none}}
 
@@ -348,13 +355,14 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
     <nav aria-label="Site">
       <a href="#games">All games</a>
       <a href="#question">Today's question</a>
+      <a href="/games/">Guides</a>
       <a href="#faq">FAQ</a>
       <a href="/stats/">My stats</a>
       <button class="btn btn-outline" id="openChallenge" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false"><span class="lbl-long">Today's challenge</span><span class="lbl-short">Challenge</span></button>
     </nav>
   </div>
 </header>
-<nav class="subnav wrap" aria-label="Sections"><a href="#games">All games</a><a href="#question">Today's question</a><a href="/stats/">My stats</a></nav>
+<nav class="subnav wrap" aria-label="Sections"><a href="#games">All games</a><a href="#question">Today's question</a><a href="/games/">Guides</a><a href="/stats/">My stats</a></nav>
 
 <main>
   <section class="mast" aria-labelledby="todayTitle">
@@ -384,7 +392,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
 
   <section class="peek" id="peek" aria-labelledby="peekTitle">
     <div class="wrap">
-      <div class="peek-head"><h2 id="peekTitle">A look inside the games</h2><span>Real screens from each game. Tap one to play.</span></div>
+      <div class="peek-head"><h2 id="peekTitle">Get to know the games</h2><span>Rules and tips for each one. Tap a game to read its guide.</span></div>
     </div>
     <ul class="peek-row" id="peekRow"></ul>
     <div class="wrap">
@@ -462,8 +470,11 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
         <ul>
           <li><a href="#games">All games</a></li>
           <li><a href="#question">Today's question</a></li>
+          <li><a href="/games/">Game guides</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="/stats/">My stats</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy/">Privacy</a></li>
           <li><a href="/terms/">Terms</a></li>
         </ul>
@@ -531,27 +542,27 @@ footer{background:var(--paper-2);border-top:1px solid var(--rule);padding:44px 0
    art: the game's id (also used by each game to report its challenge score; don't rename).
    line: the one-line description on its card. cat: Word, Logic or Trivia. color: the game's flat tile colour (ink #121212 sits on it). */
 const GAMES = [
-  { name: "Wordezy", line: "Guess the daily word in six tries.", cat: "Word", art: "wordezy", color: "#7CC4A4", url: "https://wordezy.bgameworld.com",
+  { name: "Wordezy", line: "Guess the daily word in six tries.", cat: "Word", art: "wordezy", guide: "wordezy", color: "#7CC4A4", url: "https://wordezy.bgameworld.com",
     blurb: "Guess the daily word in six tries, warm up first with a free practice round, and race the clock for a spot on the speed leaderboard." },
-  { name: "Wordezy Search", line: "Find 24 hidden words on today's board.", cat: "Word", art: "wordsearch", color: "#F5C54A", url: "https://wordezysearch.bgameworld.com",
+  { name: "Wordezy Search", line: "Find 24 hidden words on today's board.", cat: "Word", art: "wordsearch", guide: "wordezy-search", color: "#F5C54A", url: "https://wordezysearch.bgameworld.com",
     blurb: "Hunt 24 hidden words a day across 22 themes, race the clock on the shared daily board, or pick your difficulty and go unlimited." },
-  { name: "Wordezy Scramble", line: "Unscramble five words, 4 to 8 letters.", cat: "Word", art: "scramble", color: "#F4977A", url: "https://wordezyscramble.bgameworld.com",
+  { name: "Wordezy Scramble", line: "Unscramble five words, 4 to 8 letters.", cat: "Word", art: "scramble", guide: "wordezy-scramble", color: "#F4977A", url: "https://wordezyscramble.bgameworld.com",
     blurb: "Unscramble five words a day, from 4 letters up to 8, shuffle the tiles and race the clock for a spot on the daily leaderboard." },
-  { name: "Wordezy Ladder", line: "Change one letter at a time to climb.", cat: "Word", art: "ladder", color: "#9CC3F0", url: "https://wordezyladder.bgameworld.com",
+  { name: "Wordezy Ladder", line: "Change one letter at a time to climb.", cat: "Word", art: "ladder", guide: "wordezy-ladder", color: "#9CC3F0", url: "https://wordezyladder.bgameworld.com",
     blurb: "Climb from one word to another by changing a single letter at a time, every step a real word, and try to reach the top in par." },
-  { name: "Warmezy", line: "Find the secret word by meaning.", cat: "Word", art: "warmezy", color: "#F7A35C", url: "https://warmezy.bgameworld.com",
+  { name: "Warmezy", line: "Find the secret word by meaning.", cat: "Word", art: "warmezy", guide: "warmezy", color: "#F7A35C", url: "https://warmezy.bgameworld.com",
     blurb: "Find the secret word by meaning: every guess gets a rank, and the lower the number, the hotter you are. One word a day for everyone." },
-  { name: "Letterezy", line: "Spell words from a bag of 25 letters.", cat: "Word", art: "letterezy", color: "#D9C792", url: "https://letterezy.bgameworld.com",
+  { name: "Letterezy", line: "Spell words from a bag of 25 letters.", cat: "Word", art: "letterezy", guide: "letterezy", color: "#D9C792", url: "https://letterezy.bgameworld.com",
     blurb: "Spell words from today's bag of 25 letters to score points, reach the bonus squares with long words, and try to use every letter." },
-  { name: "Lingoezy", line: "Pick the right translation, dodge false friends.", cat: "Word", art: "lingoezy", color: "#79D0CF", url: "https://lingoezy.bgameworld.com",
+  { name: "Lingoezy", line: "Pick the right translation, dodge false friends.", cat: "Word", art: "lingoezy", guide: "lingoezy", color: "#79D0CF", url: "https://lingoezy.bgameworld.com",
     blurb: "Pick the right translation from four look-alike words and dodge the false friends, with ten new words a day in five languages." },
-  { name: "Sortezy", line: "Pour until every tube holds one colour.", cat: "Logic", art: "sortezy", color: "#C9A8EC", url: "https://sortezy.bgameworld.com",
+  { name: "Sortezy", line: "Pour until every tube holds one colour.", cat: "Logic", art: "sortezy", guide: "sortezy", color: "#C9A8EC", url: "https://sortezy.bgameworld.com",
     blurb: "Pour coloured water until every tube holds one colour, with a new puzzle every day and levels that grow from 3 colours to 12." },
-  { name: "Linkezy", line: "Join the dots without crossing lines.", cat: "Logic", art: "linkezy", color: "#F28FA2", url: "https://linkezy.bgameworld.com",
+  { name: "Linkezy", line: "Join the dots without crossing lines.", cat: "Logic", art: "linkezy", guide: "linkezy", color: "#F28FA2", url: "https://linkezy.bgameworld.com",
     blurb: "Join each pair of dots without crossing a line and fill every square, with a new board every day and 100 levels to climb." },
-  { name: "Mergezy", line: "Join three of a kind to merge them up.", cat: "Logic", art: "mergezy", color: "#8FA9F5", url: "https://mergezy.bgameworld.com",
+  { name: "Mergezy", line: "Join three of a kind to merge them up.", cat: "Logic", art: "mergezy", guide: "mergezy", color: "#8FA9F5", url: "https://mergezy.bgameworld.com",
     blurb: "Place the day's tiles and join three of a kind to merge them into bigger numbers, with three tries to top the daily leaderboard." },
-  { name: "When & Where", line: "Date and place a real archival photo.", cat: "Trivia", art: "timeguess", color: "#E8B96A", url: "https://whenandwhere.bgameworld.com",
+  { name: "When & Where", line: "Date and place a real archival photo.", cat: "Trivia", art: "timeguess", guide: "when-and-where", color: "#E8B96A", url: "https://whenandwhere.bgameworld.com",
     blurb: "Look at a real archival photo, then guess the year, the place and even the day of the week it was taken." }
 ];
 
@@ -661,11 +672,9 @@ function gameCard(g) {
 }
 $("grid").innerHTML = GAMES.map(gameCard).join("");
 $("gamesCount").textContent = `${GAMES.length} games, all free`;
-// screenshots in art/shots/<art>.webp; a game without one is simply left out of the row
-const SHOTS = new Set(["timeguess", "scramble", "ladder", "warmezy", "letterezy", "lingoezy", "sortezy", "linkezy", "mergezy"]);
-$("peekRow").innerHTML = GAMES.filter(g => SHOTS.has(g.art)).map(g => `<li><a href="${g.url}">
-  <span class="shot" style="--tile:${g.color}"><img src="/art/shots/${g.art}.webp" alt="${g.name} game screen" width="390" height="650" loading="lazy" decoding="async"></span>
-  <b>${g.name}</b><small>${g.cat}</small></a></li>`).join("");
+$("peekRow").innerHTML = GAMES.map(g => `<li><a href="/games/${g.guide}/">
+  <span class="shot" style="--tile:${g.color}">${icon(g.art)}<strong>${g.name}</strong></span>
+  <b>How to play</b><small>${g.cat} &middot; rules and tips</small></a></li>`).join("");
 $("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a></li>`).join("");
 
 /* ---------- today's question: homepage teaser ----------

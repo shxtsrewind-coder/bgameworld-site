@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About BGameWorld</title>
+<meta name="description" content="BGameWorld is a free daily puzzle site with eleven original word, logic and trivia games that play in your browser.">
+<link rel="canonical" href="https://bgameworld.com/about/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="BGameWorld">
+<meta property="og:title" content="About BGameWorld">
+<meta property="og:description" content="BGameWorld is a free daily puzzle site with eleven original word, logic and trivia games that play in your browser.">
+<meta property="og:url" content="https://bgameworld.com/about/">
+<meta property="og:image" content="https://bgameworld.com/og-image.jpg">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#FFFFFF">
+
+<style>
+@font-face{font-family:"Zilla Slab";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/zilla-slab-700.woff2) format("woff2")}
+@font-face{font-family:"Libre Franklin";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/libre-franklin.woff2) format("woff2")}
+:root{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;
+  --slab:"Zilla Slab",Rockwell,"Roboto Slab",Georgia,serif;--sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+::selection{background:#F5C54A;color:var(--ink)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+main{max-width:760px;margin:0 auto;padding:28px 20px 72px}
+.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 16px;margin-bottom:36px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.top img{width:120px;height:auto;display:block}
+.top nav{display:flex;flex-wrap:wrap;gap:4px 18px}
+.top nav a{color:var(--ink);font-size:15px;font-weight:600;text-decoration:none}
+.top nav a:hover,.top nav a[aria-current]{text-decoration:underline;text-underline-offset:4px}
+.crumb{font-size:14px;color:var(--ink-3);margin:0 0 10px}
+.crumb a{color:var(--ink-3)}
+h1{font:700 clamp(38px,8.5vw,58px)/1.02 var(--slab);letter-spacing:-.02em;margin:0 0 14px}
+.lede{font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 0 24px}
+.rule{border:0;border-top:3px solid var(--ink);margin:0 0 8px}
+h2{font:700 25px/1.2 var(--slab);color:var(--ink);margin:40px 0 12px}
+h3{font:700 19px/1.25 var(--slab);margin:0 0 4px}
+p,li,dd{color:var(--ink-2)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:8px}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--ink);text-underline-offset:3px}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin:0 0 22px}
+.tile{display:grid;place-items:center;width:112px;height:112px;border-radius:16px;background:var(--tile)}
+.tile svg{width:64px;height:64px}
+.tile text{dominant-baseline:auto}
+.meta{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;font:600 16px/1 var(--sans);text-decoration:none}
+.btn:hover{background:#333}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.ghost:hover{background:var(--paper-2)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
+dl.rules{margin:0}
+dl.rules div{padding:14px 0;border-top:1px solid var(--rule)}
+dl.rules div:last-child{border-bottom:1px solid var(--rule)}
+dt{font-weight:700;color:var(--ink);margin:0 0 2px}
+dd{margin:0}
+.faq h3{margin-top:18px}
+.box{border:1px solid var(--rule);border-radius:12px;padding:18px 20px;background:var(--paper-2);margin:0 0 14px}
+.box p:last-child{margin-bottom:0}
+.grid{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.grid li{margin:0}
+.grid a{display:flex;gap:14px;align-items:center;padding:12px;border:1px solid var(--rule);border-radius:14px;text-decoration:none;color:var(--ink);height:100%;transition:border-color .2s,transform .2s}
+.grid a:hover{border-color:var(--ink);transform:translateY(-2px)}
+.grid .tile{width:56px;height:56px;border-radius:10px;flex:none}
+.grid .tile svg{width:34px;height:34px}
+.grid b{display:block;font:700 18px/1.2 var(--slab)}
+.grid small{display:block;font-size:14px;color:var(--ink-3);line-height:1.35}
+footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;color:var(--ink-3);font-size:15px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px}
+footer nav{display:flex;flex-wrap:wrap;gap:4px 16px}
+footer a{color:var(--ink-3)}
+@media (max-width:520px){.hero{grid-template-columns:1fr}.tile{width:88px;height:88px}.tile svg{width:52px;height:52px}}
+@media (prefers-reduced-motion:reduce){.grid a{transition:none}.grid a:hover{transform:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a href="/" aria-label="BGameWorld home"><img src="/logo.webp" alt="BGameWorld" width="602" height="348"></a>
+    <nav aria-label="Site"><a href="/">Games</a><a href="/games/">Guides</a><a href="/about/" aria-current="page">About</a><a href="/contact/">Contact</a></nav>
+  </div>
+  <h1>About BGameWorld</h1>
+  <p class="lede">BGameWorld is a small, independent puzzle site. We make free daily games that play in any browser, with nothing to install and no sign-up needed.</p>
+  <hr class="rule">
+
+  <h2>What we make</h2>
+  <p>There are eleven games on the site: seven word games (Wordezy, Wordezy Search, Wordezy Scramble, Wordezy Ladder, Warmezy, Letterezy and Lingoezy), three logic puzzles (Sortezy, Linkezy and Mergezy) and a photo trivia game (When &amp; Where). Each one has a <a href="/games/">guide</a> with its rules and tips.</p>
+  <p>Every game is designed and built for BGameWorld. The puzzles are generated for the site, and the logic puzzles are checked by a solver so every one can be finished.</p>
+
+  <h2>How the daily puzzles work</h2>
+  <p>Every game has a daily puzzle that is the same for every player and changes at midnight UTC, so you can compare results with friends wherever they are. The <strong>Daily Seven</strong> on the homepage picks seven of the games each day for a combined score, and <a href="/question/">Today's question</a> asks everyone one light question a day.</p>
+  <p>Streaks, scores and leaderboards are optional. You can play anonymously, or save your account with an email address to keep your progress across devices.</p>
+
+  <h2>Where the words come from</h2>
+  <p>Our word games use open, public word lists, such as the public-domain ENABLE dictionary, with everyday words chosen for answers and hints. Warmezy's closeness ranks come from openly published word vectors trained on Wikipedia and news text. When &amp; Where uses photographs from archives and public-domain collections.</p>
+
+  <h2>How the site is paid for</h2>
+  <p>The games are free. BGameWorld is supported by advertising served by Google AdSense. Ads are kept away from the game boards so they never get in the way of play. Our <a href="/privacy/">privacy policy</a> explains how advertising cookies work and how to opt out of personalised ads.</p>
+
+  <h2>Get in touch</h2>
+  <p>Found a bug, spotted a word that shouldn't be there, or have an idea for a game? Email <a href="mailto:bgameworld01@gmail.com">bgameworld01@gmail.com</a> or visit our <a href="/contact/">contact page</a>.</p>
+
+  <footer>
+    <span>&copy; 2026 BGameWorld</span>
+    <nav aria-label="Footer"><a href="/games/">Game guides</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+  </footer>
+</main>
+</body>
+</html>

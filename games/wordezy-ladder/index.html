@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to play Wordezy Ladder: rules and tips | BGameWorld</title>
+<meta name="description" content="How to play Wordezy Ladder on BGameWorld: the rules, scoring and tips. Change one letter at a time to climb.">
+<link rel="canonical" href="https://bgameworld.com/games/wordezy-ladder/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="BGameWorld">
+<meta property="og:title" content="How to play Wordezy Ladder: rules and tips | BGameWorld">
+<meta property="og:description" content="How to play Wordezy Ladder on BGameWorld: the rules, scoring and tips. Change one letter at a time to climb.">
+<meta property="og:url" content="https://bgameworld.com/games/wordezy-ladder/">
+<meta property="og:image" content="https://bgameworld.com/og-image.jpg">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#FFFFFF">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3551074498139485" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "name": "How to play Wordezy Ladder", "description": "Wordezy Ladder is a daily word ladder. You start with one four-letter word and climb to another by changing a single letter at a time, and every step on the way has to be a real word.", "step": [{"@type": "HowToStep", "text": "Read the start word and the target word."}, {"@type": "HowToStep", "text": "Change exactly one letter of the current word to make a new real word. For example, COLD can become CORD."}, {"@type": "HowToStep", "text": "Keep going, one letter per move, until you reach the target."}, {"@type": "HowToStep", "text": "Try to get there in par, the fewest moves the ladder can be solved in."}]}</script>
+<style>
+@font-face{font-family:"Zilla Slab";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/zilla-slab-700.woff2) format("woff2")}
+@font-face{font-family:"Libre Franklin";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/libre-franklin.woff2) format("woff2")}
+:root{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;
+  --slab:"Zilla Slab",Rockwell,"Roboto Slab",Georgia,serif;--sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+::selection{background:#F5C54A;color:var(--ink)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+main{max-width:760px;margin:0 auto;padding:28px 20px 72px}
+.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 16px;margin-bottom:36px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.top img{width:120px;height:auto;display:block}
+.top nav{display:flex;flex-wrap:wrap;gap:4px 18px}
+.top nav a{color:var(--ink);font-size:15px;font-weight:600;text-decoration:none}
+.top nav a:hover,.top nav a[aria-current]{text-decoration:underline;text-underline-offset:4px}
+.crumb{font-size:14px;color:var(--ink-3);margin:0 0 10px}
+.crumb a{color:var(--ink-3)}
+h1{font:700 clamp(38px,8.5vw,58px)/1.02 var(--slab);letter-spacing:-.02em;margin:0 0 14px}
+.lede{font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 0 24px}
+.rule{border:0;border-top:3px solid var(--ink);margin:0 0 8px}
+h2{font:700 25px/1.2 var(--slab);color:var(--ink);margin:40px 0 12px}
+h3{font:700 19px/1.25 var(--slab);margin:0 0 4px}
+p,li,dd{color:var(--ink-2)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:8px}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--ink);text-underline-offset:3px}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin:0 0 22px}
+.tile{display:grid;place-items:center;width:112px;height:112px;border-radius:16px;background:var(--tile)}
+.tile svg{width:64px;height:64px}
+.tile text{dominant-baseline:auto}
+.meta{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;font:600 16px/1 var(--sans);text-decoration:none}
+.btn:hover{background:#333}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.ghost:hover{background:var(--paper-2)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
+dl.rules{margin:0}
+dl.rules div{padding:14px 0;border-top:1px solid var(--rule)}
+dl.rules div:last-child{border-bottom:1px solid var(--rule)}
+dt{font-weight:700;color:var(--ink);margin:0 0 2px}
+dd{margin:0}
+.faq h3{margin-top:18px}
+.box{border:1px solid var(--rule);border-radius:12px;padding:18px 20px;background:var(--paper-2);margin:0 0 14px}
+.box p:last-child{margin-bottom:0}
+.grid{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.grid li{margin:0}
+.grid a{display:flex;gap:14px;align-items:center;padding:12px;border:1px solid var(--rule);border-radius:14px;text-decoration:none;color:var(--ink);height:100%;transition:border-color .2s,transform .2s}
+.grid a:hover{border-color:var(--ink);transform:translateY(-2px)}
+.grid .tile{width:56px;height:56px;border-radius:10px;flex:none}
+.grid .tile svg{width:34px;height:34px}
+.grid b{display:block;font:700 18px/1.2 var(--slab)}
+.grid small{display:block;font-size:14px;color:var(--ink-3);line-height:1.35}
+footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;color:var(--ink-3);font-size:15px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px}
+footer nav{display:flex;flex-wrap:wrap;gap:4px 16px}
+footer a{color:var(--ink-3)}
+@media (max-width:520px){.hero{grid-template-columns:1fr}.tile{width:88px;height:88px}.tile svg{width:52px;height:52px}}
+@media (prefers-reduced-motion:reduce){.grid a{transition:none}.grid a:hover{transform:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a href="/" aria-label="BGameWorld home"><img src="/logo.webp" alt="BGameWorld" width="602" height="348"></a>
+    <nav aria-label="Site"><a href="/">Games</a><a href="/games/">Guides</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav>
+  </div>
+  <p class="crumb"><a href="/games/">Game guides</a> / Wordezy Ladder</p>
+  <div class="hero">
+    <span class="tile" style="--tile:#9CC3F0"><svg viewBox="0 0 64 64" role="img" aria-label="Wordezy Ladder icon" focusable="false"><g stroke="#121212" stroke-width="2.5" stroke-linecap="round"><path d="M20 4v56M44 4v56M20 14h24M20 26h24M20 50h24"/>
+      <path class="mv" style="--move:climb" d="M20 38h24"/></g></svg></span>
+    <div>
+      <p class="meta">Word puzzle &middot; Free &middot; Daily</p>
+      <h1>How to play Wordezy Ladder</h1>
+    </div>
+  </div>
+  <p class="lede">Wordezy Ladder is a daily word ladder. You start with one four-letter word and climb to another by changing a single letter at a time, and every step on the way has to be a real word.</p>
+  <div class="actions"><a class="btn" href="https://wordezyladder.bgameworld.com">Play Wordezy Ladder</a><a class="btn ghost" href="/games/">All guides</a></div>
+  <hr class="rule">
+
+  <h2>How to play</h2>
+  <ol>
+    <li>Read the start word and the target word.</li>
+    <li>Change exactly one letter of the current word to make a new real word. For example, COLD can become CORD.</li>
+    <li>Keep going, one letter per move, until you reach the target.</li>
+    <li>Try to get there in par, the fewest moves the ladder can be solved in.</li>
+  </ol>
+
+  <h2>Rules and modes</h2>
+  <dl class="rules">
+    <div><dt>Par</dt><dd>Every daily ladder has a par between 4 and 6 moves. Matching par is the goal; there's no penalty for going over, but the leaderboard ranks fewest moves first.</dd></div>
+    <div><dt>Undo and hints</dt><dd>Undo is free. A hint fills in the best next word, but it costs an extra move.</dd></div>
+    <div><dt>Leaderboard</dt><dd>Ranked by fewest moves, then by time. Only your first finish of the day counts.</dd></div>
+  </dl>
+
+  <h2>Tips</h2>
+  <ul>
+    <li>Compare the start and target letter by letter. Letters that already match can usually stay put.</li>
+    <li>Change vowels early. Swapping the vowel opens up many more real words than swapping a consonant.</li>
+    <li>Work backwards from the target in your head. Knowing the second-to-last word often reveals the whole route.</li>
+    <li>If you're stuck on one letter, change a different letter first and come back to it.</li>
+  </ul>
+
+  <h2>Questions</h2>
+  <div class="faq">
+    <h3>Do proper nouns count?</h3>
+    <p>No. Every step must be an ordinary English word.</p>
+    <h3>Can I play 5-letter ladders?</h3>
+    <p>The daily is four letters. Unlimited ladders come in four or five letters.</p>
+  </div>
+
+  <div class="box"><p><strong>Ready?</strong> Today's Wordezy Ladder puzzle is waiting, free in your browser. <a href="https://wordezyladder.bgameworld.com">Play Wordezy Ladder now</a>.</p></div>
+
+  <h2>More guides</h2>
+  <ul class="grid">
+    <li><a href="/games/warmezy/"><span class="tile" style="--tile:#F7A35C"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="25" y="4" width="14" height="40" rx="7" fill="#fff" stroke="#121212" stroke-width="2.5"/>
+      <circle cx="32" cy="50" r="10" fill="#121212"/>
+      <rect class="mv rise" style="--move:rise" x="29" y="24" width="6" height="22" rx="3" fill="#121212"/>
+      <g stroke="#121212" stroke-width="2.5" stroke-linecap="round"><path d="M44 10h7M44 18h5M44 26h7M44 34h5"/></g></svg></span><span><b>Warmezy</b><small>Find the secret word by meaning.</small></span></a></li>
+    <li><a href="/games/letterezy/"><span class="tile" style="--tile:#D9C792"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g font-family="Zilla Slab,Georgia,serif" font-weight="700" text-anchor="middle">
+      <rect x="4" y="30" width="22" height="22" rx="3" fill="#fff" stroke="#121212" stroke-width="2.5" transform="rotate(-8 15 41)"/>
+      <rect x="38" y="32" width="22" height="22" rx="3" fill="#fff" stroke="#121212" stroke-width="2.5" transform="rotate(9 49 43)"/>
+      <g class="mv" style="--move:lift"><rect x="17" y="10" width="30" height="30" rx="4" fill="#121212"/><text x="30" y="33" font-size="22" fill="#fff">L</text><text x="41.5" y="36" font-size="8" fill="#fff">1</text></g></g></svg></span><span><b>Letterezy</b><small>Spell words from a bag of 25 letters.</small></span></a></li>
+    <li><a href="/games/lingoezy/"><span class="tile" style="--tile:#79D0CF"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 8h28a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H16l-8 7v-7a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z" fill="#121212"/>
+      <text x="22" y="26" font-family="Zilla Slab,Georgia,serif" font-weight="700" text-anchor="middle" font-size="14" fill="#fff">Hi</text>
+      <g class="mv" style="--move:pop"><path d="M28 30h28a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4h-4v7l-8-7H28a4 4 0 0 1-4-4V34a4 4 0 0 1 4-4z" fill="#fff" stroke="#121212" stroke-width="2.5"/>
+      <text x="42" y="46" font-family="Zilla Slab,Georgia,serif" font-weight="700" text-anchor="middle" font-size="13" fill="#121212">Hola</text></g></svg></span><span><b>Lingoezy</b><small>Pick the right translation, dodge false friends.</small></span></a></li>
+    <li><a href="/games/sortezy/"><span class="tile" style="--tile:#C9A8EC"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g fill="none" stroke="#121212" stroke-width="2.5">
+      <path d="M8 10v38a6 6 0 0 0 12 0V10"/><path d="M8 34h12v14a6 6 0 0 1-12 0z" fill="#121212"/>
+      <g class="mv" style="--move:tip"><path d="M26 10v38a6 6 0 0 0 12 0V10" fill="#fff"/><path d="M26 40h12v8a6 6 0 0 1-12 0z" fill="#121212"/></g>
+      <path d="M44 10v38a6 6 0 0 0 12 0V10"/><path d="M44 22h12v26a6 6 0 0 1-12 0z" fill="#121212"/></g></svg></span><span><b>Sortezy</b><small>Pour until every tube holds one colour.</small></span></a></li>
+  </ul>
+
+  <footer>
+    <span>&copy; 2026 BGameWorld</span>
+    <nav aria-label="Footer"><a href="/games/">Game guides</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+  </footer>
+</main>
+</body>
+</html>
