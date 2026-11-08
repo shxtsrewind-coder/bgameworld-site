@@ -18,7 +18,7 @@ const SITE = "https://bgameworld.com";
 const BOARDS = {
   word: ["Word Puzzles", "Free daily word puzzles from BGameWorld: Wordle-style, word ladders, scrambles, word search and more."],
   logic: ["Logic Puzzles", "Free daily logic puzzles from BGameWorld: water sort, tile merge and connect the dots."],
-  language: ["Language Quizzes", "Spot the false friend: free daily translation quizzes in Spanish, French, German, Italian and Portuguese."],
+  language: ["Language Quizzes", "Spot the false friend: free daily translation quizzes between English, Spanish, French, German, Italian and Portuguese, in random directions."],
   all: ["Daily Brain Puzzles", "Free daily puzzles and brain games from BGameWorld."],
 };
 
