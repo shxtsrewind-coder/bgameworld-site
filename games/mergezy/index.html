@@ -127,6 +127,19 @@ footer a{color:var(--ink-3)}
     <li>Use your first try to learn the day's tile order. The tiles are the same each try, so you can plan the next one.</li>
   </ul>
 
+  <h2>A worked example</h2>
+  <p>Merges score the tile number × the number of tiles merged × 10, and each step of a chain multiplies the score by its position in the chain. Say two 1s sit next to each other and you place a third 1 beside them. They merge into a 2 on the square you just played: 1 × 3 × 10 = 30 points.</p>
+  <p>Now suppose you had already placed two 2s touching that square. The new 2 merges with them straight away into a 3. That's the second step of the chain, so it scores 2 × 3 × 10 × 2 = 120 points. One tile, two merges, 150 points in total.</p>
+  <p>Planning these chains is the heart of the game. Because everyone gets the same tiles in the same order and you have three tries, use the first try to learn the sequence, then lay out the next try so small merges feed into bigger ones.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li>Merging the moment you can. A merge that also sets off a chain is worth far more.</li>
+    <li>Building in the corners. A merged tile needs free neighbours to grow again.</li>
+    <li>Wasting star tiles on single merges. They're most valuable when they finish a combo.</li>
+    <li>Treating every try the same. The tile order doesn't change, so each try should use what the last one taught you.</li>
+  </ul>
+
   <h2>Questions</h2>
   <div class="faq">
     <h3>Does the tile order change between tries?</h3>

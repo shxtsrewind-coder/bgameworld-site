@@ -126,6 +126,19 @@ footer a{color:var(--ink-3)}
     <li>If a square can only be reached by one colour, that colour has to pass through it.</li>
   </ul>
 
+  <h2>A worked example</h2>
+  <p>On a fresh board, start in the corners. Say a red dot sits in the top-left corner and its partner is two squares to the right. A corner dot has only two directions to move, so there are very few routes to choose from, and the short, straight path along the top edge is almost always right.</p>
+  <p>Next, look for a square that only one colour can reach. If a square is boxed in by the red line and the edge of the board, and the only free neighbour belongs to the blue route, then blue has to pass through it. Finding forced squares like this is the main way to make progress on bigger boards.</p>
+  <p>Leave the long, winding colours until last. Once the short and edge-hugging pairs are placed, the remaining squares form a narrow path, and the last colour usually has just one way to fill it.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li>Drawing the shortest path every time. Some lines must wind around to cover every square.</li>
+    <li>Leaving single empty squares. The board isn't solved until every square is covered.</li>
+    <li>Starting in the middle. Lines in the centre have the most options, which makes them the hardest to place first.</li>
+    <li>Redrawing a colour several times. Drawing each colour in one move earns the Perfect badge.</li>
+  </ul>
+
   <h2>Questions</h2>
   <div class="faq">
     <h3>Can a line touch another line?</h3>
