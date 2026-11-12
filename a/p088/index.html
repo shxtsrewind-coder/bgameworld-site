@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wordezy Search puzzle answer | BGameWorld</title>
+<meta name="description" content="Find BUTTERFLY It&#x27;s hiding once, in any direction. Watch out for the fakes. See the answer, then play today's Wordezy Search free.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Find BUTTERFLY">
+<meta property="og:image" content="https://bgameworld.com/social/fb/p088.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preload" href="/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#FFFFFF">
+<style>
+@font-face{font-family:"Zilla Slab";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/zilla-slab-700.woff2) format("woff2")}
+@font-face{font-family:"Libre Franklin";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/libre-franklin.woff2) format("woff2")}
+
+:root{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#FFFFFF;--paper-2:#F4F4F1;--rule:#DCDCD7;--focus:#2860D8;
+  --slab:"Zilla Slab",Rockwell,"Roboto Slab",Georgia,serif;--sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+main{max-width:640px;margin:0 auto;padding:28px 20px 64px}
+.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 16px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.top img{width:120px;height:auto;display:block}
+.top nav{display:flex;flex-wrap:wrap;gap:4px 18px}
+.top nav a{color:var(--ink);font-size:15px;font-weight:600;text-decoration:none}
+.top nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.crumb{font-size:14px;color:var(--ink-3);margin:0 0 10px}.crumb a{color:var(--ink-3)}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin:0 0 18px}
+.tile{display:grid;place-items:center;width:72px;height:72px;border-radius:12px;background:var(--tile)}
+.tile svg{width:44px;height:44px}
+h1{font:700 clamp(30px,7vw,44px)/1.05 var(--slab);letter-spacing:-.02em;margin:0}
+.puz{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:12px;margin:0 0 18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 24px;border-radius:999px;background:var(--ink);color:#fff;font:600 16px/1 var(--sans);text-decoration:none;border:0;cursor:pointer}
+.btn:hover{background:#333}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}.btn.ghost:hover{background:var(--paper-2)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 8px}
+.ans{margin:0 0 26px}
+.rule{border:0;border-top:3px solid var(--ink);margin:0 0 18px}
+h2{font:700 28px/1.15 var(--slab);margin:0 0 16px}
+.vwrap{display:flex;justify-content:center;margin:0 0 18px;overflow-x:auto}
+.ans p{color:var(--ink-2);margin:0 0 14px}
+h3{font:700 22px/1.2 var(--slab);margin:30px 0 12px}
+.grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.grid a{display:flex;gap:12px;align-items:center;padding:10px;border:1px solid var(--rule);border-radius:12px;text-decoration:none;color:var(--ink);height:100%}
+.grid a:hover{border-color:var(--ink)}
+.grid .tile{width:52px;height:52px;border-radius:10px;flex:none}.grid .tile svg{width:32px;height:32px}
+.grid b{display:block;font:700 17px/1.2 var(--slab)}.grid small{display:block;font-size:13.5px;color:var(--ink-3);line-height:1.35}
+footer{border-top:1px solid var(--rule);margin-top:40px;padding-top:18px;color:var(--ink-3);font-size:15px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px}
+footer a{color:var(--ink-3)}
+@media (max-width:440px){.moves{columns:1}}
+
+
+.row{display:flex}.col{display:flex;flex-direction:column}
+.t{display:flex;align-items:center;justify-content:center;border-radius:6px;font:700 30px/1 "Zilla Slab",Georgia,serif;flex-shrink:0;color:#fff}
+.t.blank{background:#fff;color:#121212;border:2.5px solid #121212}
+.t.q{background:#fff;color:#121212;border:2.5px dashed #121212}
+.lc{width:100%;background:#F4F4F1;border:1px solid #DCDCD7;border-radius:12px;padding:18px 22px 20px}
+.lc small{display:block;font:600 14px/1.2 "Libre Franklin",sans-serif;color:#6B6B6B}
+.lc b{display:block;margin-top:6px;font:700 46px/1.05 "Zilla Slab",Georgia,serif;color:#121212}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}
+.opt{min-height:56px;border:1.5px solid #121212;border-radius:999px;padding:0 16px 0 8px;display:flex;align-items:center;gap:10px;font:600 20px/1.1 "Libre Franklin",sans-serif;color:#121212;background:#fff}
+.opt i{font-style:normal;width:34px;height:34px;flex:none;border-radius:50%;background:#121212;color:#fff;display:grid;place-items:center;font:700 16px/1 "Zilla Slab",serif}
+.tube{width:56px;border:2.5px solid #121212;border-top:none;border-radius:0 0 28px 28px;background:#fff;padding:0 5px 7px;display:flex;flex-direction:column;justify-content:flex-end;gap:3px}
+.tube span{display:block;height:40px;border-radius:4px}
+.tube span:first-child{border-radius:4px 4px 22px 22px}
+.sct{width:60px;height:60px;border-radius:8px;background:#fff;border:2.5px solid #121212;display:grid;place-items:center;font:700 34px/1 "Zilla Slab",serif;color:#121212}
+.scs{width:60px;height:60px;border-radius:8px;border:2px dashed #8A8A8A}
+.hint{margin:4px 0 0;font:500 19px/1.35 "Libre Franklin",sans-serif;color:#4A4A4A;text-align:center}
+.hint b{color:#121212;font-weight:700}
+.wr{position:relative;height:44px;border-bottom:1px solid #DCDCD7;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font:600 20px/1 "Libre Franklin",sans-serif;color:#121212}
+.wr.secret{border:2px dashed #121212;border-radius:8px;margin-bottom:4px;font-weight:600;color:#4A4A4A}
+.wr .rk{display:flex;align-items:baseline;gap:12px;font-variant-numeric:tabular-nums;font-weight:700}
+.wr .bd{font-weight:600;font-size:14px}
+.wr .bar{position:absolute;left:0;bottom:-1px;height:4px}
+.lad{display:flex;flex-direction:column;align-items:center;gap:9px}
+.rung{display:flex;gap:7px}
+.lt{position:relative;width:64px;height:64px;border-radius:8px;background:#fff;border:2.5px solid #121212;display:grid;place-items:center;font:700 34px/1 "Zilla Slab",serif;color:#121212}
+.lt sub{position:absolute;right:6px;bottom:5px;font:700 13px/1 "Libre Franklin",sans-serif}
+.sl{width:46px;height:46px;border-radius:7px;border:1.5px solid #8A8A8A;display:grid;place-items:center;font:700 12px/1 "Libre Franklin",sans-serif;color:#4A4A4A}
+.lk{display:grid;gap:3px;background:#DCDCD7;border:3px solid #121212;border-radius:10px;padding:3px}
+.lk div{display:grid;place-items:center;background:#fff;border-radius:4px}
+.dot{border-radius:50%;display:grid;place-items:center;font:700 18px/1 "Zilla Slab",serif;color:#fff}
+.ws{display:grid;gap:0;border:2.5px solid #121212;border-radius:10px;padding:8px;background:#fff;font:700 19px/1 "Libre Franklin",sans-serif;color:#121212}
+.ws div{display:grid;place-items:center;border-radius:6px}
+.moves{margin:0;padding:0 0 0 28px;columns:2;column-gap:44px;font:600 16px/1.3 "Libre Franklin",sans-serif;color:#121212}
+.moves li{margin:0 0 6px}
+.alist{list-style:none;margin:0;padding:0;width:100%}
+.alist li{padding:10px 0;border-top:1px solid #DCDCD7;font:400 17px/1.45 "Libre Franklin",sans-serif;color:#4A4A4A}
+.alist li b{color:#121212}
+.alist li.good b:first-child{background:#E3F0E7;padding:0 4px;border-radius:3px}
+.alist li.bad b:first-child{text-decoration:line-through;text-decoration-thickness:2px}
+.close{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;width:100%}
+.close div{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid #DCDCD7;font:600 17px/1.2 "Libre Franklin",sans-serif;color:#121212}
+.close span{color:#6B6B6B;font-variant-numeric:tabular-nums}
+
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a href="/?utm_source=social&utm_medium=answer&utm_campaign=portal&utm_content=p088-logo" aria-label="BGameWorld home"><img src="/logo.webp" alt="BGameWorld" width="602" height="348"></a>
+    <nav aria-label="Site"><a href="/">Games</a><a href="/games/">Guides</a><a href="/about/">About</a></nav>
+  </div>
+  <p class="crumb">Puzzle answer / <a href="/games/wordezy-search/">Wordezy Search</a></p>
+  <div class="hero"><span class="tile" style="--tile:#F5C54A"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g fill="#121212"><circle cx="11" cy="11" r="2.6"/><circle cx="25" cy="11" r="2.6"/><circle cx="39" cy="11" r="2.6"/><circle cx="53" cy="11" r="2.6"/><circle cx="11" cy="25" r="2.6"/><circle cx="25" cy="25" r="2.6"/><circle cx="39" cy="25" r="2.6"/><circle cx="53" cy="25" r="2.6"/><circle cx="11" cy="39" r="2.6"/><circle cx="25" cy="39" r="2.6"/><circle cx="39" cy="39" r="2.6"/><circle cx="53" cy="39" r="2.6"/><circle cx="11" cy="53" r="2.6"/><circle cx="25" cy="53" r="2.6"/><circle cx="39" cy="53" r="2.6"/><circle cx="53" cy="53" r="2.6"/></g>
+      <g class="mv" style="--move:sweep"><rect x="2" y="25.5" width="60" height="13" rx="6.5" transform="rotate(45 32 32)" fill="none" stroke="#121212" stroke-width="2.5"/></g></svg></span><h1>Find BUTTERFLY</h1></div>
+  <img class="puz" src="/social/fb/p088.png" alt="Find BUTTERFLY It&#x27;s hiding once, in any direction. Watch out for the fakes." width="1080" height="1350">
+  <div class="actions"><button class="btn ghost" id="show" type="button">Show the answer</button></div>
+  <section class="ans" id="ans" hidden>
+    <hr class="rule">
+    <h2>Here&#x27;s BUTTERFLY</h2>
+    <div class="vwrap"><div class="ws" style="grid-template-columns:repeat(11,30px);grid-auto-rows:30px;font-size:17px"><div style="">G</div><div style="">H</div><div style="">R</div><div style="">E</div><div style="">D</div><div style="">I</div><div style="">P</div><div style="">S</div><div style="">B</div><div style="">G</div><div style="">S</div><div style="">G</div><div style="background:#F5C54A">B</div><div style="">O</div><div style="">S</div><div style="">N</div><div style="">K</div><div style="">I</div><div style="">A</div><div style="">U</div><div style="">N</div><div style="">Y</div><div style="">G</div><div style="">C</div><div style="background:#F5C54A">U</div><div style="">R</div><div style="">G</div><div style="">M</div><div style="">Y</div><div style="">H</div><div style="">T</div><div style="">T</div><div style="">E</div><div style="">U</div><div style="">O</div><div style="">R</div><div style="background:#F5C54A">T</div><div style="">N</div><div style="">M</div><div style="">D</div><div style="">A</div><div style="">T</div><div style="">A</div><div style="">L</div><div style="">B</div><div style="">E</div><div style="">P</div><div style="">I</div><div style="background:#F5C54A">T</div><div style="">E</div><div style="">O</div><div style="">A</div><div style="">E</div><div style="">N</div><div style="">T</div><div style="">Y</div><div style="">O</div><div style="">T</div><div style="">M</div><div style="">C</div><div style="background:#F5C54A">E</div><div style="">T</div><div style="">T</div><div style="">S</div><div style="">G</div><div style="">E</div><div style="">D</div><div style="">A</div><div style="">O</div><div style="">U</div><div style="">M</div><div style="">K</div><div style="background:#F5C54A">R</div><div style="">K</div><div style="">H</div><div style="">E</div><div style="">E</div><div style="">A</div><div style="">A</div><div style="">Y</div><div style="">L</div><div style="">F</div><div style="">R</div><div style="">E</div><div style="background:#F5C54A">F</div><div style="">R</div><div style="">D</div><div style="">B</div><div style="">L</div><div style="">E</div><div style="">G</div><div style="">G</div><div style="">T</div><div style="">V</div><div style="">T</div><div style="">T</div><div style="background:#F5C54A">L</div><div style="">A</div><div style="">P</div><div style="">B</div><div style="">O</div><div style="">W</div><div style="">A</div><div style="">S</div><div style="">P</div><div style="">R</div><div style="">G</div><div style="">C</div><div style="background:#F5C54A">Y</div><div style="">I</div><div style="">P</div><div style="">B</div><div style="">U</div><div style="">T</div><div style="">T</div><div style="">E</div><div style="">R</div><div style="">H</div><div style="">C</div><div style="">C</div><div style="">H</div></div></div>
+    <p>It runs diagonally down to the right, starting from the B in row 2, column 2. The BUTTER and BUTTE near-misses are decoys.</p>
+  </section>
+  <div class="actions"><a class="btn" href="https://wordezysearch.bgameworld.com/?utm_source=social&utm_medium=answer&utm_campaign=search&utm_content=p088">Play today's Wordezy Search</a><a class="btn ghost" href="/?utm_source=social&utm_medium=answer&utm_campaign=portal&utm_content=p088">All 11 games</a></div>
+  <h3>More free puzzles today</h3>
+  <ul class="grid"><li><a href="https://sortezy.bgameworld.com/?utm_source=social&utm_medium=answer&utm_campaign=sortezy&utm_content=p088-more"><span class="tile" style="--tile:#C9A8EC"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g fill="none" stroke="#121212" stroke-width="2.5">
+      <path d="M8 10v38a6 6 0 0 0 12 0V10"/><path d="M8 34h12v14a6 6 0 0 1-12 0z" fill="#121212"/>
+      <g class="mv" style="--move:tip"><path d="M26 10v38a6 6 0 0 0 12 0V10" fill="#fff"/><path d="M26 40h12v8a6 6 0 0 1-12 0z" fill="#121212"/></g>
+      <path d="M44 10v38a6 6 0 0 0 12 0V10"/><path d="M44 22h12v26a6 6 0 0 1-12 0z" fill="#121212"/></g></svg></span><span><b>Sortezy</b><small>Pour until every tube holds one colour.</small></span></a></li><li><a href="https://letterezy.bgameworld.com/?utm_source=social&utm_medium=answer&utm_campaign=letterezy&utm_content=p088-more"><span class="tile" style="--tile:#D9C792"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g font-family="Zilla Slab,Georgia,serif" font-weight="700" text-anchor="middle">
+      <rect x="4" y="30" width="22" height="22" rx="3" fill="#fff" stroke="#121212" stroke-width="2.5" transform="rotate(-8 15 41)"/>
+      <rect x="38" y="32" width="22" height="22" rx="3" fill="#fff" stroke="#121212" stroke-width="2.5" transform="rotate(9 49 43)"/>
+      <g class="mv" style="--move:lift"><rect x="17" y="10" width="30" height="30" rx="4" fill="#121212"/><text x="30" y="33" font-size="22" fill="#fff">L</text><text x="41.5" y="36" font-size="8" fill="#fff">1</text></g></g></svg></span><span><b>Letterezy</b><small>Spell words from a bag of 25 letters.</small></span></a></li><li><a href="https://linkezy.bgameworld.com/?utm_source=social&utm_medium=answer&utm_campaign=linkezy&utm_content=p088-more"><span class="tile" style="--tile:#F28FA2"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path class="mv draw" style="--move:draw" d="M12 12V52H52" fill="none" stroke="#121212" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M32 12H52V32" fill="none" stroke="#121212" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="#121212"><circle cx="12" cy="12" r="6"/><circle cx="52" cy="52" r="6"/><circle cx="32" cy="32" r="2.5"/></g>
+      <g fill="#fff" stroke="#121212" stroke-width="2.5"><circle cx="32" cy="12" r="5.5"/><circle cx="52" cy="32" r="5.5"/></g></svg></span><span><b>Linkezy</b><small>Join the dots without crossing lines.</small></span></a></li></ul>
+  <footer><span>Free, no download · <a href="/">bgameworld.com</a></span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></footer>
+</main>
+<noscript><style>#ans{display:block!important}#show{display:none}</style></noscript>
+<script>
+document.getElementById('show').addEventListener('click',function(){var a=document.getElementById('ans');a.hidden=false;this.style.display='none';a.scrollIntoView({behavior:'smooth',block:'start'});});
+</script>
+</body>
+</html>
