@@ -16,6 +16,8 @@
 //      posted to the Page on the schedule in src/reels.json.
 //   6. Pinterest video Pins (src/pinterest.js): one gameplay video a day via
 //      the Pinterest API, once the app is connected.
+//   7. YouTube Shorts (src/youtube.js): puzzle and gameplay Shorts from
+//      src/shorts.json, uploaded at their times once the channel is connected.
 //
 // To pause posting: in the SOCIAL KV namespace, set the key PAUSED to 1.
 // Delete the key (or set it to 0) to resume.
@@ -24,6 +26,7 @@ import { tiktokRoute, tiktokDue, tiktokStatus } from "./tiktok.js";
 import { pinFeed } from "./pins.js";
 import { reelsDue, reelsStatus } from "./reels.js";
 import { pinterestRoute, pinterestDue, pinterestStatus } from "./pinterest.js";
+import { youtubeRoute, youtubeDue, youtubeStatus } from "./youtube.js";
 
 const GRAPH = "https://graph.facebook.com/v26.0";
 const SITE = "https://bgameworld.com";
@@ -38,6 +41,7 @@ export default {
     if (url.pathname === "/api/social/status") return status(env);
     if (url.pathname.startsWith("/api/tiktok/")) return tiktokRoute(request, env, url);
     if (url.pathname.startsWith("/api/pinterest/")) return pinterestRoute(request, env, url);
+    if (url.pathname.startsWith("/api/youtube/")) return youtubeRoute(request, env, url);
     if (url.pathname.startsWith("/feed/pins/")) {
       const feed = pinFeed(url, Date.now());
       if (feed) return feed;
@@ -47,7 +51,7 @@ export default {
 
   async scheduled(event, env, ctx) {
     const now = Date.now();
-    ctx.waitUntil(Promise.all([postDue(env, now), tiktokDue(env, now), reelsDue(env, now), pinterestDue(env, now)]));
+    ctx.waitUntil(Promise.all([postDue(env, now), tiktokDue(env, now), reelsDue(env, now), pinterestDue(env, now), youtubeDue(env, now)]));
   },
 };
 
@@ -127,6 +131,7 @@ async function status(env) {
   out.reels = await reelsStatus(env, now);
   out.pinterest = await pinterestStatus(env);
   out.tiktok = await tiktokStatus(env, now);
+  out.youtube = await youtubeStatus(env, now);
   return new Response(JSON.stringify(out, null, 2), {
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
   });
