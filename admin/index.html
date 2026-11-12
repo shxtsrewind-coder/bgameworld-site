@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | BGameWorld</title>
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#121212;--ink-2:#4A4A4A;--ink-3:#6B6B6B;--paper:#fff;--paper-2:#F4F4F1;--rule:#DCDCD7;--accent:#2860D8;--bad:#B3261E;
+  --sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--ink:#F2F2EE;--ink-2:#C4C4BE;--ink-3:#9A9A94;--paper:#16161A;--paper-2:#202026;--rule:#33333B;--accent:#7FA6FF;--bad:#FF8A80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--sans)}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 64px}
+h1{font-size:24px;margin:0}
+h2{font-size:17px;margin:32px 0 10px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.muted{color:var(--ink-3);font-size:13px}
+button,select,input{font:inherit;color:inherit;background:var(--paper-2);border:1px solid var(--rule);border-radius:8px;padding:8px 12px}
+button{cursor:pointer;font-weight:600}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{border:1px solid var(--rule);border-radius:10px;padding:12px;background:var(--paper-2)}
+.tile b{display:block;font-size:26px;line-height:1.1}
+.tile span{color:var(--ink-3);font-size:13px}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.game{border:1px solid var(--rule);border-radius:10px;padding:14px}
+.game h3{margin:0 0 6px;font-size:16px}
+.game dl{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin:8px 0 0;font-size:14px}
+.game dt{color:var(--ink-3)} .game dd{margin:0;text-align:right;font-weight:600}
+svg.spark{width:100%;height:46px;display:block;margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--rule)}
+th{color:var(--ink-3);font-weight:600}
+.scroll{overflow-x:auto}
+#login{max-width:340px;margin:12vh auto;display:grid;gap:10px}
+#login input{width:100%}
+.err{color:var(--bad);font-size:14px;min-height:20px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <section id="login" hidden>
+    <h1>Admin</h1>
+    <input id="em" type="email" placeholder="Email" autocomplete="username">
+    <input id="pw" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="go" class="primary">Sign in</button>
+    <button id="signup" type="button">Create account</button>
+    <div id="lerr" class="err" role="alert"></div>
+  </section>
+
+  <section id="app" hidden>
+    <div class="bar">
+      <h1>BGameWorld activity</h1>
+      <div>
+        <select id="range" aria-label="Date range">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+        <button id="refresh">Refresh</button>
+        <button id="out">Sign out</button>
+      </div>
+    </div>
+    <div class="muted" id="stamp"></div>
+    <div id="aerr" class="err" role="alert"></div>
+    <div id="body"></div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  var SB_URL="https://hkcvtoozpeybwehqtiif.supabase.co";
+  var SB_KEY="sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
+  var sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{storageKey:"bgw-admin-auth"}});
+  var $=function(id){return document.getElementById(id)};
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  function fmt(n){return Number(n||0).toLocaleString()}
+  function when(t){if(!t)return "never";var d=new Date(t);return d.toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
+
+  function spark(series,key){
+    var v=series.map(function(p){return p[key]||0}),max=Math.max.apply(null,v.concat([1])),w=300,h=46,n=v.length,bw=w/n;
+    var bars=v.map(function(x,i){var bh=Math.max(x?2:0,x/max*(h-4));return '<rect x="'+(i*bw+.5)+'" y="'+(h-bh)+'" width="'+Math.max(bw-1,1)+'" height="'+bh+'" rx="1" fill="var(--accent)"><title>'+esc(series[i].day)+': '+x+'</title></rect>'}).join("");
+    return '<svg class="spark" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" role="img" aria-label="Daily '+key+'">'+bars+'</svg>';
+  }
+
+  function render(d){
+    var t=d.totals,h="";
+    h+='<h2>Overview</h2><div class="tiles">'+
+      [["Total accounts",t.users],["Guest (anonymous)",t.anonymous_users],["Registered",t.registered_users],
+       ["Sign-ins today",t.sign_ins_today],["Sign-ins, 7 days",t.sign_ins_7d],
+       ["Games played today",t.plays_today],["Games played, 7 days",t.plays_7d],["Games played, all time",t.plays_total],
+       ["Active players today",t.active_players_today],["Active players, 7 days",t.active_players_7d]]
+      .map(function(x){return '<div class="tile"><b>'+fmt(x[1])+'</b><span>'+x[0]+'</span></div>'}).join("")+'</div>';
+
+    h+='<h2>Daily trend</h2><div class="game"><div class="muted">Games played per day</div>'+spark(d.daily,"plays")+
+       '<div class="muted" style="margin-top:10px">New accounts per day</div>'+spark(d.daily,"new_users")+
+       '<div class="muted" style="margin-top:10px">Sign-ins per day</div>'+spark(d.daily,"sign_ins")+'</div>';
+
+    h+='<h2>Each game</h2><div class="games">'+d.games.map(function(g){
+      return '<div class="game"><h3>'+esc(g.name)+'</h3>'+spark(g.series,"plays")+
+        '<dl><dt>Played today</dt><dd>'+fmt(g.plays_today)+'</dd>'+
+        '<dt>Played, 7 days</dt><dd>'+fmt(g.plays_7d)+'</dd>'+
+        '<dt>Players, 7 days</dt><dd>'+fmt(g.players_7d)+'</dd>'+
+        '<dt>Played, all time</dt><dd>'+fmt(g.plays_total)+'</dd>'+
+        '<dt>Players, all time</dt><dd>'+fmt(g.players_total)+'</dd>'+
+        '<dt>Last played</dt><dd>'+esc(when(g.last_play))+'</dd></dl></div>';
+    }).join("")+'</div>';
+
+    h+='<h2>Latest plays</h2><div class="scroll"><table><thead><tr><th>When</th><th>Game</th><th>Player</th><th>Type</th></tr></thead><tbody>'+
+      (d.recent_plays.length?d.recent_plays.map(function(r){return '<tr><td>'+esc(when(r.at))+'</td><td>'+esc(r.game)+'</td><td>'+esc(r.player)+'</td><td>'+(r.registered?"Registered":"Guest")+'</td></tr>'}).join(""):'<tr><td colspan="4" class="muted">No plays yet.</td></tr>')+
+      '</tbody></table></div>';
+
+    h+='<h2>Registered players</h2><div class="scroll"><table><thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Last sign-in</th></tr></thead><tbody>'+
+      (d.registered_users.length?d.registered_users.map(function(u){return '<tr><td>'+esc(u.name||"-")+'</td><td>'+esc(u.email)+'</td><td>'+esc(when(u.created_at))+'</td><td>'+esc(when(u.last_sign_in_at))+'</td></tr>'}).join(""):'<tr><td colspan="4" class="muted">None yet.</td></tr>')+
+      '</tbody></table></div>';
+
+    var x=d.extras;
+    h+='<h2>Community</h2><div class="tiles">'+
+      [["Doodles created by players",x.doodles_created],["Doodle reports",x.doodle_reports],["Poll votes, all time",x.poll_votes_total],["Poll votes today",x.poll_votes_today],["Suggestions",x.suggestions_total]]
+      .map(function(y){return '<div class="tile"><b>'+fmt(y[1])+'</b><span>'+y[0]+'</span></div>'}).join("")+'</div>';
+    if(x.recent_suggestions.length){
+      h+='<div class="scroll"><table><tbody>'+x.recent_suggestions.map(function(s){return '<tr><td>'+esc(when(s.at))+'</td><td>'+esc(s.body)+'</td></tr>'}).join("")+'</tbody></table></div>';
+    }
+
+    h+='<h2>What this does not cover</h2><p class="muted">Days are UTC. Wordezy practice rounds are not logged per play. When &amp; Where uses a separate database, and Linkezy and Lingoezy have no player database, so none of these appear above. A "player" is one account, and most are guests.</p>';
+    $("body").innerHTML=h;
+  }
+
+  async function load(){
+    $("aerr").textContent="";
+    var r=await sb.rpc("admin_activity_overview",{p_days:parseInt($("range").value,10)});
+    if(r.error){
+      $("body").innerHTML="";
+      $("aerr").textContent=(r.error.message==="not authorized")?"This account is not an admin. Ask the site owner to add it.":("Could not load: "+r.error.message);
+      return;
+    }
+    $("stamp").textContent="Updated "+new Date(r.data.generated_at).toLocaleTimeString();
+    render(r.data);
+  }
+
+  async function show(){
+    var s=(await sb.auth.getSession()).data.session;
+    var ok=s&&s.user&&!s.user.is_anonymous;
+    $("login").hidden=!!ok; $("app").hidden=!ok;
+    if(ok)load();
+  }
+
+  $("go").onclick=async function(){
+    $("lerr").textContent="";
+    var r=await sb.auth.signInWithPassword({email:$("em").value.trim(),password:$("pw").value});
+    if(r.error)$("lerr").textContent=r.error.message; else show();
+  };
+  $("signup").onclick=async function(){
+    $("lerr").textContent="";
+    var r=await sb.auth.signUp({email:$("em").value.trim(),password:$("pw").value});
+    if(r.error)$("lerr").textContent=r.error.message;
+    else if(r.data.session)show();
+    else $("lerr").textContent="Check your email to confirm the account, then sign in.";
+  };
+  $("pw").addEventListener("keydown",function(e){if(e.key==="Enter")$("go").click()});
+  $("refresh").onclick=load; $("range").onchange=load;
+  $("out").onclick=async function(){await sb.auth.signOut();show()};
+  show();
+})();
+</script>
+</body>
+</html>
