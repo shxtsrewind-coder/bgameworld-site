@@ -396,6 +396,7 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
         <button type="button" data-cat="Logic">Logic</button>
         <button type="button" data-cat="Trivia">Trivia</button>
         <a href="/games/">Guides</a>
+        <a href="/tips/">Tips</a>
         <a href="/question/">Daily question</a>
       </nav>
       <div class="nav-right">
@@ -505,6 +506,7 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
         <li><a href="#games">All games</a></li>
         <li><a href="/question/">Today's question</a></li>
         <li><a href="/games/">Game guides</a></li>
+        <li><a href="/tips/">Puzzle tips</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="/stats/">My stats</a></li>
         <li><a href="/about/">About</a></li>
@@ -745,6 +747,7 @@ $("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a><
     <li><a href="/question/" style="--tint:#7C3AED"><i>?</i><span><b>Today's question</b>${esc(qText)}</span></a></li>
     <li><button type="button" id="newsBoard" style="--tint:#B26BFF"><i>🏆</i><span><b>Today's leaderboard</b>See who's top of the Daily Seven.</span></button></li>
     <li><a href="/games/" style="--tint:#3B82F6"><i>📖</i><span><b>Game guides</b>Rules and tips for all ${GAMES.length} games.</span></a></li>
+    <li><a href="/tips/" style="--tint:#10B981"><i>💡</i><span><b>Puzzle tips</b>Strategies for word and logic puzzles.</span></a></li>
     <li><a href="/stats/" style="--tint:#E8A33D"><i>📈</i><span><b>Your stats</b>Streaks and scores, kept on this device.</span></a></li>`;
   $("newsBoard").onclick = () => $("openChallenge").click();
 

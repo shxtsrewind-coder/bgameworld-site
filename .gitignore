@@ -5,3 +5,5 @@ art/when-and-where-source.jpg
 .impeccable/build/
 .impeccable/mocks/
 .impeccable/config.local.json
+__pycache__/
+*.pyc
