@@ -1,4 +1,7 @@
-"""Writes src/shorts.json: 5 YouTube Shorts a day for 13-26 Nov 2026.
+"""Writes src/shorts.json: 5 YouTube Shorts a day, 70 in all (the 56 puzzles of nov.py + 14 Linkezy videos).
+
+    python3 shorts_schedule.py                    # from 13 Nov 2026 09:00 UTC (the original plan)
+    python3 shorts_schedule.py 2026-11-24T16:00   # restart from a later slot (slots must be 09/13/16/19/22 UTC)
 
 Each day: that day's 4 puzzles (each a few hours after its Facebook post, so the Short's answer
 never comes before the question) plus one Linkezy gameplay video.
@@ -48,14 +51,21 @@ def linkezy_short(i, at):
                             f"#shorts #puzzle #connectthedots #logicpuzzle #satisfying"),
             "tags": BASE_TAGS + ["linkezy"] + GAME_TAGS["linkezy"]}
 
-def main():
-    P = nov.build_puzzles(); start = dt.date(2026, 11, 13); out = []
-    for i in range(14):
-        day = (start + dt.timedelta(days=i)).isoformat()
+HOURS = [9, 13, 16, 19, 22]
+def slots(first):
+    day, h = dt.date.fromisoformat(first[:10]), int(first[11:13])
+    i = HOURS.index(h)
+    while True:
+        yield f"{day.isoformat()}T{HOURS[i]:02d}:00:00Z"
+        i += 1
+        if i == len(HOURS): i, day = 0, day + dt.timedelta(days=1)
+
+def main(first="2026-11-13T09:00"):
+    P = nov.build_puzzles(); order = []
+    for i in range(14):                                     # same mix as before: puzzle, puzzle, Linkezy, puzzle, puzzle
         ps = P[4 * i: 4 * i + 4]
-        out += [puzzle_short(ps[0], f"{day}T09:00:00Z"), puzzle_short(ps[1], f"{day}T13:00:00Z"),
-                linkezy_short(i, f"{day}T16:00:00Z"),
-                puzzle_short(ps[2], f"{day}T19:00:00Z"), puzzle_short(ps[3], f"{day}T22:00:00Z")]
+        order += [("p", ps[0]), ("p", ps[1]), ("l", i), ("p", ps[2]), ("p", ps[3])]
+    out = [puzzle_short(x, at) if k == "p" else linkezy_short(x, at) for (k, x), at in zip(order, slots(first))]
     for s in out:
         assert (SITE / s["file"]).exists(), s["file"]
         assert len(",".join(s["tags"])) < 450 and len(s["description"]) < 4500
@@ -67,4 +77,5 @@ def main():
     print(len(out), "Shorts,", out[0]["at"], "->", out[-1]["at"])
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(*sys.argv[1:2])
