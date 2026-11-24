@@ -4,7 +4,8 @@
 // posts (FB_PAGE_ID, FB_PAGE_TOKEN):
 //   1. start   POST /{page}/video_reels upload_phase=start      -> video_id
 //   2. upload  POST rupload.facebook.com/video-upload/...  with the MP4 bytes
-//              (read from this site's /social/reels/ files)
+//              (read from this site's own files: r.file, e.g. social/shorts/p061.mp4,
+//              or r.video inside /social/reels/)
 //   3. finish  POST /{page}/video_reels upload_phase=finish video_state=PUBLISHED
 // If Facebook is still processing the video at step 3, the next run (30 min
 // later) tries step 3 again, inside the 6-hour window.
@@ -43,7 +44,7 @@ export async function reelsDue(env, now) {
         const s = await post(`${GRAPH}/${env.FB_PAGE_ID}/video_reels`, { upload_phase: "start", access_token: token });
         if (!s.data.video_id) { await env.SOCIAL.delete(key); await fail(env, r.id, "start", s, now); continue; }
         // Send the file itself (Facebook couldn't fetch it from a file_url: 422 on Oct 19).
-        const file = await env.ASSETS.fetch(new Request(`${SITE}/social/reels/${r.video}`));
+        const file = await env.ASSETS.fetch(new Request(r.file ? `${SITE}/${r.file}` : `${SITE}/social/reels/${r.video}`));
         if (!file.ok) { await env.SOCIAL.delete(key); await fail(env, r.id, "read video", { status: file.status, data: { error: { message: "video file missing" } } }, now); continue; }
         const bytes = await file.arrayBuffer();
         const up = await fetch(s.data.upload_url || `${RUPLOAD}/${s.data.video_id}`, {
@@ -110,7 +111,9 @@ export async function reelsStatus(env, now) {
     else if (at > now) state = "scheduled";
     else if (now - at <= WINDOW_MS) state = "due";
     else state = "missed";
-    const row = { id: r.id, level: r.level, at: r.at, state };
+    const row = { id: r.id, at: r.at, state };
+    if (r.level) row.level = r.level;
+    if (r.title) row.title = r.title;
     if (rec && rec.stage === "published") row.facebook = { video_id: rec.video_id, published_at: rec.published_at, video_status: rec.video_status, publish_status: rec.publish_status, processing_error: rec.processing_error };
     if (err) row.last_error = JSON.parse(err);
     out.reels.push(row);
