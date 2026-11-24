@@ -78,6 +78,10 @@ th{color:var(--ink-3);font-weight:600}
   var SB_KEY="sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
   var sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{storageKey:"bgw-admin-auth"}});
   var $=function(id){return document.getElementById(id)};
+  // Country code to flag emoji, plus a short "City, Region" label.
+  function flag(cc){if(!cc||cc.length!==2)return "";return String.fromCodePoint.apply(null,cc.toUpperCase().split("").map(function(c){return 127397+c.charCodeAt(0)}))}
+  var CN={};try{var dn=new Intl.DisplayNames(["en"],{type:"region"});CN=function(cc){try{return dn.of(cc)}catch(e){return cc}}}catch(e){CN=function(cc){return cc}}
+  function place(r){if(!r||!r.country)return '<span class="muted">Unknown</span>';var bits=[r.city,r.region].filter(Boolean).join(", ");return flag(r.country)+" "+esc(bits?bits+", "+CN(r.country):CN(r.country))+(r.likely_bot?' <span class="muted" title="A data-centre location: probably a bot or crawler">(bot?)</span>':"")}
   function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
   function fmt(n){return Number(n||0).toLocaleString()}
   function when(t){if(!t)return "never";var d=new Date(t);return d.toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
@@ -111,12 +115,26 @@ th{color:var(--ink-3);font-weight:600}
         '<dt>Last played</dt><dd>'+esc(when(g.last_play))+'</dd></dl></div>';
     }).join("")+'</div>';
 
-    h+='<h2>Latest plays</h2><div class="scroll"><table><thead><tr><th>When</th><th>Game</th><th>Player</th><th>Type</th></tr></thead><tbody>'+
-      (d.recent_plays.length?d.recent_plays.map(function(r){return '<tr><td>'+esc(when(r.at))+'</td><td>'+esc(r.game)+'</td><td>'+esc(r.player)+'</td><td>'+(r.registered?"Registered":"Guest")+'</td></tr>'}).join(""):'<tr><td colspan="4" class="muted">No plays yet.</td></tr>')+
+    h+='<h2>Latest plays</h2><div class="scroll"><table><thead><tr><th>When</th><th>Game</th><th>Player</th><th>Type</th><th>Location</th></tr></thead><tbody>'+
+      (d.recent_plays.length?d.recent_plays.map(function(r){return '<tr><td>'+esc(when(r.at))+'</td><td>'+esc(r.game)+'</td><td>'+esc(r.player)+'</td><td>'+(r.registered?"Registered":"Guest")+'</td><td>'+place(r)+'</td></tr>'}).join(""):'<tr><td colspan="5" class="muted">No plays yet.</td></tr>')+
       '</tbody></table></div>';
 
-    h+='<h2>Registered players</h2><div class="scroll"><table><thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Last sign-in</th></tr></thead><tbody>'+
-      (d.registered_users.length?d.registered_users.map(function(u){return '<tr><td>'+esc(u.name||"-")+'</td><td>'+esc(u.email)+'</td><td>'+esc(when(u.created_at))+'</td><td>'+esc(when(u.last_sign_in_at))+'</td></tr>'}).join(""):'<tr><td colspan="4" class="muted">None yet.</td></tr>')+
+    var L=d.locations||{countries:[],cities:[],players:[]};
+    h+='<h2>Where players are</h2><div class="tiles">'+
+      [["Players with a location",L.located],["Countries",L.countries.length],["Likely bots (data centres)",L.likely_bots],["No location",L.unlocated]]
+      .map(function(t){return '<div class="tile"><b>'+esc(t[1]==null?0:t[1])+'</b><span>'+esc(t[0])+'</span></div>'}).join("")+'</div>';
+    h+='<div class="games" style="margin-top:14px"><div class="game"><h3>By country</h3><div class="scroll"><table><thead><tr><th>Country</th><th>Accounts</th><th>Have played</th><th>Plays</th></tr></thead><tbody>'+
+      (L.countries.length?L.countries.map(function(c){return '<tr><td>'+flag(c.country)+' '+esc(CN(c.country))+'</td><td>'+esc(c.players)+'</td><td>'+esc(c.players_who_played)+'</td><td>'+esc(c.plays)+'</td></tr>'}).join(""):'<tr><td colspan="4" class="muted">No locations yet.</td></tr>')+
+      '</tbody></table></div><p class="muted">Bots and crawlers from data centres are left out of this table.</p></div>'+
+      '<div class="game"><h3>Top cities</h3><div class="scroll"><table><thead><tr><th>Place</th><th>Accounts</th></tr></thead><tbody>'+
+      (L.cities.length?L.cities.map(function(c){return '<tr><td>'+place(c)+'</td><td>'+esc(c.players)+'</td></tr>'}).join(""):'<tr><td colspan="2" class="muted">No cities yet.</td></tr>')+
+      '</tbody></table></div></div></div>';
+    h+='<h3>Every player who has played</h3><div class="scroll"><table><thead><tr><th>Player</th><th>Name</th><th>Type</th><th>Location</th><th>Plays</th><th>Last played</th><th>Games</th></tr></thead><tbody>'+
+      (L.players.length?L.players.map(function(p){return '<tr><td>'+esc(p.player)+'</td><td>'+esc(p.name||"-")+'</td><td>'+(p.registered?"Registered":"Guest")+'</td><td>'+place(p)+'</td><td>'+esc(p.plays)+'</td><td>'+esc(when(p.last_play))+'</td><td>'+esc(p.games)+'</td></tr>'}).join(""):'<tr><td colspan="7" class="muted">No plays yet.</td></tr>')+
+      '</tbody></table></div>';
+
+    h+='<h2>Registered players</h2><div class="scroll"><table><thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Last sign-in</th><th>Location</th></tr></thead><tbody>'+
+      (d.registered_users.length?d.registered_users.map(function(u){return '<tr><td>'+esc(u.name||"-")+'</td><td>'+esc(u.email)+'</td><td>'+esc(when(u.created_at))+'</td><td>'+esc(when(u.last_sign_in_at))+'</td><td>'+place(u)+'</td></tr>'}).join(""):'<tr><td colspan="5" class="muted">None yet.</td></tr>')+
       '</tbody></table></div>';
 
     var x=d.extras;
@@ -127,7 +145,7 @@ th{color:var(--ink-3);font-weight:600}
       h+='<div class="scroll"><table><tbody>'+x.recent_suggestions.map(function(s){return '<tr><td>'+esc(when(s.at))+'</td><td>'+esc(s.body)+'</td></tr>'}).join("")+'</tbody></table></div>';
     }
 
-    h+='<h2>What this does not cover</h2><p class="muted">Days are UTC. Wordezy practice rounds are not logged per play. When &amp; Where uses a separate database, and Linkezy and Lingoezy have no player database, so none of these appear above. A "player" is one account, and most are guests.</p>';
+    h+='<h2>What this does not cover</h2><p class="muted">Days are UTC. Wordezy practice rounds are not logged per play. When &amp; Where uses a separate database, and Linkezy and Lingoezy have no player database, so none of these appear above. A "player" is one account, and most are guests. Locations are approximate, worked out from the address a player last signed in from: the country is always current, and the city is from the last location refresh. Data-centre towns such as Ashburn or Mountain View usually mean a bot or crawler, not a person. IP geolocation by <a href="https://db-ip.com">DB-IP</a>.</p>';
     $("body").innerHTML=h;
   }
 
