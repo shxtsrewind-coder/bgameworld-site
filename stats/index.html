@@ -89,6 +89,7 @@ section{margin-top:40px}
 footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;color:var(--ink-3);font-size:15px}
 footer a{color:var(--ink);text-underline-offset:3px}
 </style>
+<script src="/shared-auth.js"></script>
 </head>
 <body>
 <main>
@@ -324,7 +325,7 @@ footer a{color:var(--ink);text-underline-offset:3px}
   s.onload = () => {
     clearTimeout(timer);
     if (!window.supabase) return offline();
-    sb = window.supabase.createClient(SB_URL, SB_KEY);
+    sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: window.bgwSharedAuth() });
     sb.auth.getSession().then(({ data }) => { if (data.session && data.session.user) loadStats(); }).catch(() => {});
   };
   document.head.append(s);
