@@ -133,7 +133,7 @@ async function advance(env, now, { force, wait }) {
   const pinRes = await fetch(`${api(env)}/pins`, {
     method: "POST", headers: H,
     body: JSON.stringify({
-      board_id: board, title: item.title, description: item.description, link: item.link, alt_text: item.alt,
+      board_id: board, title: item.title, description: item.description, link: item.link && !item.link.includes("?") ? `${item.link}?ref=pinterest` : item.link, alt_text: item.alt,
       media_source: { source_type: "video_id", media_id: rec.media_id, cover_image_url: `${SITE}/social/reels/${item.cover}` },
     }),
   });

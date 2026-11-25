@@ -32,6 +32,12 @@ const GRAPH = "https://graph.facebook.com/v26.0";
 const SITE = "https://bgameworld.com";
 // A post is only sent within 6 hours of its time, so a long outage never
 // dumps a backlog of old puzzles onto the Page at once.
+// Adds ?ref=<tag> to bgameworld.com links in a post, so the admin page can tell
+// which platform a visitor came from (in-app browsers often send no referrer).
+export function tagLinks(text, tag) {
+  return String(text).replace(/https:\/\/([a-z0-9-]+\.)?bgameworld\.com[^\s?#]*/g, (u) => `${u}?ref=${tag}`);
+}
+
 const WINDOW_MS = 6 * 60 * 60 * 1000;
 const ERROR_TTL = 14 * 24 * 60 * 60;
 
@@ -71,7 +77,7 @@ async function postDue(env, now) {
     try {
       const body = new URLSearchParams({
         url: `${SITE}/social/fb/${p.id}.png`,
-        message: p.caption,
+        message: tagLinks(p.caption, "fb"),
         access_token: env.FB_PAGE_TOKEN,
       });
       const res = await fetch(`${GRAPH}/${env.FB_PAGE_ID}/photos`, { method: "POST", body });

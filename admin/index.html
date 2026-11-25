@@ -133,6 +133,8 @@ tbody tr:hover td{background:var(--rule-2)}
   function kind(r){return r.likely_bot?'<span class="badge bot" title="From a data centre: probably a bot or crawler">Bot?</span>':
     (r.registered?'<span class="badge reg">Registered</span>':'<span class="badge guest">Guest</span>')}
   var gameName=function(slug){return slug};
+  function came(r){var t=data.traffic;var v=t&&t.first_source&&r.player&&t.first_source[r.player];return v?esc(v):'<span class="muted">–</span>'}
+  function siteName(h){if(h==="bgameworld.com"||h==="www.bgameworld.com")return "BGameWorld";var sub=String(h||"").replace(/\.bgameworld\.com$/,"");return gameName(sub)}
 
   /* ---------- pieces ---------- */
   function kpi(label,value,sub){return '<div class="kpi"><div class="label">'+label+'</div><div class="value">'+fmt(value)+'</div><div class="sub">'+(sub||"&nbsp;")+'</div></div>'}
@@ -161,16 +163,16 @@ tbody tr:hover td{background:var(--rule-2)}
       if(filters.game&&r.game!==filters.game)return false;
       if(q&&[r.player,r.name,r.city,r.region,r.country&&country(r.country)].join(" ").toLowerCase().indexOf(q)<0)return false;
       return true});
-    return f+table([{t:"When"},{t:"Player"},{t:"Type"},{t:"Location"},{t:"Game"}],
-      rows.map(function(r){return '<tr>'+td(esc(when(r.at)))+td(who(r))+td(kind(r))+td(place(r))+td(esc(gameName(r.game)))+'</tr>'}),
+    return f+table([{t:"When"},{t:"Player"},{t:"Type"},{t:"Location"},{t:"Came from"},{t:"Game"}],
+      rows.map(function(r){return '<tr>'+td(esc(when(r.at)))+td(who(r))+td(kind(r))+td(place(r))+td(came(r))+td(esc(gameName(r.game)))+'</tr>'}),
       "No plays match these filters.")+
       '<div class="card-body muted">Showing '+fmt(rows.length)+' of the latest '+fmt(data.recent_plays.length)+' plays.</div>'}
 
   function playersTab(){
     var L=data.locations||{players:[]};
     var rows=L.players.filter(function(p){return filters.bots||!p.likely_bot});
-    return table([{t:"Player"},{t:"Type"},{t:"Location"},{t:"Games played"},{t:"Plays",num:1},{t:"Last played"}],
-      rows.map(function(p){return '<tr>'+td(who(p))+td(kind(p))+td(place(p))+td(esc((p.games||"").split(", ").map(gameName).join(", ")))+td(fmt(p.plays),1)+td(esc(when(p.last_play)))+'</tr>'}),
+    return table([{t:"Player"},{t:"Type"},{t:"Location"},{t:"Came from"},{t:"Games played"},{t:"Plays",num:1},{t:"Last played"}],
+      rows.map(function(p){return '<tr>'+td(who(p))+td(kind(p))+td(place(p))+td(came(p))+td(esc((p.games||"").split(", ").map(gameName).join(", ")))+td(fmt(p.plays),1)+td(esc(when(p.last_play)))+'</tr>'}),
       "No players yet.")}
 
   function gamesTab(){
@@ -194,12 +196,31 @@ tbody tr:hover td{background:var(--rule-2)}
       data.registered_users.map(function(u){return '<tr>'+td('<b>'+esc(u.name||"–")+'</b>')+td(esc(u.email))+td(place(u))+td(esc(when(u.created_at)))+td(esc(when(u.last_sign_in_at)))+'</tr>'}),
       "No registered players yet.")}
 
+  function trafficTab(){
+    var T=data.traffic;
+    if(!T)return '<div class="empty">Traffic sources could not be loaded. Try Refresh.</div>';
+    var max=Math.max.apply(null,T.sources.map(function(x){return x.visits}).concat([1]));
+    var h='<div class="card-head"><h2>Where visitors came from</h2><span class="muted">'+fmt(T.total)+' visits in the last '+data.range_days+' days</span></div>';
+    h+=table([{t:"Source"},{t:"Visits",num:1},{t:""},{t:"Visitors",num:1},{t:"Today",num:1}],
+      T.sources.map(function(x){return '<tr>'+td('<b>'+esc(x.source)+'</b>')+td(fmt(x.visits),1)+td('<div class="bar"><i style="width:'+Math.round(x.visits/max*100)+'%"></i></div>')+td(fmt(x.visitors),1)+td(fmt(x.today),1)+'</tr>'}),
+      "No visits recorded yet. They start appearing as people open the site.");
+    var rows=T.recent.filter(function(r){return filters.bots||!r.likely_bot});
+    h+='<div class="card-head" style="border-top:1px solid var(--rule-2)"><h2>Latest visits</h2><label class="muted"><input type="checkbox" id="fbots"'+(filters.bots?" checked":"")+'> Show bots</label></div>';
+    h+=table([{t:"When"},{t:"Came from"},{t:"Link detail"},{t:"Landed on"},{t:"Player"},{t:"Location"}],
+      rows.map(function(r){var det=[r.ref_host,r.medium,r.campaign].filter(Boolean).join(" · ");
+        return '<tr>'+td(esc(when(r.at)))+td('<b>'+esc(r.source)+'</b>')+td(det?esc(det):'<span class="muted">–</span>')+
+          td(esc(siteName(r.site))+' <span class="id">'+esc(r.path&&r.path!=="/"?r.path:"")+'</span>')+
+          td(r.player?who(r)+' '+kind(r):'<span class="muted">Not played yet</span>')+td(r.player?place(r):'<span class="muted">–</span>')+'</tr>'}),
+      "No visits yet.");
+    return h}
+
   var TABS=[["activity","Activity",function(){return data.recent_plays.filter(function(r){return !r.likely_bot}).length}],
+            ["traffic","Traffic sources",function(){return data.traffic?data.traffic.sources.length:0}],
             ["players","Players",function(){return ((data.locations&&data.locations.players)||[]).filter(function(p){return !p.likely_bot}).length}],
             ["games","Games",function(){return data.games.length}],
             ["countries","Countries",function(){return ((data.locations&&data.locations.countries)||[]).filter(function(c){return c.players_who_played>0}).length}],
             ["registered","Registered",function(){return data.totals.registered_users}]];
-  var VIEWS={activity:activityTab,players:playersTab,games:gamesTab,countries:countriesTab,registered:registeredTab};
+  var VIEWS={activity:activityTab,traffic:trafficTab,players:playersTab,games:gamesTab,countries:countriesTab,registered:registeredTab};
 
   function renderTab(){
     $("tabs").innerHTML=TABS.map(function(t){return '<button class="tab" role="tab" data-tab="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'<span class="count">'+fmt(t[2]())+'</span></button>'}).join("");
@@ -223,7 +244,7 @@ tbody tr:hover td{background:var(--rule-2)}
     h+='<div class="card"><div class="tabs" id="tabs" role="tablist"></div><div id="panel"></div></div>';
     h+='<p class="foot">Days are in UTC. A player is one account: guests get one automatically the first time they play. '+
        'Locations are approximate, from the address a player last signed in from. Data-centre locations are marked as bots and hidden unless you choose to show them. '+
-       'When &amp; Where, Linkezy and Lingoezy are not included. IP geolocation by <a href="https://db-ip.com">DB-IP</a>.</p>';
+       '&ldquo;Came from&rdquo; is the site a player first arrived from; apps like WhatsApp often hide this and show as Direct, so add <code>?ref=whatsapp</code> (or any name) to links you share. When &amp; Where, Linkezy and Lingoezy are not included. IP geolocation by <a href="https://db-ip.com">DB-IP</a>.</p>';
     $("body").innerHTML=h;
     $("tabs").onclick=function(e){var b=e.target.closest(".tab");if(!b)return;tab=b.dataset.tab;try{sessionStorage.setItem("bgw-admin-tab",tab)}catch(x){}renderTab()};
     if(!VIEWS[tab])tab="activity";
@@ -233,13 +254,16 @@ tbody tr:hover td{background:var(--rule-2)}
   /* ---------- data and sign-in ---------- */
   async function load(){
     $("aerr").textContent="";
-    var r=await sb.rpc("admin_activity_overview",{p_days:parseInt($("range").value,10)});
+    var days=parseInt($("range").value,10);
+    var both=await Promise.all([sb.rpc("admin_activity_overview",{p_days:days}),sb.rpc("admin_traffic_sources",{p_days:days})]);
+    var r=both[0];
     if(r.error){
       $("body").innerHTML="";
       $("aerr").textContent=(r.error.message==="not authorized")?"This account is not an admin. Ask the site owner to add it.":("Could not load: "+r.error.message);
       return;
     }
     $("stamp").textContent="Updated "+new Date(r.data.generated_at).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+    r.data.traffic=both[1].error?null:both[1].data;
     render(r.data);
   }
 

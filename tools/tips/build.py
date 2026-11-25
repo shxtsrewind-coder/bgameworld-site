@@ -63,6 +63,7 @@ def head(title, desc, url, kind, ld):
 <script type="application/ld+json">{json.dumps(ld)}</script>
 {STYLE}
 {EXTRA_CSS}
+<script src="/visit.js" defer></script>
 </head>"""
 
 

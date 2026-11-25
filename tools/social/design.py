@@ -280,6 +280,7 @@ def answer_page(p, more):
 {PAGE_CSS}
 {VIS_CSS}
 </style>
+<script src="/visit.js" defer></script>
 </head>
 <body>
 <main>
