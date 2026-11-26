@@ -67,6 +67,12 @@ tbody tr:hover td{background:var(--rule-2)}
 .badge.reg{background:var(--good-soft);color:var(--good)}
 .badge.guest{background:var(--rule-2);color:var(--ink-3)}
 .badge.bot{background:var(--warn-soft);color:var(--warn)}
+.vkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 18px}
+@media (max-width:820px){.vkpis{grid-template-columns:repeat(2,1fr)}}
+.vkpi{border:1px solid var(--rule);border-radius:10px;padding:12px 14px}
+.vkpi .label{color:var(--ink-3);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.vkpi .value{font-size:24px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+.vkpi .sub{color:var(--ink-3);font-size:12px;margin-top:2px}
 .bar{height:6px;border-radius:3px;background:var(--accent-soft);min-width:60px;position:relative}
 .bar i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--accent)}
 .empty{padding:28px 18px;color:var(--ink-3);text-align:center}
@@ -198,6 +204,36 @@ tbody tr:hover td{background:var(--rule-2)}
       data.registered_users.map(function(u){return '<tr>'+td('<b>'+esc(u.name||"–")+'</b>')+td(esc(u.email))+td(place(u))+td(esc(when(u.created_at)))+td(esc(when(u.last_sign_in_at)))+'</tr>'}),
       "No registered players yet.")}
 
+  function visitsTab(){
+    var T=data.traffic;
+    if(!T||!T.summary)return '<div class="empty">Visits could not be loaded. Try Refresh.</div>';
+    var S=T.summary, pct=function(a,b){return b?Math.round(a/b*100)+"%":"–"};
+    var h='<div class="vkpis">'+
+      vk("Visits today",S.visits_today,fmt(S.visitors_today)+" different people")+
+      vk("Played today",S.played_today,pct(S.played_today,S.visitors_today)+" of today's visitors finished a game")+
+      vk("Visits, 7 days",S.visits_7d,fmt(S.visitors_7d)+" different people")+
+      vk("Visits, "+data.range_days+" days",S.visits_range,fmt(S.visitors_range)+" different people")+'</div>';
+    var days=(T.daily||[]).slice().reverse();
+    var max=Math.max.apply(null,days.map(function(d){return d.visits}).concat([1]));
+    h+='<div class="card-head" style="border-top:1px solid var(--rule-2)"><h2>Visits by day</h2><span class="muted">Newest first</span></div>';
+    h+=table([{t:"Day"},{t:"Visits",num:1},{t:""},{t:"Visitors",num:1},{t:"Played",num:1},{t:"Played %",num:1}],
+      days.filter(function(d){return d.visits>0}).map(function(d){
+        var label=new Date(d.day+"T12:00:00Z").toLocaleDateString([],{weekday:"short",month:"short",day:"numeric",timeZone:"UTC"});
+        return '<tr>'+td(esc(d.day===data.today?"Today":label))+td(fmt(d.visits),1)+td('<div class="bar"><i style="width:'+Math.round(d.visits/max*100)+'%"></i></div>')+
+          td(fmt(d.visitors),1)+td(fmt(d.played),1)+td(pct(d.played,d.visitors),1)+'</tr>'}),
+      "No visits recorded yet.");
+    h+='<div class="card-head" style="border-top:1px solid var(--rule-2)"><h2>Top pages people landed on</h2><span class="muted">Last '+data.range_days+' days</span></div>';
+    h+=table([{t:"Page"},{t:"Today",num:1},{t:"Visits",num:1},{t:"Visitors",num:1}],
+      (T.pages||[]).map(function(pg){return '<tr>'+td(esc(siteName(pg.site))+' <span class="id">'+esc(pg.path&&pg.path!=="/"?pg.path:"")+'</span>')+td(fmt(pg.today),1)+td(fmt(pg.visits),1)+td(fmt(pg.visitors),1)+'</tr>'}),
+      "No visits yet.");
+    h+='<div class="card-head" style="border-top:1px solid var(--rule-2)"><h2>By site</h2></div>';
+    h+=table([{t:"Site"},{t:"Today",num:1},{t:"Visits",num:1},{t:"Visitors",num:1}],
+      (T.sites||[]).map(function(x){return '<tr>'+td('<b>'+esc(siteName(x.site))+'</b>')+td(fmt(x.today),1)+td(fmt(x.visits),1)+td(fmt(x.visitors),1)+'</tr>'}),
+      "No visits yet.");
+    h+='<div class="card-body muted">A visit is one browser tab opening one site, so moving from a game to bgameworld.com counts on both. "Played" means the visitor finished at least one game that day; guest plays are counted from 26 November.</div>';
+    return h}
+  function vk(label,value,sub){return '<div class="vkpi"><div class="label">'+label+'</div><div class="value">'+fmt(value)+'</div><div class="sub">'+sub+'</div></div>'}
+
   function trafficTab(){
     var T=data.traffic;
     if(!T)return '<div class="empty">Traffic sources could not be loaded. Try Refresh.</div>';
@@ -217,12 +253,13 @@ tbody tr:hover td{background:var(--rule-2)}
     return h}
 
   var TABS=[["activity","Activity",function(){return data.recent_plays.filter(function(r){return !r.likely_bot}).length}],
+            ["visits","Visits",function(){return data.traffic&&data.traffic.summary?data.traffic.summary.visits_today:0}],
             ["traffic","Traffic sources",function(){return data.traffic?data.traffic.sources.length:0}],
             ["players","Players",function(){return ((data.locations&&data.locations.players)||[]).filter(function(p){return !p.likely_bot}).length}],
             ["games","Games",function(){return data.games.length}],
             ["countries","Countries",function(){return ((data.locations&&data.locations.countries)||[]).filter(function(c){return c.players_who_played>0}).length}],
             ["registered","Registered",function(){return data.totals.registered_users}]];
-  var VIEWS={activity:activityTab,traffic:trafficTab,players:playersTab,games:gamesTab,countries:countriesTab,registered:registeredTab};
+  var VIEWS={activity:activityTab,visits:visitsTab,traffic:trafficTab,players:playersTab,games:gamesTab,countries:countriesTab,registered:registeredTab};
 
   function renderTab(){
     $("tabs").innerHTML=TABS.map(function(t){return '<button class="tab" role="tab" data-tab="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'<span class="count">'+fmt(t[2]())+'</span></button>'}).join("");
@@ -246,7 +283,7 @@ tbody tr:hover td{background:var(--rule-2)}
     h+='<div class="card"><div class="tabs" id="tabs" role="tablist"></div><div id="panel"></div></div>';
     h+='<p class="foot">Days are in UTC. A player is one account: guests get one automatically the first time they play. '+
        'Locations are approximate, from the address a player last signed in from. Data-centre locations are marked as bots and hidden unless you choose to show them. '+
-       '&ldquo;Came from&rdquo; is the site a player first arrived from; apps like WhatsApp often hide this and show as Direct, so add <code>?ref=whatsapp</code> (or any name) to links you share. When &amp; Where, Linkezy and Lingoezy are not included. IP geolocation by <a href="https://db-ip.com">DB-IP</a>.</p>';
+       '&ldquo;Came from&rdquo; is the site a player first arrived from; apps like WhatsApp often hide this and show as Direct, so add <code>?ref=whatsapp</code> (or any name) to links you share. Guests count as active once they finish a game (from 26 November; Wordezy counts a started game). When &amp; Where is not included. IP geolocation by <a href="https://db-ip.com">DB-IP</a>.</p>';
     $("body").innerHTML=h;
     $("tabs").onclick=function(e){var b=e.target.closest(".tab");if(!b)return;tab=b.dataset.tab;try{sessionStorage.setItem("bgw-admin-tab",tab)}catch(x){}renderTab()};
     if(!VIEWS[tab])tab="activity";
