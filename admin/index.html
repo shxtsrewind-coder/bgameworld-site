@@ -67,6 +67,8 @@ tbody tr:hover td{background:var(--rule-2)}
 .badge.reg{background:var(--good-soft);color:var(--good)}
 .badge.guest{background:var(--rule-2);color:var(--ink-3)}
 .badge.bot{background:var(--warn-soft);color:var(--warn)}
+.pinrow{display:flex;gap:12px;align-items:center;white-space:normal;min-width:280px;max-width:460px}
+img.pin,.pin.none{width:40px;height:60px;object-fit:cover;border-radius:6px;background:var(--rule-2);flex:none}
 .vkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 18px}
 @media (max-width:820px){.vkpis{grid-template-columns:repeat(2,1fr)}}
 .vkpi{border:1px solid var(--rule);border-radius:10px;padding:12px 14px}
@@ -204,6 +206,28 @@ tbody tr:hover td{background:var(--rule-2)}
       data.registered_users.map(function(u){return '<tr>'+td('<b>'+esc(u.name||"–")+'</b>')+td(esc(u.email))+td(place(u))+td(esc(when(u.created_at)))+td(esc(when(u.last_sign_in_at)))+'</tr>'}),
       "No registered players yet.")}
 
+  // Titles and pictures of posts and Pins (tools/social/pins_index.py writes it).
+  var pinInfo=null;
+  fetch("/social/pins.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():{}}).then(function(d){pinInfo=d||{};if(tab==="pins"&&data)renderTab()}).catch(function(){pinInfo={}});
+
+  function pinsTab(){
+    var T=data.traffic;
+    if(!T||!T.pins)return '<div class="empty">Pins could not be loaded. Try Refresh.</div>';
+    var info=pinInfo||{}, pct=function(a,b){return b?Math.round(a/b*100)+"%":"–"};
+    var max=Math.max.apply(null,T.pins.map(function(p){return p.clicks}).concat([1]));
+    var h='<div class="card-head"><h2>Top pins and posts</h2><span class="muted">Clicks in the last '+data.range_days+' days</span></div>';
+    h+=table([{t:"Pin"},{t:"Clicks",num:1},{t:""},{t:"Today",num:1},{t:"From"},{t:"Reached a game",num:1},{t:"Played",num:1},{t:"Played %",num:1}],
+      T.pins.map(function(p){
+        var m=info[p.id]||{}, img=m.image?'<img class="pin" src="'+esc(m.image)+'" alt="" loading="lazy">':'<span class="pin none"></span>';
+        var from=[p.pinterest?"Pinterest "+fmt(p.pinterest):"",p.facebook?"Facebook "+fmt(p.facebook):""].filter(Boolean).join(" · ")||"–";
+        return '<tr>'+td('<div class="pinrow">'+img+'<div><b>'+esc(m.title||p.id)+'</b>'+
+            '<div class="muted">'+esc(p.id)+(m.game?' · '+esc(m.game):'')+(m.pinned?' · pinned '+esc(m.pinned):m.posted?' · posted '+esc(m.posted):'')+' · last click '+esc(when(p.last_click))+'</div></div></div>')+
+          td(fmt(p.clicks),1)+td('<div class="bar"><i style="width:'+Math.round(p.clicks/max*100)+'%"></i></div>')+td(fmt(p.today),1)+td(esc(from))+
+          td(fmt(p.to_game),1)+td(fmt(p.played),1)+td(pct(p.played,p.clicks),1)+'</tr>'}),
+      "No clicks from pins or posts yet.");
+    h+='<div class="card-body muted"><b>Clicks</b>: people who tapped the pin or post. <b>Reached a game</b>: visits that went on to a game. <b>Played</b>: people who then finished a game that day (guest plays are counted from 26 November, so older pins show low).</div>';
+    return h}
+
   function visitsTab(){
     var T=data.traffic;
     if(!T||!T.summary)return '<div class="empty">Visits could not be loaded. Try Refresh.</div>';
@@ -256,12 +280,13 @@ tbody tr:hover td{background:var(--rule-2)}
 
   var TABS=[["activity","Activity",function(){return data.recent_plays.filter(function(r){return !r.likely_bot}).length}],
             ["visits","Visits",function(){return data.traffic&&data.traffic.summary?data.traffic.summary.visits_today:0}],
+            ["pins","Top pins",function(){return data.traffic&&data.traffic.pins?data.traffic.pins.length:0}],
             ["traffic","Traffic sources",function(){return data.traffic?data.traffic.sources.length:0}],
             ["players","Players",function(){return ((data.locations&&data.locations.players)||[]).filter(function(p){return !p.likely_bot}).length}],
             ["games","Games",function(){return data.games.length}],
             ["countries","Countries",function(){return ((data.locations&&data.locations.countries)||[]).filter(function(c){return c.players_who_played>0}).length}],
             ["registered","Registered",function(){return data.totals.registered_users}]];
-  var VIEWS={activity:activityTab,visits:visitsTab,traffic:trafficTab,players:playersTab,games:gamesTab,countries:countriesTab,registered:registeredTab};
+  var VIEWS={activity:activityTab,visits:visitsTab,pins:pinsTab,traffic:trafficTab,players:playersTab,games:gamesTab,countries:countriesTab,registered:registeredTab};
 
   function renderTab(){
     $("tabs").innerHTML=TABS.map(function(t){return '<button class="tab" role="tab" data-tab="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'<span class="count">'+fmt(t[2]())+'</span></button>'}).join("");

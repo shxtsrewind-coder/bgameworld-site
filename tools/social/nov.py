@@ -264,6 +264,7 @@ def main():
                      "image": f"https://bgameworld.com/social/pin/{p['id']}.jpg", "bytes": (SITE / "social/pin" / f"{p['id']}.jpg").stat().st_size})
     pins.sort(key=lambda x: x["at"])
     (SITE / "src/pins.json").write_text(json.dumps(pins, indent=1, ensure_ascii=False))
+    import pins_index; pins_index.build()  # titles and pictures for the admin's Top pins tab
     print(f"{len(P)} puzzles: images, answer pages, posts.json ({len(posts)}), pins.json ({len(pins)})")
 
 if __name__ == "__main__":

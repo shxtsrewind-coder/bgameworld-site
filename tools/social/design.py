@@ -291,7 +291,7 @@ def answer_page(p, more):
   </div>
   <p class="crumb">Puzzle answer / <a href="/games/{g['guide']}/">{e(g['name'])}</a></p>
   <div class="hero"><span class="tile" style="--tile:{g['color']}">{g['icon']}</span><h1>{p['headline']}</h1></div>
-  <div class="actions"><a class="btn" href="{g['url']}/?{utm(p['game'], '-top')}">Play today's {e(g['name'])} free</a></div>
+  <div class="actions" data-top-play><a class="btn" href="{g['url']}/?{utm(p['game'], '-top')}">Play today's {e(g['name'])} free</a></div>
   <img class="puz" src="/social/fb/{pid}.png" alt="{e(title)} {e(p['sub'])}" width="1080" height="1350">
   <div class="actions"><button class="btn ghost" id="show" type="button">Show the answer</button></div>
   <section class="ans" id="ans" hidden>
@@ -306,6 +306,8 @@ def answer_page(p, more):
   <footer><span>Free, no download · <a href="/">bgameworld.com</a></span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></footer>
 </main>
 <noscript><style>#ans{{display:block!important}}#show{{display:none}}</style></noscript>
+<script>/* Send visitors straight on to today's game (visit.js has already noted the post). ?stay shows this page. */
+document.addEventListener("DOMContentLoaded",function(){{if(/[?&]stay\b/.test(location.search))return;var a=document.querySelector("[data-top-play] a");if(!a)return;if(window.bgwVisitFlush)window.bgwVisitFlush();setTimeout(function(){location.replace(a.href)},150);}});</script>
 <script>
 document.getElementById('show').addEventListener('click',function(){{var a=document.getElementById('ans');a.hidden=false;this.style.display='none';a.scrollIntoView({{behavior:'smooth',block:'start'}});}});
 </script>

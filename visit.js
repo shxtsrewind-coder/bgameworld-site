@@ -41,6 +41,7 @@
     p_tag: q.get("ref") || q.get("utm_source") || q.get("src") || null,
     p_medium: q.get("utm_medium"),
     p_campaign: q.get("utm_campaign"),
+    p_content: q.get("utm_content"), // which post or Pin, e.g. p047
   };
 
   // Where the person first arrived from, kept for 30 minutes across all
@@ -53,11 +54,13 @@
   if (internal) {
     var entry = null;
     try { entry = JSON.parse(decodeURIComponent(cookie("bgw-entry") || "")); } catch (e) { /* none */ }
-    if (entry) { info.p_referrer = entry.r; info.p_tag = entry.t; info.p_medium = entry.m; info.p_campaign = entry.c; }
-    else { info.p_tag = info.p_medium = info.p_campaign = null; }
+    if (entry) { info.p_referrer = entry.r; info.p_tag = entry.t; info.p_medium = entry.m; info.p_campaign = entry.c; info.p_content = entry.n || null; }
+    else { info.p_tag = info.p_medium = info.p_campaign = info.p_content = null; }
   } else if (info.p_referrer || info.p_tag) {
     var val = encodeURIComponent(JSON.stringify({
       r: (info.p_referrer || "").slice(0, 200) || null, t: info.p_tag, m: info.p_medium, c: info.p_campaign,
+      // the post they came from (or the answer page they landed on)
+      n: (info.p_content || (location.pathname.match(/^\/a\/(p\d+)/) || [])[1] || null),
     }));
     document.cookie = "bgw-entry=" + val + "; Domain=.bgameworld.com; Path=/; Max-Age=1800; SameSite=Lax; Secure";
   }
@@ -79,6 +82,7 @@
     langs: (navigator.languages || []).length,
     w: (window.screen && screen.width) || 0,
     h: (window.screen && screen.height) || 0,
+    hop: internal, // came from another of our pages (so not a new click from outside)
   };
 
   // Count a page only once it has actually been on screen (not prerendered or
@@ -101,4 +105,5 @@
   }
   setTimeout(send, 1500);
   addEventListener("pagehide", function () { send(true); }); // leaving early: record it anyway
+  window.bgwVisitFlush = function () { send(true); }; // answer pages call this just before moving on to the game
 })();
