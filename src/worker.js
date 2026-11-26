@@ -35,7 +35,8 @@ const SITE = "https://bgameworld.com";
 // Adds ?ref=<tag> to bgameworld.com links in a post, so the admin page can tell
 // which platform a visitor came from (in-app browsers often send no referrer).
 export function tagLinks(text, tag) {
-  return String(text).replace(/https:\/\/([a-z0-9-]+\.)?bgameworld\.com[^\s?#]*/g, (u) => `${u}?ref=${tag}`);
+  // Links that already carry a tag (?utm_source=...) are left alone.
+  return String(text).replace(/https:\/\/([a-z0-9-]+\.)?bgameworld\.com[^\s]*/g, (u) => (u.includes("?") ? u : `${u}?ref=${tag}`));
 }
 
 const WINDOW_MS = 6 * 60 * 60 * 1000;

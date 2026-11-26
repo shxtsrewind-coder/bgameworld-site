@@ -207,7 +207,7 @@ h1{{margin:0;font:700 46px/1.02 "Zilla Slab",serif;letter-spacing:-.02em}}
 
 def post_html(p, kind="fb"):
     g = game(p["game"])
-    cta = "Answer: link in the post" if kind == "fb" else "Tap for the answer"
+    cta = "Play free: link in the post" if kind == "fb" else "Tap to play free"
     zoom = p.get("zoom", 1)
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONT}{VIS_CSS}{POST_CSS}</style></head><body>
 <div class="post {kind}" style="--tile:{g['color']}">
@@ -257,7 +257,8 @@ footer a{{color:var(--ink-3)}}
 
 def answer_page(p, more):
     g = game(p["game"]); pid = p["id"]
-    utm = lambda key, extra="": f"utm_source=social&utm_medium=answer&utm_campaign={key}&utm_content={pid}{extra}"
+    # No utm_source: visit.js credits clicks from here to wherever the visitor first came from.
+    utm = lambda key, extra="": f"utm_medium=answer&utm_campaign={key}&utm_content={pid}{extra}"
     cards = "".join(f'<li><a href="{game(k)["url"]}/?{utm(k, "-more")}"><span class="tile" style="--tile:{game(k)["color"]}">{game(k)["icon"]}</span>'
                     f'<span><b>{e(game(k)["name"])}</b><small>{e(game(k)["line"])}</small></span></a></li>' for k in more)
     title = re.sub("<[^>]+>", " ", p["headline"]).replace("  ", " ").strip()
@@ -290,6 +291,7 @@ def answer_page(p, more):
   </div>
   <p class="crumb">Puzzle answer / <a href="/games/{g['guide']}/">{e(g['name'])}</a></p>
   <div class="hero"><span class="tile" style="--tile:{g['color']}">{g['icon']}</span><h1>{p['headline']}</h1></div>
+  <div class="actions"><a class="btn" href="{g['url']}/?{utm(p['game'], '-top')}">Play today's {e(g['name'])} free</a></div>
   <img class="puz" src="/social/fb/{pid}.png" alt="{e(title)} {e(p['sub'])}" width="1080" height="1350">
   <div class="actions"><button class="btn ghost" id="show" type="button">Show the answer</button></div>
   <section class="ans" id="ans" hidden>

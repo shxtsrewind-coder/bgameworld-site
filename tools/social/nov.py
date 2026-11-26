@@ -9,7 +9,7 @@ import design as d
 
 SITE = d.SITE
 HERE = pathlib.Path(__file__).parent
-WZ_TAIL = "Comment your answer 👇 Then check it and play today's Wordezy free: {link}"
+WZ_TAIL = "Comment your answer 👇 Then play today's Wordezy free: {link}"
 
 TAGS = {
     "wordezy": "#wordgame #wordpuzzle #5letterwords #brainteaser #puzzle",
@@ -45,7 +45,7 @@ def lingo(lang, en, options, headline, sub, caption):
     a = g.lingo_answer(lang, en, options)
     trap_note = f"{a['trap']} looks like the obvious answer, but it means {a['trap_en']}."
     return dict(game="lingoezy", headline=headline, sub=sub, vis=d.lingo_card(f"English → {names[lang]}", en, options),
-                caption=caption + "\n\nSee if you got fooled and play today's Lingoezy free: {link}",
+                caption=caption + "\n\nPlay today's Lingoezy free: {link}",
                 ans_title=f"The answer is {a['letter']}: {a['answer']}", ans_vis=d.lingo_explain(a),
                 ans_text=f"{trap_note[0].upper() + trap_note[1:]} {en[0].upper() + en[1:]} in {names[lang]} is {a['answer']}.",
                 pin_title=f"{names[lang]} False Friends Quiz: How Do You Say \"{en.title()}\"?")
@@ -54,7 +54,7 @@ def sortezy(tubes, n, sub="Pour onto the same colour or an empty tube.", extra="
     t = [list(x) for x in tubes] + [[], []]
     moves = g.sort_solve(t); assert len(moves) == n, (tubes, len(moves))
     return dict(game="sortezy", headline=f"Sort it in {n} moves?", sub=sub, vis=d.sort_tubes(t, g.SORT_COLORS),
-                caption=f"{extra}Can you sort it in {n} moves? Pour only onto the same colour or into an empty tube. {n} is the fewest possible.\n\nStep-by-step solution and today's free puzzle: {{link}}",
+                caption=f"{extra}Can you sort it in {n} moves? Pour only onto the same colour or into an empty tube. {n} is the fewest possible.\n\nPlay today's free Sortezy: {{link}}",
                 ans_title=f"The {n}-move solution", ans_vis=d.moves_list(moves),
                 ans_text="Tubes are numbered 1 to 6 from the left. Each move pours the top colour of one tube into another.",
                 pin_title=f"Water Sort Puzzle: Can You Solve It in {n} Moves?")
@@ -64,7 +64,7 @@ def scramble(word, seed, hint, headline=None):
     words = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight"}[n]
     return dict(game="scramble", headline=headline or f"{n} letters. One word.", sub="Can you unscramble it?",
                 vis=d.scramble_tiles(s, hint), zoom={4: 1, 5: 1, 6: 1, 7: 0.86, 8: 0.78}[n],
-                caption=f"Unscramble this: {' '.join(s)}. {words} letters, one answer. Hint: {hint}\n\nReveal the word and play today's Scramble free: {{link}}",
+                caption=f"Unscramble this: {' '.join(s)}. {words} letters, one answer. Hint: {hint}\n\nPlay today's Scramble free: {{link}}",
                 ans_title=f"The word was {word.upper()}", ans_vis=d.tiles(word.upper(), [color("scramble")] * n, 48, 6),
                 ans_text=f"{' '.join(s)} → {word.upper()}.", pin_title=f"Word Scramble: Unscramble {s}")
 
@@ -72,7 +72,7 @@ def warmezy(secret, guesses, picks, headline, flavour):
     rows, close = g.warm_rows(secret, guesses)
     rk = {r["word"]: r["rank"] for r in rows}; a, b, c = guesses[:3]
     return dict(game="warmezy", headline=headline, sub="The lower the number, the hotter you are.", vis=d.warm_rows(rows),
-                caption=f"Guess the secret word. Every guess gets a rank by how close its meaning is: {a} is #{rk[a]}, {b} is #{rk[b]}, {c} is #{rk[c]}. {flavour}What's #1?\n\nReveal it and play today's Warmezy free: {{link}}",
+                caption=f"Guess the secret word. Every guess gets a rank by how close its meaning is: {a} is #{rk[a]}, {b} is #{rk[b]}, {c} is #{rk[c]}. {flavour}What's #1?\n\nPlay today's Warmezy free: {{link}}",
                 ans_title=f"The secret word was {secret.upper()}", ans_vis=d.warm_closest(close, picks),
                 ans_text=f"Those are some of the closest words to {secret.upper()} in Warmezy's own rankings. {a.title()} (#{rk[a]}) and {b} (#{rk[b]}) were already boiling.",
                 pin_title=f"Guess the Secret Word: {a} #{rk[a]}, {b} #{rk[b]}")
@@ -82,7 +82,7 @@ def ladder(a, b, q):
     size = 54 if len(path) <= 5 else 48 if len(path) == 6 else 44
     return dict(game="ladder", headline=f"Turn {a.upper()} into {b.upper()}", sub=f"One letter at a time, real words only. Par is {n}.",
                 vis=d.ladder_vis(path, color("ladder"), size=size),
-                caption=f"Turn {a.upper()} into {b.upper()}, one letter at a time. Every step has to be a real word, and it can be done in {n} moves. {q}\n\nThe {n}-step answer and today's free ladder: {{link}}",
+                caption=f"Turn {a.upper()} into {b.upper()}, one letter at a time. Every step has to be a real word, and it can be done in {n} moves. {q}\n\nPlay today's free Word Ladder: {{link}}",
                 ans_title=" → ".join(path), ans_vis=d.ladder_vis(path, color("ladder"), solved=True, size=42),
                 ans_text=f"That's one {n}-move route. Found a different one? If every step is a real word, it counts.",
                 pin_title=f"Word Ladder Puzzle: Turn {a.upper()} Into {b.upper()} in {n} Moves")
@@ -90,7 +90,7 @@ def ladder(a, b, q):
 def letterezy(word, extra, seed, hint, headline="9 letters. One 7-letter word."):
     rack = g.letter_rack(word, extra, seed); g.letter_ok(word, rack)
     return dict(game="letterezy", headline=headline, sub="Use 7 of these 9 letters for the +20 bonus.", vis=d.letter_rack(rack, g.LET_VALUES),
-                caption=f"Find the 7-letter word hidden in these 9 letters: {' '.join(rack)}. Hint: {hint}\n\nReveal the word and play today's Letterezy free: {{link}}",
+                caption=f"Find the 7-letter word hidden in these 9 letters: {' '.join(rack)}. Hint: {hint}\n\nPlay today's Letterezy free: {{link}}",
                 ans_title=f"The word was {word.upper()}", ans_vis=d.tiles(word.upper(), [color("letterezy")] * 7, 44, 6),
                 ans_text=f"In Letterezy it scores {g.letter_score(word)}: the 4th letter counts double, reaching the 5th square doubles the word, and a 7-letter word adds 20.",
                 pin_title=f"Find the 7-Letter Word in {' '.join(rack)}")
@@ -99,7 +99,7 @@ LINKS = json.load(open(HERE / "data" / "links-nov.json"))
 def linkezy(i, cap):
     segs = LINKS[i]; g.link_ok(segs); k = len(segs)
     return dict(game="linkezy", headline=f"{k} pairs. One way.", sub="Join each pair. Lines can't cross, and every square gets filled.",
-                vis=d.link_grid(segs, g.LINK_COLORS), caption=cap + "\n\nSee the solution and play today's Linkezy free: {link}",
+                vis=d.link_grid(segs, g.LINK_COLORS), caption=cap + "\n\nPlay today's Linkezy free: {link}",
                 ans_title="The only solution", ans_vis=d.link_grid(segs, g.LINK_COLORS, solved=True, cell=46),
                 ans_text="Each colour fills its own path, and together they cover all 36 squares.",
                 pin_title=f"Connect the Dots Puzzle: {k} Pairs, Only One Solution")
@@ -113,7 +113,7 @@ def search(target, cells, others, decoys, seed, decoy_note):
     where = f"It runs {DIRS[(r1 - r0, c1 - c0)]}, starting from the {target[0]} in row {r0 + 1}, column {c0 + 1}. {decoy_note}"
     return dict(game="search", headline=f"Find {target}", sub="It's hiding once, in any direction. Watch out for the fakes.",
                 vis=d.ws_grid(grid, cells, color("search"), cell=34, fs=19),
-                caption=f"Find the word {target}. It's hiding in this grid exactly once, in any direction. Watch out for the fakes.\n\nSee where it is and play today's word search free: {{link}}",
+                caption=f"Find the word {target}. It's hiding in this grid exactly once, in any direction. Watch out for the fakes.\n\nPlay today's word search free: {{link}}",
                 ans_title=f"Here's {target}", ans_vis=d.ws_grid(grid, cells, color("search"), True, 30, 17), ans_text=where,
                 pin_title=f"Word Search Puzzle: Find {target} in the Grid")
 
@@ -225,6 +225,11 @@ def build_puzzles():
         p["pin_at"] = (start + dt.timedelta(days=day, hours=(6, 10, 14, 18)[slot])).strftime("%Y-%m-%dT%H:%M:%SZ")
     return P
 
+# Posts and Pins link straight to today's game, so every tap is a chance to play.
+# (The answer pages in a/ are still made, for search and for anyone who wants the answer.)
+def play_link(p, source):
+    return f"{d.game(p['game'])['url']}/?utm_source={source}&utm_medium=social&utm_campaign={p['game']}&utm_content={p['id']}"
+
 MORE = ["wordezy", "linkezy", "warmezy", "sortezy", "lingoezy", "scramble", "letterezy", "search", "ladder"]
 def more_for(p, i):
     pool = [k for k in MORE if k != p["game"]]
@@ -245,18 +250,17 @@ def main():
     posts = [x for x in json.load(open(SITE / "src/posts.json")) if x["id"] not in ids]
     for p in P:
         posts.append({"id": p["id"], "at": p["at"], "game": p["game"],
-                      "caption": p["caption"].format(link=f"https://bgameworld.com/a/{p['id']}") + "\n\n" + TAGS[p["game"]]})
+                      "caption": p["caption"].format(link=play_link(p, "facebook")) + "\n\n" + TAGS[p["game"]]})
     posts.sort(key=lambda x: x["at"])
     (SITE / "src/posts.json").write_text(json.dumps(posts, indent=1, ensure_ascii=False))
     pins = [x for x in json.load(open(SITE / "src/pins.json")) if x["id"] not in ids]
     for p in P:
         board = BOARD.get(p["game"], "word")
         first = p["caption"].split("\n\n")[0]
-        desc = f"{first} Tap the Pin for the answer, then play today's free puzzle at bgameworld.com. {KEYWORDS[board]}"
+        desc = f"{first} Tap the Pin to play today's free puzzle at bgameworld.com. {KEYWORDS[board]}"
         assert len(desc) <= 500 and len(p["pin_title"]) <= 100, p["id"]
-        q = f"utm_source=pinterest&utm_medium=social&utm_campaign={p['game']}&utm_content={p['id']}"
         pins.append({"id": p["id"], "at": p["pin_at"], "board": board, "game": p["game"], "title": p["pin_title"],
-                     "description": desc, "link": f"https://bgameworld.com/a/{p['id']}/?{q}",
+                     "description": desc, "link": play_link(p, "pinterest"),
                      "image": f"https://bgameworld.com/social/pin/{p['id']}.jpg", "bytes": (SITE / "social/pin" / f"{p['id']}.jpg").stat().st_size})
     pins.sort(key=lambda x: x["at"])
     (SITE / "src/pins.json").write_text(json.dumps(pins, indent=1, ensure_ascii=False))

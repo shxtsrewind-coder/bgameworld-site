@@ -134,7 +134,9 @@ tbody tr:hover td{background:var(--rule-2)}
     (r.registered?'<span class="badge reg">Registered</span>':'<span class="badge guest">Guest</span>')}
   var gameName=function(slug){return slug};
   function came(r){var t=data.traffic;var v=t&&t.first_source&&r.player&&t.first_source[r.player];return v?esc(v):'<span class="muted">–</span>'}
-  function siteName(h){if(h==="bgameworld.com"||h==="www.bgameworld.com")return "BGameWorld";var sub=String(h||"").replace(/\.bgameworld\.com$/,"");return gameName(sub)}
+  function siteName(h){if(h==="bgameworld.com"||h==="www.bgameworld.com")return "BGameWorld";var sub=String(h||"").replace(/\.bgameworld\.com$/,"");
+    // Game sites drop the dashes: wordezyladder.bgameworld.com is the game "wordezy-ladder".
+    var slug=(data.games||[]).map(function(g){return g.slug}).filter(function(x){return x.replace(/-/g,"")===sub})[0];return gameName(slug||sub)}
 
   /* ---------- pieces ---------- */
   function kpi(label,value,sub){return '<div class="kpi"><div class="label">'+label+'</div><div class="value">'+fmt(value)+'</div><div class="sub">'+(sub||"&nbsp;")+'</div></div>'}
