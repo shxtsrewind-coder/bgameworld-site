@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Join BGameWorld | Free account for every game</title>
+<meta name="description" content="One free BGameWorld account for every game: your name on the leaderboards, streaks saved on every device, and the members-only Daily Seven.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1a0e29">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<style>
+@font-face{font-family:"Zilla Slab";font-weight:700;font-display:swap;src:url(/fonts/zilla-slab-700.woff2) format("woff2")}
+@font-face{font-family:"Libre Franklin";font-weight:100 900;font-display:swap;src:url(/fonts/libre-franklin.woff2) format("woff2")}
+:root{--bg:#1a0e29;--ink:#F5F0FC;--ink-2:#CDC1E2;--ink-3:#A797C2;--panel:rgba(255,255,255,.055);--line:rgba(255,255,255,.12);
+  --acc:#A855F7;--focus:#D8B4FE;--good:#5be49b;--bad:#ff9b93;
+  --slab:"Zilla Slab",Rockwell,Georgia,serif;--sans:"Libre Franklin","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100vh;background:radial-gradient(1200px 600px at 20% -10%,#3b1a63 0,transparent 60%),radial-gradient(900px 500px at 110% 10%,#1f2c6b 0,transparent 55%),var(--bg);
+  color:var(--ink);font:16px/1.5 var(--sans);display:flex;flex-direction:column;align-items:center;padding:24px 16px 40px}
+a{color:var(--ink)}
+.top{width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.top img{width:132px;height:auto;display:block}
+.top a.back{font-size:14px;color:var(--ink-2)}
+.card{width:100%;max-width:440px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px 22px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+h1{margin:0 0 6px;font:700 30px/1.1 var(--slab)}
+.lede{margin:0 0 16px;color:var(--ink-2)}
+ul.perks{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:6px;font-size:14.5px;color:var(--ink-2)}
+ul.perks li{padding-left:26px;position:relative}
+ul.perks li:before{content:"\2713";position:absolute;left:3px;color:var(--good);font-weight:800}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:12px;background:rgba(255,255,255,.06);margin-bottom:16px}
+.tabs button{border:0;border-radius:9px;padding:9px;font:600 14.5px var(--sans);color:var(--ink-2);background:none;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--acc);color:#fff}
+label{display:block;font-size:13.5px;font-weight:600;color:var(--ink-2);margin:12px 0 5px}
+input{width:100%;min-height:46px;border:1.5px solid rgba(255,255,255,.2);border-radius:10px;padding:0 12px;font:16px var(--sans);color:var(--ink);background:rgba(255,255,255,.06)}
+input:focus{outline:3px solid var(--focus);outline-offset:1px}
+input[aria-invalid="true"]{border-color:var(--bad)}
+.btn{display:block;width:100%;margin-top:18px;min-height:48px;border:0;border-radius:12px;background:linear-gradient(90deg,#a855f7,#d946ef);color:#fff;font:700 16px var(--sans);cursor:pointer;text-align:center;text-decoration:none;line-height:48px}
+.btn:disabled{opacity:.6;cursor:default}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.msg{min-height:22px;margin:12px 0 0;font-size:14.5px}
+.msg.err{color:var(--bad)}.msg.ok{color:var(--good)}
+.small{font-size:13.5px;color:var(--ink-3);margin:14px 0 0;text-align:center}
+.linkbtn{border:0;background:none;color:var(--ink-2);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer;padding:6px}
+.row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+</style>
+<script src="/shared-auth.js"></script>
+<script src="/visit.js" defer></script>
+</head>
+<body>
+<div class="top">
+  <a href="/" aria-label="BGameWorld home"><img src="/logo.webp" alt="BGameWorld" width="602" height="348"></a>
+  <a class="back" id="back" href="/">Back to playing</a>
+</div>
+
+<main class="card">
+  <!-- sign up / log in -->
+  <section id="formView">
+    <h1 id="title">Join BGameWorld</h1>
+    <p class="lede" id="lede">One free account for every BGameWorld game.</p>
+    <ul class="perks" id="perks">
+      <li>Play the members-only Daily Seven and build a streak</li>
+      <li>Your name on every game's leaderboard</li>
+      <li>Your progress saved on every device</li>
+    </ul>
+    <div class="tabs" role="tablist" aria-label="Account">
+      <button type="button" role="tab" id="tabSignup" aria-selected="true">Create account</button>
+      <button type="button" role="tab" id="tabLogin" aria-selected="false">Log in</button>
+    </div>
+    <form id="form" novalidate>
+      <div id="nameRow">
+        <label for="name">Your name on the leaderboards</label>
+        <input id="name" maxlength="20" autocomplete="nickname" placeholder="e.g. WordWizard" spellcheck="false">
+      </div>
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="new-password" placeholder="At least 6 characters">
+      <button class="btn" id="go" type="submit">Create free account</button>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    </form>
+    <p class="small" id="forgotRow" hidden><button class="linkbtn" type="button" id="forgot">Forgot your password?</button></p>
+    <p class="small" id="keep">Your games, scores and streaks so far stay with you.</p>
+  </section>
+
+  <!-- waiting for the email link -->
+  <section id="checkView" hidden>
+    <h1>Check your email</h1>
+    <p class="lede">We sent a link to <b id="checkEmail"></b>. Tap it to finish, and you'll come straight back to your game.</p>
+    <p class="lede">Can't find it? Look in your spam or promotions folder. It comes from <b>Supabase Auth</b>.</p>
+    <a class="btn" id="checkBack" href="/">Keep playing</a>
+    <div class="row"><button class="linkbtn" type="button" id="resend">Send the link again</button><button class="linkbtn" type="button" id="other">Use a different email</button></div>
+    <p class="msg" id="checkMsg" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- signed in -->
+  <section id="inView" hidden>
+    <h1 id="inTitle">You're signed in</h1>
+    <p class="lede" id="inLede"></p>
+    <a class="btn" id="inGo" href="/#challenge">Play the Daily Seven</a>
+    <div class="row"><button class="linkbtn" type="button" id="signout">Sign out</button></div>
+  </section>
+
+  <!-- new password (from a reset email) -->
+  <section id="resetView" hidden>
+    <h1>Choose a new password</h1>
+    <form id="resetForm" novalidate>
+      <label for="pw2">New password</label>
+      <input id="pw2" type="password" autocomplete="new-password" placeholder="At least 6 characters">
+      <button class="btn" type="submit">Save password</button>
+      <p class="msg" id="resetMsg" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+<p class="small"><a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  var sb = window.supabase.createClient("https://hkcvtoozpeybwehqtiif.supabase.co", "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai", { auth: window.bgwSharedAuth() });
+  var $ = function (id) { return document.getElementById(id); };
+  var q = new URLSearchParams(location.search);
+
+  // Where to go afterwards: only our own sites.
+  var next = "/";
+  (function () {
+    var n = q.get("next");
+    if (!n) return;
+    try {
+      var u = new URL(n, location.origin);
+      if (/(^|\.)bgameworld\.com$/.test(u.hostname) || u.origin === location.origin) next = u.href;
+    } catch (e) { /* ignore */ }
+  })();
+  var nextAbs = new URL(next, location.origin).href;
+  $("back").href = next; $("checkBack").href = next;
+
+  var mode = q.get("mode") === "login" ? "login" : "signup";
+  function show(view) { ["formView", "checkView", "inView", "resetView"].forEach(function (v) { $(v).hidden = v !== view; }); }
+  function say(el, text, kind) { el.textContent = text || ""; el.className = "msg" + (kind ? " " + kind : ""); }
+  function setMode(m) {
+    mode = m;
+    var up = m === "signup";
+    $("tabSignup").setAttribute("aria-selected", up); $("tabLogin").setAttribute("aria-selected", !up);
+    $("nameRow").hidden = !up; $("forgotRow").hidden = up; $("keep").hidden = !up;
+    $("title").textContent = up ? "Join BGameWorld" : "Welcome back";
+    $("lede").textContent = up ? "One free account for every BGameWorld game." : "Log in to your BGameWorld account.";
+    $("perks").hidden = !up;
+    $("go").textContent = up ? "Create free account" : "Log in";
+    $("pw").autocomplete = up ? "new-password" : "current-password";
+    say($("msg"), "");
+  }
+  $("tabSignup").onclick = function () { setMode("signup"); };
+  $("tabLogin").onclick = function () { setMode("login"); };
+  setMode(mode);
+
+  function friendly(e) {
+    var m = String((e && e.message) || "");
+    if (/invalid login credentials/i.test(m)) return "That email and password don't match. Check them, or create an account.";
+    if (/already (been )?registered|already exists|email_exists/i.test(m)) { setMode("login"); return "That email already has an account. Log in instead."; }
+    if (/email not confirmed/i.test(m)) return "Confirm your email first: open the link we sent you, then log in.";
+    if (/rate limit|too many|seconds/i.test(m)) return "Too many tries. Wait a minute and try again.";
+    if (/fetch|network/i.test(m)) return "Couldn't reach the server. Check your connection and try again.";
+    return m || "Something went wrong. Please try again.";
+  }
+
+  function checkEmail(email) { $("checkEmail").textContent = email; show("checkView"); }
+
+  async function refresh() {
+    var s = (await sb.auth.getSession()).data.session;
+    var u = s && s.user;
+    if (location.hash.indexOf("type=recovery") >= 0) return show("resetView");
+    if (u && !u.is_anonymous) {
+      var name = null;
+      try { var r = await sb.from("portal_profiles").select("display_name").eq("id", u.id).maybeSingle(); name = r.data && r.data.display_name; } catch (e) {}
+      $("inTitle").textContent = name ? "You're in, " + name + "!" : "You're signed in";
+      $("inLede").textContent = "Signed in as " + u.email + ". Your account works on every BGameWorld game.";
+      $("inGo").href = next === location.origin + "/" || next === "/" ? "/#challenge" : next;
+      $("inGo").textContent = $("inGo").href.indexOf("#challenge") >= 0 ? "Play the Daily Seven" : "Back to your game";
+      return show("inView");
+    }
+    if (u && u.new_email) return checkEmail(u.new_email);
+    show("formView");
+  }
+
+  $("form").onsubmit = async function (ev) {
+    ev.preventDefault();
+    var name = $("name").value.trim(), email = $("email").value.trim(), pw = $("pw").value, msg = $("msg");
+    ["name", "email", "pw"].forEach(function (i) { $(i).removeAttribute("aria-invalid"); });
+    function bad(id, text) { $(id).setAttribute("aria-invalid", "true"); $(id).focus(); say(msg, text, "err"); }
+    if (mode === "signup" && !/^[A-Za-z0-9 _.\-]{2,20}$/.test(name)) return bad("name", "Choose a name of 2 to 20 letters or numbers (spaces, dots, dashes and underscores are fine).");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return bad("email", "Enter your email address, like name@example.com.");
+    if (pw.length < 6) return bad("pw", "Use a password of at least 6 characters.");
+    $("go").disabled = true; say(msg, mode === "signup" ? "Creating your account..." : "Logging in...");
+    try {
+      if (mode === "login") {
+        var r = await sb.auth.signInWithPassword({ email: email, password: pw });
+        if (r.error) throw r.error;
+        location.href = next === "/" || next === location.origin + "/" ? "/#challenge" : next;
+        return;
+      }
+      // Sign up: upgrade this browser's guest account in place, so every score
+      // and streak so far is kept. No guest account yet? Make one first.
+      var s = (await sb.auth.getSession()).data.session;
+      if (!s) {
+        var a = await sb.auth.signInAnonymously();
+        if (a.error) throw a.error;
+      }
+      var n = await sb.rpc("bgw_set_display_name", { p_display_name: name });
+      if (n.error) { $("go").disabled = false; return bad("name", n.error.message); }
+      var up = await sb.auth.updateUser({ email: email, password: pw }, { emailRedirectTo: nextAbs });
+      if (up.error) throw up.error;
+      checkEmail(email);
+    } catch (e) {
+      say(msg, friendly(e), "err");
+    } finally {
+      $("go").disabled = false;
+    }
+  };
+
+  $("resend").onclick = async function () {
+    var email = $("checkEmail").textContent;
+    say($("checkMsg"), "Sending...");
+    var r = await sb.auth.updateUser({ email: email }, { emailRedirectTo: nextAbs });
+    say($("checkMsg"), r.error ? friendly(r.error) : "Sent. Check your inbox and spam folder.", r.error ? "err" : "ok");
+  };
+  $("other").onclick = function () { setMode("signup"); show("formView"); $("email").focus(); };
+  $("forgot").onclick = async function () {
+    var email = $("email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $("email").setAttribute("aria-invalid", "true"); $("email").focus(); return say($("msg"), "Type your email above first, then tap this again.", "err"); }
+    var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/join/" });
+    say($("msg"), r.error ? friendly(r.error) : "We sent a link to reset your password. Check your inbox and spam folder.", r.error ? "err" : "ok");
+  };
+  $("resetForm").onsubmit = async function (ev) {
+    ev.preventDefault();
+    var pw = $("pw2").value;
+    if (pw.length < 6) return say($("resetMsg"), "Use a password of at least 6 characters.", "err");
+    var r = await sb.auth.updateUser({ password: pw });
+    if (r.error) return say($("resetMsg"), friendly(r.error), "err");
+    history.replaceState(null, "", location.pathname + location.search);
+    refresh();
+  };
+  $("signout").onclick = async function () { await sb.auth.signOut(); setMode("login"); show("formView"); };
+  sb.auth.onAuthStateChange(function (event) { if (event === "PASSWORD_RECOVERY") show("resetView"); });
+  refresh();
+})();
+</script>
+</body>
+</html>

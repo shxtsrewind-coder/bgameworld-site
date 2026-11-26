@@ -1,199 +1,193 @@
-/* "Save your progress": invites guests to make a free account, on every
-   BGameWorld game. Loaded by visit.js.
+/* BGameWorld across every game. Loaded by visit.js on bgameworld.com and on
+   every game site.
 
-   When it shows:
-   - right after a guest finishes a game (the moment they have something to keep), or
-   - when a guest who has already played 2+ games opens any game,
-   at most once a day, and never again after "Don't ask again".
-   Someone who started signing up but hasn't confirmed their email instead gets
-   a small reminder with a "send the link again" button.
-
-   The account is the guest's own account, upgraded in place, so every score
-   and streak they already have stays. One account works on every game. */
+   1. Welcome: a new player, arriving on any page from any link, is asked once
+      (for all BGameWorld sites, not per game) to make a free BGameWorld
+      account or play as a guest. Accounts are made only on bgameworld.com/join/.
+   2. Play next: when a game is finished (each game fires a "bgw:finished"
+      event), suggest three other games, today's Daily Seven first. Guests also
+      get a link to save their progress.
+   3. Someone who started signing up but hasn't tapped the email link gets a
+      small daily reminder. */
 (function () {
   if (window.__bgwAccount) return;
   window.__bgwAccount = true;
+  if (/^\/(join|admin|a)\//.test(location.pathname)) return;
 
   var SB_URL = "https://hkcvtoozpeybwehqtiif.supabase.co";
   var SB_KEY = "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
+  var SITE = "https://bgameworld.com";
   var DAY = 864e5;
+
+  // art id (same as on bgameworld.com), name, address, artwork, colour
+  var GAMES = [
+    ["wordezy", "Wordezy", "https://wordezy.bgameworld.com", "wordezy", "Guess the daily word in six tries."],
+    ["wordsearch", "Wordezy Search", "https://wordezysearch.bgameworld.com", "wordezy-search", "Find the hidden words."],
+    ["scramble", "Wordezy Scramble", "https://wordezyscramble.bgameworld.com", "wordezy-scramble", "Unscramble five words."],
+    ["ladder", "Wordezy Ladder", "https://wordezyladder.bgameworld.com", "wordezy-ladder", "Change one letter at a time."],
+    ["warmezy", "Warmezy", "https://warmezy.bgameworld.com", "warmezy", "Find the secret word by meaning."],
+    ["letterezy", "Letterezy", "https://letterezy.bgameworld.com", "letterezy", "Spell words from a bag of letters."],
+    ["lingoezy", "Lingoezy", "https://lingoezy.bgameworld.com", "lingoezy", "Dodge the false friends."],
+    ["sortezy", "Sortezy", "https://sortezy.bgameworld.com", "sortezy", "Pour until every tube is one colour."],
+    ["linkezy", "Linkezy", "https://linkezy.bgameworld.com", "linkezy", "Join the dots without crossing."],
+    ["mergezy", "Mergezy", "https://mergezy.bgameworld.com", "mergezy", "Join three to merge them up."],
+    ["timeguess", "When & Where", "https://whenandwhere.bgameworld.com", "when-and-where", "Date and place a real photo."],
+  ].map(function (g) { return { art: g[0], name: g[1], url: g[2], guide: g[3], line: g[4] }; });
+  var current = GAMES.filter(function (g) { return g.url.indexOf("//" + location.hostname) > 0; })[0];
 
   function store(k, v) {
     try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; }
   }
-  if (store("bgw-acct-never") === "1") return;
-
   function cookie(name) {
     var pre = name + "=", parts = document.cookie.split("; ");
     for (var i = 0; i < parts.length; i++) if (parts[i].indexOf(pre) === 0) return parts[i].slice(pre.length);
     return null;
   }
+  function setCookie(name, val, maxAge) {
+    var dom = /(^|\.)bgameworld\.com$/.test(location.hostname) ? "; Domain=.bgameworld.com" : "";
+    document.cookie = name + "=" + val + dom + "; Path=/; Max-Age=" + maxAge + "; SameSite=Lax; Secure";
+  }
   function session() {
     var raw = "", v;
     for (var i = 0; (v = cookie("bgw-auth." + i)) !== null; i++) raw += v;
-    if (!raw) { try { raw = localStorage.getItem("bgw-auth") || ""; } catch (e) { /* none */ } } else raw = decodeURIComponent(raw);
-    try {
-      var s = JSON.parse(raw);
-      return s && s.access_token && s.expires_at * 1000 > Date.now() + 15000 ? s : null;
-    } catch (e) { return null; }
+    if (raw) raw = decodeURIComponent(raw); else { try { raw = localStorage.getItem("bgw-auth") || ""; } catch (e) { /* none */ } }
+    try { return JSON.parse(raw); } catch (e) { return null; }
   }
-  function api(path, opts) {
+  function token() {
     var s = session();
-    if (!s) return Promise.reject(new Error("no session"));
-    opts = opts || {};
-    opts.headers = { "Content-Type": "application/json", apikey: SB_KEY, Authorization: "Bearer " + s.access_token };
-    return fetch(SB_URL + path, opts).then(function (r) {
-      return r.text().then(function (t) {
-        var body = null;
-        try { body = t ? JSON.parse(t) : null; } catch (e) { body = t; }
-        if (!r.ok) {
-          var msg = (body && (body.msg || body.message || body.error_description || body.error)) || "Something went wrong. Please try again.";
-          throw new Error(msg);
-        }
-        return body;
-      });
-    });
+    return s && s.access_token && s.expires_at * 1000 > Date.now() + 15000 ? s.access_token : null;
   }
-  function status() { return api("/rest/v1/rpc/bgw_guest_status", { method: "POST", body: "{}" }); }
-
-  // ---------- the panel ----------
-  var host, root;
-  var CSS = ":host{all:initial}" +
-    ".wrap{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;justify-content:center;padding:0 12px 12px;pointer-events:none;font:15px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#15171a}" +
-    ".card{pointer-events:auto;width:100%;max-width:440px;background:#fff;border:1px solid #e3e5ea;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.22);padding:18px 18px 16px;animation:up .28s ease-out;box-sizing:border-box;max-height:calc(100vh - 24px);overflow:auto}" +
-    "@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}" +
-    ".x{float:right;border:0;background:none;font-size:22px;line-height:1;color:#6b717c;cursor:pointer;padding:2px 4px;margin:-4px -4px 0 8px}" +
-    "h2{font-size:19px;line-height:1.25;margin:0 0 6px;font-weight:700}" +
-    "p{margin:0 0 12px;color:#3f444d}" +
-    "ul{margin:0 0 14px;padding:0;list-style:none}li{padding-left:24px;position:relative;margin:4px 0;color:#3f444d}li:before{content:'\\2713';position:absolute;left:2px;color:#1e7d4a;font-weight:700}" +
-    "label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px;color:#3f444d}" +
-    "input{box-sizing:border-box;width:100%;font:inherit;padding:10px 12px;border:1px solid #cfd3da;border-radius:10px;background:#fff;color:#15171a}" +
-    "input:focus{outline:2px solid #2860d8;outline-offset:0;border-color:#2860d8}" +
-    ".go{display:block;width:100%;margin-top:14px;padding:12px;border:0;border-radius:10px;background:#1e7d4a;color:#fff;font:inherit;font-weight:700;cursor:pointer}" +
-    ".go:disabled{opacity:.6;cursor:default}" +
-    ".row{display:flex;gap:10px;margin-top:10px}.row button{flex:1}" +
-    ".lnk{border:0;background:none;color:#3f444d;font:inherit;font-size:13.5px;text-decoration:underline;cursor:pointer;padding:6px}" +
-    ".err{color:#b3261e;font-size:13.5px;margin:10px 0 0}" +
-    ".small{font-size:12.5px;color:#6b717c;margin:10px 0 0;text-align:center}" +
-    "@media (prefers-color-scheme:dark){.card{background:#1a1d23;border-color:#2c3039;color:#eef0f3}p,li,label,.lnk{color:#c6cad2}input{background:#111317;border-color:#3a3f4a;color:#eef0f3}.x,.small{color:#8f95a0}}";
-
-  function close() {
-    if (host) host.remove();
-    host = root = null;
+  function registered() { var s = session(); return !!(s && s.user && !s.user.is_anonymous); }
+  function status() {
+    var t = token();
+    if (!t) return Promise.resolve(null);
+    return fetch(SB_URL + "/rest/v1/rpc/bgw_guest_status", {
+      method: "POST", body: "{}",
+      headers: { "Content-Type": "application/json", apikey: SB_KEY, Authorization: "Bearer " + t },
+    }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   }
-  function open(html, wire) {
-    close();
-    host = document.createElement("div");
-    host.setAttribute("data-bgw", "account");
-    root = host.attachShadow ? host.attachShadow({ mode: "open" }) : host;
-    root.innerHTML = "<style>" + CSS + "</style><div class='wrap'><div class='card' role='dialog' aria-label='Save your progress'>" +
-      "<button class='x' type='button' aria-label='Close'>&times;</button>" + html + "</div></div>";
-    document.body.appendChild(host);
-    root.querySelector(".x").onclick = function () { store("bgw-acct-last", String(Date.now())); close(); };
-    if (wire) wire(root);
+  function joinUrl(mode) {
+    return SITE + "/join/?" + (mode === "login" ? "mode=login&" : "") + "next=" + encodeURIComponent(location.href.split("#")[0]);
   }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
 
-  function showInvite(plays, justWon) {
-    store("bgw-acct-last", String(Date.now()));
+  // ---------- one panel at a time, in a shadow root so game styles can't touch it ----------
+  var host = null;
+  var CSS = ":host{all:initial}" +
+    "*{box-sizing:border-box}" +
+    ".back{position:fixed;inset:0;z-index:2147483000;background:rgba(12,6,22,.62);display:flex;align-items:center;justify-content:center;padding:16px;font:15px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#15171a;animation:fade .2s ease-out}" +
+    ".back.sheet{background:none;align-items:flex-end;pointer-events:none;padding:0 12px 12px}" +
+    "@keyframes fade{from{opacity:0}}@keyframes up{from{transform:translateY(24px);opacity:0}}" +
+    ".card{pointer-events:auto;position:relative;width:100%;max-width:420px;background:#fff;border-radius:20px;padding:24px 20px 18px;box-shadow:0 24px 70px rgba(0,0,0,.35);max-height:calc(100vh - 24px);overflow:auto;animation:up .28s ease-out;text-align:center}" +
+    ".x{position:absolute;top:8px;right:8px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;line-height:1;color:#6b717c;cursor:pointer}" +
+    ".logo{width:128px;height:auto;display:block;margin:0 auto 10px}" +
+    "h2{margin:0 0 6px;font-size:21px;line-height:1.25}" +
+    "p{margin:0 0 14px;color:#3f444d}" +
+    "ul{list-style:none;margin:0 0 16px;padding:0;text-align:left;display:grid;gap:5px}li{position:relative;padding-left:24px;color:#3f444d;font-size:14.5px}li:before{content:'\\2713';position:absolute;left:3px;color:#1e7d4a;font-weight:800}" +
+    "a.primary,button.primary{display:block;width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(90deg,#8b3dff,#d946ef);color:#fff;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;margin-bottom:8px}" +
+    "a.secondary{display:block;padding:12px;border-radius:12px;border:1px solid #d5d8de;color:#15171a;font-weight:600;text-decoration:none;margin-bottom:4px}" +
+    "button.link,a.link{border:0;background:none;color:#5b6170;font:inherit;font-size:14px;text-decoration:underline;cursor:pointer;padding:8px;display:inline-block}" +
+    ".games{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 14px}" +
+    ".g{display:block;text-decoration:none;color:#15171a;font-size:13px;font-weight:700;line-height:1.2}" +
+    ".g img{display:block;width:100%;aspect-ratio:5/7;object-fit:cover;border-radius:12px;background:#24123a;margin-bottom:6px}" +
+    ".g .tag{display:block;font-size:11px;font-weight:700;color:#a1460f;margin-top:2px}" +
+    ".save{border-top:1px solid #eceef2;margin-top:4px;padding-top:12px;font-size:14px;color:#3f444d}" +
+    ".save a{color:#7c2fe0;font-weight:700}" +
+    "@media (prefers-color-scheme:dark){.card{background:#1d1229;color:#f5f0fc}p,li,.save{color:#cdc1e2}.g{color:#f5f0fc}a.secondary{color:#f5f0fc;border-color:#3d2b55}.save{border-color:#33244a}.save a{color:#d8b4fe}button.link,a.link,.x{color:#a797c2}.g .tag{color:#ffb86b}}";
+
+  function close() { if (host) host.remove(); host = null; }
+  function open(html, opts, wire) {
+    close();
+    host = document.createElement("div");
+    host.setAttribute("data-bgw", "account");
+    var root = host.attachShadow ? host.attachShadow({ mode: "open" }) : host;
+    root.innerHTML = "<style>" + CSS + "</style><div class='back" + (opts.sheet ? " sheet" : "") + "'><div class='card' role='dialog' aria-modal='" + !opts.sheet + "' aria-label='" + esc(opts.label) + "'>" +
+      "<button class='x' type='button' aria-label='Close'>&times;</button>" + html + "</div></div>";
+    document.body.appendChild(host);
+    var dismiss = function () { if (opts.onClose) opts.onClose(); close(); };
+    root.querySelector(".x").onclick = dismiss;
+    if (!opts.sheet) root.querySelector(".back").onclick = function (e) { if (e.target === e.currentTarget) dismiss(); };
+    var onKey = function (e) { if (e.key === "Escape" && host) { document.removeEventListener("keydown", onKey); dismiss(); } };
+    document.addEventListener("keydown", onKey);
+    if (wire) wire(root, dismiss);
+    var first = root.querySelector("a.primary,button.primary");
+    if (first && !opts.sheet) setTimeout(function () { first.focus(); }, 50);
+  }
+
+  // ---------- 1. welcome, once for all BGameWorld sites ----------
+  function welcomed() { return cookie("bgw-welcomed") === "1" || store("bgw-welcomed") === "1"; }
+  function markWelcomed() { setCookie("bgw-welcomed", "1", 60 * 60 * 24 * 365); store("bgw-welcomed", "1"); }
+  function welcome() {
     open(
-      "<h2>" + (justWon ? "Nice one! Save your progress" : "Keep your progress safe") + "</h2>" +
-      "<p>You've played " + plays + " game" + (plays === 1 ? "" : "s") + " as a guest. If you clear your browser or change phones, it's gone. A free account keeps it.</p>" +
-      "<ul><li>Your streaks and scores on every device</li><li>Your name on the daily leaderboards</li><li>One account for all BGameWorld games</li></ul>" +
-      "<form novalidate>" +
-      "<label for='n'>Your name on the leaderboard</label><input id='n' maxlength='20' autocomplete='nickname' placeholder='e.g. WordWizard'>" +
-      "<label for='e'>Email</label><input id='e' type='email' autocomplete='email' placeholder='you@example.com'>" +
-      "<label for='p'>Password</label><input id='p' type='password' autocomplete='new-password' placeholder='At least 6 characters'>" +
-      "<div class='err' role='alert'></div>" +
-      "<button class='go' type='submit'>Save my progress &ndash; it's free</button></form>" +
-      "<div class='row'><button class='lnk' type='button' data-later>Maybe later</button><button class='lnk' type='button' data-never>Don't ask again</button></div>",
-      function (r) {
-        var err = r.querySelector(".err"), btn = r.querySelector(".go");
-        r.querySelector("[data-later]").onclick = close;
-        r.querySelector("[data-never]").onclick = function () { store("bgw-acct-never", "1"); close(); };
-        r.querySelector("form").onsubmit = function (ev) {
-          ev.preventDefault();
-          var name = r.querySelector("#n").value.trim(), email = r.querySelector("#e").value.trim(), pw = r.querySelector("#p").value;
-          err.textContent = "";
-          if (name.length < 2) return (err.textContent = "Please choose a name (2 to 20 characters).");
-          if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return (err.textContent = "Please enter a valid email address.");
-          if (pw.length < 6) return (err.textContent = "Please choose a password of at least 6 characters.");
-          btn.disabled = true; btn.textContent = "Saving...";
-          api("/rest/v1/rpc/bgw_set_display_name", { method: "POST", body: JSON.stringify({ p_display_name: name }) })
-            .then(function () {
-              return api("/auth/v1/user?redirect_to=" + encodeURIComponent(location.origin + "/"), {
-                method: "PUT", body: JSON.stringify({ email: email, password: pw }),
-              });
-            })
-            .then(function () { showCheckEmail(email, true); })
-            .catch(function (e) {
-              var m = e.message || "";
-              if (/already (been )?registered|exists/i.test(m)) m = "That email already has an account. Log in from the game's menu instead.";
-              else if (/rate limit|too many/i.test(m)) m = "Too many sign-ups right now. Please try again in a few minutes.";
-              err.textContent = m;
-              btn.disabled = false; btn.innerHTML = "Save my progress &ndash; it's free";
-            });
-        };
-        setTimeout(function () { var n = r.querySelector("#n"); if (n && window.innerWidth > 640) n.focus(); }, 300);
-      }
+      "<img class='logo' src='" + SITE + "/logo.webp' alt='BGameWorld'>" +
+      "<h2>Welcome to BGameWorld</h2>" +
+      "<p>" + (current ? esc(current.name) + " is one of our free daily games. " : "Free daily puzzles, new every day. ") + "Make one free account for all of them:</p>" +
+      "<ul><li>Play the members-only Daily Seven and build a streak</li><li>Your name on every game's leaderboard</li><li>Your progress saved on every device</li></ul>" +
+      "<a class='primary' href='" + joinUrl() + "'>Create free account</a>" +
+      "<a class='secondary' href='" + joinUrl("login") + "'>I already have an account</a>" +
+      "<button class='link' type='button' data-guest>Play as a guest</button>",
+      { label: "Welcome to BGameWorld", onClose: markWelcomed },
+      function (r, dismiss) { r.querySelector("[data-guest]").onclick = dismiss; r.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", markWelcomed); }); }
     );
   }
 
-  function showCheckEmail(email, fresh) {
+  // ---------- 2. play next ----------
+  function pick(st) {
+    var seven = (st && st.seven) || [], today = (st && st.today) || [];
+    var cand = GAMES.filter(function (g) { return !current || g.art !== current.art; });
+    function score(g) {
+      var s = Math.random();
+      if (today.indexOf(g.art) < 0) s += 2;          // not played today
+      if (seven.indexOf(g.art) >= 0) s += 1.5;       // in today's Daily Seven
+      return s;
+    }
+    return cand.map(function (g) { return [score(g), g]; }).sort(function (a, b) { return b[0] - a[0]; }).slice(0, 3).map(function (x) { return x[1]; });
+  }
+  var lastFinish = 0;
+  function playNext() {
+    if (Date.now() - lastFinish < 10000) return; // one card per finish
+    lastFinish = Date.now();
+    var guest = !registered();
+    status().then(function (st) {
+      setTimeout(function () {
+        if (document.querySelector('[role="dialog"][aria-modal="true"]') && !host) return; // the game's own dialog is up
+        var seven = (st && st.seven) || [], today = (st && st.today) || [];
+        var memberLeft = !guest ? seven.filter(function (a) { return today.indexOf(a) < 0; }).length : 0;
+        var games = pick(st).map(function (g) {
+          var tag = seven.indexOf(g.art) >= 0 && today.indexOf(g.art) < 0 ? "<span class='tag'>Daily Seven</span>" : "";
+          return "<a class='g' href='" + g.url + "/'><img src='" + SITE + "/art/" + g.guide + "-poster.webp' alt='' loading='lazy'>" + esc(g.name) + tag + "</a>";
+        }).join("");
+        open(
+          "<h2>Nice one! Play next</h2>" +
+          "<p>" + (!guest && seven.length ? (memberLeft ? memberLeft + " of today's Daily Seven still to go. Finish them all to grow your streak." : "You've finished today's Daily Seven. Your streak is safe!") : "Three more free puzzles for today:") + "</p>" +
+          "<div class='games'>" + games + "</div>" +
+          (guest ? "<p class='save'>Playing as a guest. <a href='" + joinUrl() + "'>Create a free BGameWorld account</a> to keep your progress and join the Daily Seven.</p>" : "") +
+          "<a class='link' href='" + SITE + "/#challenge'>See all games and the Daily Seven</a>",
+          { label: "Play next", sheet: true }
+        );
+      }, 2200); // let them see their result first
+    });
+  }
+  window.addEventListener("bgw:finished", playNext);
+
+  // ---------- 3. unconfirmed sign-up reminder ----------
+  function reminder(email) {
+    store("bgw-remind", String(Date.now()));
     open(
-      "<h2>" + (fresh ? "Check your email" : "Finish signing up") + "</h2>" +
-      "<p>" + (fresh ? "We sent" : "We sent") + " a confirmation link to <b>" + esc(email) + "</b>. Tap it to finish. " +
-      "Can't see it? Look in your spam or promotions folder. It comes from Supabase Auth.</p>" +
-      "<p>Your progress is already saved on this device while you wait.</p>" +
-      "<div class='err' role='status'></div>" +
-      "<button class='go' type='button' data-ok>" + (fresh ? "Got it, keep playing" : "Keep playing") + "</button>" +
-      "<div class='row'><button class='lnk' type='button' data-resend>Send the link again</button><button class='lnk' type='button' data-other>Use a different email</button></div>",
-      function (r) {
-        var msg = r.querySelector(".err");
-        r.querySelector("[data-ok]").onclick = close;
-        r.querySelector("[data-other]").onclick = function () { status().then(function (s) { showInvite((s && s.plays) || 0, false); }); };
-        r.querySelector("[data-resend]").onclick = function () {
-          msg.style.color = ""; msg.textContent = "Sending...";
-          api("/auth/v1/user?redirect_to=" + encodeURIComponent(location.origin + "/"), { method: "PUT", body: JSON.stringify({ email: email }) })
-            .then(function () { msg.style.color = "#1e7d4a"; msg.textContent = "Sent. Check your inbox and spam folder."; })
-            .catch(function (e) { msg.style.color = ""; msg.textContent = /rate|seconds/i.test(e.message) ? "Please wait a minute before sending it again." : e.message; });
-        };
-      }
+      "<h2>Finish signing up</h2>" +
+      "<p>We sent a link to <b>" + esc(email) + "</b>. Tap it to finish your BGameWorld account. Check your spam folder too.</p>" +
+      "<a class='primary' href='" + SITE + "/join/?next=" + encodeURIComponent(location.href.split("#")[0]) + "'>Send it again or change email</a>" +
+      "<button class='link' type='button' data-ok>Later</button>",
+      { label: "Finish signing up", sheet: true },
+      function (r, dismiss) { r.querySelector("[data-ok]").onclick = dismiss; }
     );
   }
 
-  // ---------- when to show it ----------
-  var lastPlays = null, timer = null;
-  function quietToday() { return Date.now() - Number(store("bgw-acct-last") || 0) < DAY; }
-  function busy() {
-    // Don't cover the game's own sign-up or menu dialogs.
-    return !!document.querySelector('[role="dialog"][aria-modal="true"]') || !!host;
-  }
-
-  function check(first) {
-    if (document.hidden) return;
-    status().then(function (s) {
-      if (!s || !s.guest) { if (s && !s.guest) stop(); return; }
-      var justWon = lastPlays !== null && s.plays > lastPlays;
-      lastPlays = s.plays;
-      if (busy()) return;
-      if (s.pending_email) {
-        if (first && !quietToday()) { store("bgw-acct-last", String(Date.now())); showCheckEmail(s.pending_email, false); }
-        return;
-      }
-      if (justWon && (!quietToday() || !store("bgw-acct-won-" + new Date().toDateString()))) {
-        store("bgw-acct-won-" + new Date().toDateString(), "1");
-        setTimeout(function () { if (!busy()) showInvite(s.plays, true); }, 2500); // let them see their result first
-      } else if (first && s.plays >= 2 && !quietToday()) {
-        showInvite(s.plays, false);
-      }
-    }).catch(function () { /* no session yet, or offline */ });
-  }
-  function stop() { if (timer) clearInterval(timer); timer = null; }
-
+  // ---------- start ----------
   setTimeout(function () {
-    check(true);
-    timer = setInterval(function () { check(false); }, 20000);
-    document.addEventListener("visibilitychange", function () { if (!document.hidden) check(false); });
-  }, 6000);
+    if (registered()) { markWelcomed(); return; }
+    if (!welcomed()) return welcome();
+    if (Date.now() - Number(store("bgw-remind") || 0) < DAY) return;
+    status().then(function (st) { if (st && st.guest && st.pending_email && !host) reminder(st.pending_email); });
+  }, location.hostname === "bgameworld.com" ? 1200 : 900);
 })();

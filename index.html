@@ -303,59 +303,48 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
 @media (max-width:767px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}.foot-games{columns:1}}
 @media (prefers-reduced-motion:reduce){.slide,.slide img,.pcard .poster,.pcard .poster img,.gcard .shot img,.lx-side{transition:none}.slide img{transform:none}}
 
-/* ---------- challenge dialog ---------- */
-.ch-backdrop{position:fixed;inset:0;z-index:110;background:rgba(10,4,18,.7);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s linear .25s}
-.ch-backdrop.open{opacity:1;visibility:visible;transition:opacity .25s}
-.ch-modal{position:fixed;z-index:111;left:50%;top:50%;width:min(680px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;
-  background:linear-gradient(180deg,#2a1645,#1c0f2e);border:1px solid var(--line);border-radius:18px;padding:28px 22px calc(24px + var(--safe-b));box-shadow:0 24px 60px -20px rgba(0,0,0,.45);
-  transform:translate(-50%,-47%);opacity:0;visibility:hidden;transition:opacity .25s,transform .3s var(--ease),visibility 0s linear .3s}
-.ch-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%);transition:opacity .25s,transform .3s var(--ease)}
-@media (min-width:640px){.ch-modal{padding:36px 36px 32px}}
-.ch-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
-.ch-close:hover{background:var(--paper-2)}
-.ch-modal h2{margin:0;padding-right:44px;font:700 clamp(1.7rem,5vw,2.2rem)/1.05 var(--slab)}
-.ch-date{margin:6px 0 0;font-weight:700}
-.ch-sub{margin:8px 0 0;color:var(--ink-2);max-width:56ch}
-.ch-games{display:flex;flex-wrap:wrap;gap:12px 10px;padding:18px 2px 6px}
-.ch-g{flex:none;width:76px;text-align:center;text-decoration:none}
-.ch-g .th{display:grid;place-items:center;width:76px;height:76px;border-radius:10px;background:var(--tile)}
-.ch-g .th svg{width:46px;height:46px}
-.ch-g b{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.25}
-@media (max-width:599px){.ch-games{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.ch-g,.ch-g .th{width:100%}.ch-g .th{height:auto;aspect-ratio:1}.ch-g .th svg{width:62%;height:auto}}
-.ch-gate{display:grid;gap:16px;margin-top:20px;grid-template-columns:1fr;align-items:start}
-@media (min-width:600px){.ch-gate{grid-template-columns:1fr 1fr}}
-.ch-path{border:1px solid var(--rule);border-radius:12px;padding:18px}
-.ch-path h3{margin:0 0 6px;font:700 20px/1.15 var(--slab)}
-.ch-path p{margin:0 0 14px;font-size:14.5px;color:var(--ink-2)}
-#chAuthForm{display:flex;flex-direction:column;gap:10px}
-#chAuthForm input{min-height:46px;border:1.5px solid rgba(255,255,255,.22);border-radius:10px;padding:0 12px;font:16px var(--sans);color:var(--ink);background:rgba(255,255,255,.06)}
-#chAuthForm input::placeholder{color:var(--ink-3)}
-#chAuthForm input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--ink)}
-#chAuthForm input[aria-invalid="true"]{border-color:#ff9b93}
-.ch-toggle{margin:12px 0 0;font-size:14px;color:var(--ink-2)}
-.ch-toggle button,.ch-link,.ch-retry,.ch-fine a{font-weight:600;text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
-.ch-msg{margin:10px 0 0;font-size:14px;min-height:1.2em}
-.ch-msg:empty{margin:0;min-height:0}
-.ch-msg.err{color:#ff9b93}
-.ch-msg.ok{color:#7ee2a8}
-.ch-fine{margin:12px 0 0;font-size:13px;color:var(--ink-3)}
-.ch-note{margin:0 0 14px;padding:10px 12px;border-radius:8px;background:var(--paper-2);color:var(--ink);font-size:14px}
-.ch-toggle button:disabled{opacity:.45;cursor:not-allowed;text-decoration:none}
-.ch-playing .ch-msg{font-size:16px;font-weight:700}
-.ch-link{margin-top:14px;font-size:15px;min-height:44px}
-.ch-board{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
-.ch-board h3{margin:0 0 8px;font:700 20px/1.15 var(--slab)}
-.ch-board-list{list-style:none;margin:0;padding:0}
-.ch-board-list li{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--rule);font-size:15px}
-.ch-board-list .rank{width:24px;flex:none;font:700 17px var(--slab);font-variant-numeric:tabular-nums}
-.ch-board-list .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ch-board-list .score{font-weight:700;font-variant-numeric:tabular-nums}
-.ch-board-list .ch-board-empty{color:var(--ink-2);display:block}
 
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
-}
+/* ---------- the Daily Seven: first thing on the page, with a glow ---------- */
+@property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
+.seven{grid-template-columns:minmax(0,340px) minmax(0,1fr);margin-bottom:22px}
+@media (max-width:899px){.seven{grid-template-columns:1fr}}
+.seven.glow{position:relative;isolation:isolate;border-color:transparent;
+  box-shadow:0 0 0 1px rgba(255,215,120,.35),0 0 38px -4px rgba(255,190,80,.45),0 0 90px -10px rgba(178,107,255,.55);animation:sevenPulse 3.2s ease-in-out infinite}
+.seven.glow::before{content:"";position:absolute;inset:-2px;border-radius:20px;padding:2px;z-index:-1;pointer-events:none;
+  background:conic-gradient(from var(--spin),#ffd76a,#ff7ad9,#a855f7,#38bdf8,#ffd76a);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:sevenSpin 5s linear infinite}
+@keyframes sevenSpin{to{--spin:360deg}}
+@keyframes sevenPulse{50%{box-shadow:0 0 0 1px rgba(255,215,120,.5),0 0 54px 0 rgba(255,190,80,.6),0 0 120px -6px rgba(178,107,255,.7)}}
+.seven.flash{animation:sevenPulse .5s ease-in-out 3}
+.seven .kicker{margin:0 0 8px;font:700 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#ffd76a}
+.seven .spark{display:inline-block;animation:sevenSpark 1.6s ease-in-out infinite}
+@keyframes sevenSpark{50%{transform:scale(1.35) rotate(20deg);opacity:.7}}
+.seven .shine{background:linear-gradient(100deg,#fff 0%,#fff 40%,#ffe39a 50%,#fff 60%,#fff 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sevenShine 4s ease-in-out infinite}
+@keyframes sevenShine{0%{background-position:100% 0}60%,100%{background-position:-50% 0}}
+.seven-me{display:grid;gap:10px;justify-items:start}
+.seven-login{font-size:14px;color:var(--ink-2)}
+.seven-note{margin:0;font-size:12.5px;color:var(--ink-3, #a99bc0)}
+.streak{display:flex;align-items:baseline;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px var(--line)}
+.streak b{font:700 26px/1 var(--slab)}.streak span:last-child{font-size:13.5px;color:var(--ink-2)}
+.streak .flame{font-size:22px;filter:grayscale(1);opacity:.5}
+.streak.on{box-shadow:inset 0 0 0 1px rgba(255,170,60,.6),0 0 22px -4px rgba(255,140,40,.6)}
+.streak.on .flame{filter:none;opacity:1;animation:sevenSpark 1.4s ease-in-out infinite}
+.prog{width:100%;max-width:300px;height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.prog i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#ffd76a,#ff7ad9,#a855f7)}
+.prog-label{margin:0;font-size:14px;color:var(--ink-2)}
+.seven-side{display:grid;gap:14px;min-width:0}
+.pcard.done .poster{box-shadow:inset 0 0 0 3px #5be49b}
+.pcard .tick,.pcard .lock{position:absolute;top:8px;right:8px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-weight:800}
+.pcard .tick{background:#5be49b;color:#0b2a17}
+.pcard .lock{background:rgba(10,4,18,.75);color:#fff}.pcard .lock svg{width:15px;height:15px}
+.pcard.locked img{filter:saturate(.7) brightness(.85)}
+.seven-board h3{margin:0 0 8px;font:700 17px/1.2 var(--slab)}
+.seven-board ol{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}
+.seven-board li{display:grid;grid-template-columns:28px 1fr auto 52px;gap:8px;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.05)}
+.seven-board li.you{box-shadow:inset 0 0 0 1px rgba(255,215,120,.6)}
+.seven-board li.none{display:block;color:var(--ink-2)}
+.seven-board .rank{color:var(--ink-2)}.seven-board .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.seven-board .streak{all:unset;text-align:right}
+@media (prefers-reduced-motion:reduce){.seven.glow,.seven.glow::before,.seven .spark,.seven .shine,.streak.on .flame{animation:none}}
 </style>
 <script src="/shared-auth.js"></script>
 <script src="/visit.js" defer></script>
@@ -402,10 +391,25 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
         <a href="/question/">Daily question</a>
       </nav>
       <div class="nav-right">
-        <button class="chal" id="openChallenge" type="button" aria-haspopup="dialog" aria-controls="challengeModal" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg><span>Today's challenge</span></button>
+        <button class="chal" id="openChallenge" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg><span>Today's challenge</span></button>
         <a class="me" href="/stats/"><svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span>My stats</span><i class="av" aria-hidden="true">B</i></a>
       </div>
     </div>
+
+    <section class="seven glass glow" id="challenge" aria-labelledby="sevenTitle">
+      <div>
+        <p class="kicker"><span class="spark" aria-hidden="true">&#10022;</span> Members only &middot; daily</p>
+        <h2 id="sevenTitle"><span class="shine">The Daily Seven</span></h2>
+        <h1 class="sr-only" id="todayTitle">Today's puzzles</h1>
+        <p class="edition"><span class="date" id="todayDate"></span><span class="reset" id="resetIn"></span></p>
+        <p class="lede">Seven games, the same seven for everyone. Finish all seven today to grow your streak and climb the leaderboard.</p>
+        <div class="seven-me" id="sevenMe" aria-live="polite"><a class="btn btn-primary" href="/join/?next=%2F%23challenge">Join free to play</a></div>
+      </div>
+      <div class="seven-side">
+        <ul class="rail" id="sevenTiles" aria-label="Today's seven games"></ul>
+        <div class="seven-board" id="sevenBoard" hidden><h3>Today's leaderboard</h3><ol id="chBoard"></ol></div>
+      </div>
+    </section>
 
     <section class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured games">
       <div id="slides"></div>
@@ -413,16 +417,6 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
       <div class="hero-dots" id="heroDots" role="group" aria-label="Choose a featured game"></div>
     </section>
 
-    <section class="seven glass" aria-labelledby="sevenTitle">
-      <div>
-        <h2 id="sevenTitle">The Daily Seven</h2>
-        <h1 class="sr-only" id="todayTitle">Today's puzzles</h1>
-        <p class="edition"><span class="date" id="todayDate"></span><span class="reset" id="resetIn"></span></p>
-        <p class="lede">Seven of today's games, the same seven for everyone. Play them all, add up your scores, and see where you rank.</p>
-        <button class="btn btn-primary" id="startChallenge" type="button" aria-haspopup="dialog" aria-controls="challengeModal">Start today's challenge</button>
-      </div>
-      <ul class="rail" id="sevenTiles" aria-label="Today's seven games"></ul>
-    </section>
 
     <section class="games" id="games" aria-labelledby="gamesTitle">
       <div class="row-head">
@@ -469,7 +463,7 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
         </div>
         <div class="faq-item">
           <dt>What's the daily 7-game challenge?</dt>
-          <dd>Each day the site picks 7 of the 11 games at random, the same 7 for every player that day, so everyone is comparing the same set. Play them from the "Today's challenge" button, add up your score across all seven, and see where you land against everyone else who signed up that day. It's entirely optional &mdash; the rest of the site works the same with or without it.</dd>
+          <dd>Each day the site picks seven of the games, the same seven for every player. It's for members: make a free BGameWorld account, finish all seven puzzles that day, and your streak grows by one. Miss a day and it starts again. Today's leaderboard ranks members by how many of the seven they've finished, then by who finished first. Every game itself stays free to play as a guest.</dd>
         </div>
         <div class="faq-item">
           <dt>Do the daily puzzles reset at the same time for everyone?</dt>
@@ -522,57 +516,6 @@ footer{margin-top:20px;border-top:1px solid var(--line);background:rgba(10,5,18,
 </footer>
 
 
-<div class="ch-backdrop" id="challengeBackdrop" hidden></div>
-<div class="ch-modal" id="challengeModal" role="dialog" aria-modal="true" aria-labelledby="chTitle" hidden>
-  <button class="ch-close" id="chClose" aria-label="Close challenge">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14"/></svg>
-  </button>
-
-  <div id="chBody">
-    <h2 id="chTitle">The Daily Seven</h2>
-    <p class="ch-date" id="chDate"></p>
-    <p class="ch-sub">Play all seven, add up your score, see where you land on today's leaderboard.</p>
-
-    <div class="ch-games" id="chGames"></div>
-
-    <div class="ch-gate" id="chGate">
-      <div class="ch-path">
-        <h3>Play as guest</h3>
-        <p>Jump straight in. Your scores won't be saved, and you won't show up on the leaderboard.</p>
-        <button class="btn btn-outline btn-block" id="chGuestBtn">Continue as guest</button>
-      </div>
-      <div class="ch-path">
-        <h3 id="chAuthHeading">Sign up to compete</h3>
-        <p class="ch-note" id="chOffline" hidden>Sign-in is unavailable right now. You can still play today's seven as a guest.</p>
-        <p>Save your scores and get ranked on today's leaderboard against everyone else playing.</p>
-        <form id="chAuthForm" novalidate aria-describedby="chAuthMsg">
-          <label class="sr-only" for="chName">Display name</label>
-          <input type="text" id="chName" placeholder="Display name" autocomplete="nickname" maxlength="24" spellcheck="false">
-          <label class="sr-only" for="chEmail">Email</label>
-          <input type="email" id="chEmail" placeholder="Email" autocomplete="email" inputmode="email">
-          <label class="sr-only" for="chPassword">Password</label>
-          <input type="password" id="chPassword" placeholder="Password (6+ characters)" autocomplete="new-password">
-          <button type="submit" class="btn btn-primary btn-block" id="chAuthSubmit">Sign up</button>
-        </form>
-        <p class="ch-toggle"><span id="chToggleLead">Already have an account?</span> <button type="button" id="chToggleMode">Sign in</button></p>
-        <p class="ch-msg" id="chAuthMsg" role="status" aria-live="polite"></p>
-        <p class="ch-fine">Your display name and score appear on the public leaderboard. <a href="/privacy/">Privacy</a> · <a href="#faq" id="chFaqLink">How scoring works</a></p>
-      </div>
-    </div>
-
-    <div class="ch-playing" id="chPlaying" hidden>
-      <p class="ch-msg ok" id="chPlayingMsg" role="status"></p>
-      <p class="ch-sub">Play today's seven (each opens in a new tab), then check back to see your rank:</p>
-      <div class="ch-games" id="chGamesPlaying"></div>
-      <button type="button" class="ch-link" id="chSwitchToAccount" hidden>Want your scores ranked? Sign up or sign in</button>
-    </div>
-
-    <div class="ch-board">
-      <h3>Today's leaderboard</h3>
-      <ol id="chBoard" class="ch-board-list"><li class="ch-board-empty">Loading…</li></ol>
-    </div>
-  </div>
-</div>
 
 <script src="/data/questions.js"></script>
 <script>
@@ -662,16 +605,13 @@ function icon(kind, label) {
 
 /* ---------- today: date, reset countdown, today's seven ---------- */
 function todayStr() { return new Date().toISOString().slice(0, 10); } // UTC date: same for every visitor
+// Same pick as the database's daily_seven_games(): FNV-1a hash of "date:game",
+// lowest seven, from the games that save results (so progress and streaks can be checked).
+const SEVEN_POOL = ["wordezy", "wordsearch", "scramble", "ladder", "warmezy", "letterezy", "sortezy", "mergezy"];
+function fnv(str) { let h = 2166136261; for (const b of new TextEncoder().encode(str)) { h = (h ^ b) >>> 0; h = Math.imul(h, 16777619) >>> 0; } return h; }
 function pickDailyGames(dateStr) {
-  let seed = 0;
-  for (let i = 0; i < dateStr.length; i++) seed = (seed * 31 + dateStr.charCodeAt(i)) >>> 0;
-  const rnd = rand(seed || 1);
-  const pool = GAMES.slice();
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(rnd() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  return pool.slice(0, 7);
+  return SEVEN_POOL.map(a => [fnv(dateStr + ":" + a), a]).sort((x, y) => x[0] - y[0] || (x[1] < y[1] ? -1 : 1)).slice(0, 7)
+    .map(([, a]) => GAMES.find(g => g.art === a)).filter(Boolean);
 }
 const chDate = todayStr();
 const todaysGames = pickDailyGames(chDate);
@@ -691,7 +631,6 @@ updateReset();
 setInterval(updateReset, 30000);
 
 const poster = g => `/art/${g.guide}-poster.webp`, banner = g => `/art/${g.guide}-banner.webp`;
-$("sevenTiles").innerHTML = todaysGames.map(g => `<li><a class="pcard" href="${g.url}" title="${g.blurb}"><span class="poster"><img src="${poster(g)}" alt="" width="800" height="1120" loading="lazy"></span><b>${g.name}</b></a></li>`).join("");
 
 /* ---------- game cards: the game's poster, its name and category ---------- */
 function gameCard(g) {
@@ -828,288 +767,90 @@ $("footGames").innerHTML = GAMES.map(g => `<li><a href="${g.url}">${g.name}</a><
   $("askFoot").textContent = mine === null ? "Tap an answer to see how everyone else answered." : "You've answered today. Tap to see the results.";
 })();
 
-/* ---------- daily 7-game challenge + guest/signup gate + leaderboard ----------
-   The dialog, today's seven and the guest path never depend on Supabase: they
-   are wired first, and the Supabase client loads after the page without blocking
-   it. If it can't load (offline, ad-blocker, CDN outage) the dialog still
-   opens, guests can still play, and sign-in/leaderboard say they're unavailable. */
-(function initChallenge() {
+/* ---------- the Daily Seven (members only) ----------
+   Progress, streak and leaderboard come from the database (daily_seven()),
+   which reads each game's own results, so nothing extra has to be reported.
+   Guests see the seven and the leaderboard, and a button to join. */
+(function initSeven() {
   const SB_URL = "https://hkcvtoozpeybwehqtiif.supabase.co";
   const SB_KEY = "sb_publishable_CGTFNipWN_1IeG28m4upSg_n2HSsGai";
   const SB_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
-  const SB_TIMEOUT_MS = 10000;
-  const GUEST_KEY = "bgw_ch_mode_" + chDate;
+  const JOIN = "/join/?next=" + encodeURIComponent("/#challenge");
+  const seven = $("challenge");
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  let member = false, done = new Set();
 
-  // token (when present) is the user's own Supabase access token, carried in
-  // the URL fragment only — fragments never leave the browser (no server
-  // logs, no Referer header), and each game reads it client-side to report
-  // its own score back once the round ends. Guests get plain links.
-  function gameChip(g, token) {
-    const hash = token ? `#ch=${encodeURIComponent(chDate)}|${encodeURIComponent(g.art)}|${encodeURIComponent(token)}` : "";
-    return `<a class="ch-g" href="${g.url}${hash}" target="_blank" rel="noopener">
-      <span class="th" style="--tile:${g.color}">${icon(g.art)}</span><b>${g.name}<span class="sr-only"> (opens in a new tab)</span></b>
-    </a>`;
+  function tiles() {
+    $("sevenTiles").innerHTML = todaysGames.map(g => {
+      const ok = done.has(g.art);
+      const href = member ? g.url : JOIN;
+      return `<li><a class="pcard${ok ? " done" : ""}${member ? "" : " locked"}" href="${href}" title="${esc(g.blurb)}">` +
+        `<span class="poster"><img src="${poster(g)}" alt="" width="800" height="1120" loading="lazy">` +
+        (ok ? '<span class="tick" aria-label="Done">&#10003;</span>' : member ? "" : '<span class="lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>') +
+        `</span><b>${esc(g.name)}</b></a></li>`;
+    }).join("");
   }
-  $("chGames").innerHTML = todaysGames.map(g => gameChip(g)).join("");
-  function renderPlayingLinks(token) {
-    $("chGamesPlaying").innerHTML = todaysGames.map(g => gameChip(g, token)).join("");
-  }
-  renderPlayingLinks(null);
-  $("chDate").textContent = longDate;
+  tiles();
 
-  /* ---- open / close ---- */
-  const chBackdrop = $("challengeBackdrop");
-  const chModal = $("challengeModal");
-  const openers = [$("openChallenge"), $("startChallenge")];
-  let returnFocus = null;
-  function setChallenge(open) {
-    chBackdrop.hidden = false; chModal.hidden = false;
-    requestAnimationFrame(() => { chBackdrop.classList.toggle("open", open); chModal.classList.toggle("open", open); });
-    document.documentElement.style.overflow = open ? "hidden" : "";
-    openers.forEach(b => b.setAttribute("aria-expanded", open));
-    if (open) {
-      returnFocus = document.activeElement;
-      $("chClose").focus();
-    } else {
-      setTimeout(() => { if (!chModal.classList.contains("open")) { chBackdrop.hidden = true; chModal.hidden = true; } }, 320);
-      if (returnFocus && returnFocus.focus) returnFocus.focus();
+  function meBox(d) {
+    const me = d && d.me;
+    if (!me || !me.member) {
+      $("sevenMe").innerHTML = `<a class="btn btn-primary" href="${JOIN}">Join free to play</a>` +
+        `<a class="seven-login" href="/join/?mode=login&next=${encodeURIComponent("/#challenge")}">I have an account</a>` +
+        `<p class="seven-note">Every game stays free for guests. The Daily Seven, its streak and leaderboard are for members.</p>`;
+      return;
     }
-  }
-  openers.forEach(b => b.addEventListener("click", () => setChallenge(true)));
-  $("chClose").addEventListener("click", () => setChallenge(false));
-  chBackdrop.addEventListener("click", () => setChallenge(false));
-  document.addEventListener("keydown", e => {
-    if (!chModal.classList.contains("open")) return;
-    if (e.key === "Escape") return setChallenge(false);
-    if (e.key !== "Tab") return;
-    // keep keyboard focus inside the open dialog
-    const f = [...chModal.querySelectorAll("a[href],button:not([disabled]),input:not([disabled])")].filter(el => el.offsetParent !== null);
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  });
-
-  /* ---- bgameworld.com/#challenge (the link in social posts) opens it straight away.
-     No longer auto-opens on an ordinary visit — an unprompted pop-up gating
-     content behind a sign-up form is exactly the kind of thing AdSense review
-     flags, so it's opt-in only now: the challenge buttons, or this deep link. ---- */
-  function openFromHash() {
-    if (location.hash !== "#challenge") return;
-    history.replaceState(null, "", location.pathname + location.search);   // so closing it doesn't leave #challenge behind
-    setTimeout(() => setChallenge(true), 300);
-  }
-  openFromHash();
-  window.addEventListener("hashchange", openFromHash);
-
-  /* ---- gate / playing views ---- */
-  const chGate = $("chGate"), chPlaying = $("chPlaying"), chSwitch = $("chSwitchToAccount");
-  function showPlaying(message, token, guest) {
-    chGate.hidden = true;
-    chPlaying.hidden = false;
-    $("chPlayingMsg").textContent = message;
-    chSwitch.hidden = !guest;
-    renderPlayingLinks(token || null);
-  }
-  function showGate() {
-    try { localStorage.removeItem(GUEST_KEY); } catch (e) {}
-    chPlaying.hidden = true;
-    chGate.hidden = false;
-    renderPlayingLinks(null);
-    (chMode === "signup" ? chName : chEmail).focus();
-  }
-  function playAsGuest() {
-    showPlaying("Playing as guest — your scores won't be saved or ranked.", null, true);
-  }
-  $("chGuestBtn").addEventListener("click", () => {
-    try { localStorage.setItem(GUEST_KEY, "guest"); } catch (e) {}
-    playAsGuest();
-  });
-  chSwitch.addEventListener("click", showGate);
-  $("chFaqLink").addEventListener("click", e => {
-    e.preventDefault();
-    setChallenge(false);
-    setTimeout(() => $("faq").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }), 330);
-  });
-  try { if (localStorage.getItem(GUEST_KEY) === "guest") playAsGuest(); } catch (e) {}
-
-  /* ---- sign up / sign in form ---- */
-  let chMode = "signup";
-  const chForm = $("chAuthForm");
-  const chName = $("chName"), chEmail = $("chEmail"), chPassword = $("chPassword");
-  const chSubmit = $("chAuthSubmit"), chMsg = $("chAuthMsg"), chToggle = $("chToggleMode"), chHeading = $("chAuthHeading");
-
-  function say(text, kind) { chMsg.textContent = text; chMsg.className = "ch-msg" + (kind ? " " + kind : ""); }
-  function clearInvalid() { [chName, chEmail, chPassword].forEach(i => i.removeAttribute("aria-invalid")); }
-  function fieldError(input, text) { clearInvalid(); input.setAttribute("aria-invalid", "true"); input.focus(); say(text, "err"); }
-
-  function setChMode(next) {
-    chMode = next;
-    const signup = chMode === "signup";
-    chHeading.textContent = signup ? "Sign up to compete" : "Sign in to compete";
-    chSubmit.textContent = signup ? "Sign up" : "Sign in";
-    chName.hidden = !signup;
-    chPassword.autocomplete = signup ? "new-password" : "current-password";
-    chToggle.textContent = signup ? "Sign in" : "Sign up";
-    $("chToggleLead").textContent = signup ? "Already have an account?" : "New here?";
-    clearInvalid(); say("");
-  }
-  chToggle.addEventListener("click", () => setChMode(chMode === "signup" ? "signin" : "signup"));
-  setChMode("signup");
-
-  // Display names are shown to every player on the leaderboard: letters,
-  // numbers, spaces and . _ ' - only, 2-24 characters.
-  const NAME_RE = /^[\p{L}\p{N}][\p{L}\p{N} ._'-]{1,23}$/u;
-  const cleanName = s => String(s || "").normalize("NFC").replace(/\s+/g, " ").trim();
-
-  function validate() {
-    const name = cleanName(chName.value), email = chEmail.value.trim(), password = chPassword.value;
-    if (chMode === "signup" && !NAME_RE.test(name))
-      return fieldError(chName, "Pick a display name of 2–24 letters or numbers (spaces, . _ ' - are fine)."), null;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      return fieldError(chEmail, "Enter your email address, like name@example.com."), null;
-    if (password.length < 6)
-      return fieldError(chPassword, "Use a password of at least 6 characters."), null;
-    clearInvalid();
-    return { name, email, password };
+    const n = done.size, streak = me.streak || 0, all = n === 7;
+    $("sevenMe").innerHTML =
+      `<div class="streak${streak ? " on" : ""}"><span class="flame" aria-hidden="true">&#128293;</span><b>${streak}</b><span>day streak</span></div>` +
+      `<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="${n}" aria-label="Today's progress"><i style="width:${n / 7 * 100}%"></i></div>` +
+      `<p class="prog-label">${all ? `All seven done${me.name ? ", " + esc(me.name) : ""}! Come back tomorrow to keep your streak.` : `${n} of 7 done today${streak ? ". Finish all seven to make it " + (streak + (n === 7 ? 0 : 1)) + " days." : ". Finish all seven to start a streak."}`}</p>` +
+      (all ? "" : `<a class="btn btn-primary" href="${(todaysGames.find(g => !done.has(g.art)) || todaysGames[0]).url}">${n ? "Play the next one" : "Start today's seven"}</a>`);
   }
 
-  function friendly(err) {
-    const m = String((err && err.message) || "");
-    if (/invalid login credentials/i.test(m)) return "That email and password don't match. Check them, or sign up instead.";
-    if (/already registered|already exists/i.test(m)) { setChMode("signin"); return "There's already an account with that email — sign in instead."; }
-    if (/email not confirmed/i.test(m)) return "Confirm your email first: open the link we sent, then sign in here.";
-    if (/rate limit|too many/i.test(m)) return "Too many attempts. Wait a minute, then try again.";
-    if (/password/i.test(m)) return "That password won't work. Use at least 6 characters.";
-    if (/fetch|network|failed to/i.test(m)) return "Couldn't reach the server. Check your connection and try again.";
-    return "Something went wrong signing you in. Try again in a moment.";
-  }
-
-  /* ---- Supabase: loaded after the page, never required for the rest ---- */
-  let sb = null, sbState = "loading";
-  function setOffline() {
-    if (sbState === "ready") return;
-    sbState = "offline";
-    $("chOffline").hidden = false;
-    say("");
-    chSubmit.disabled = true;
-    chToggle.disabled = true;
-    renderBoardMessage("The leaderboard can't load right now. Try again later.");
-  }
-
-  async function ensureProfile(user, displayName) {
-    const { data: existing } = await sb.from("portal_profiles").select("display_name").eq("id", user.id).maybeSingle();
-    if (existing) return existing.display_name;
-    let name = cleanName(displayName);
-    if (!NAME_RE.test(name)) name = "Player";
-    await sb.from("portal_profiles").insert({ id: user.id, display_name: name });
-    return name;
-  }
-
-  chForm.addEventListener("submit", async e => {
-    e.preventDefault();
-    if (sbState === "loading") return say("Still connecting — try again in a second.", "err");
-    if (sbState === "offline") return;
-    const v = validate();
-    if (!v) return;
-    chSubmit.disabled = true; say(chMode === "signup" ? "Creating your account…" : "Signing you in…");
-    try {
-      if (chMode === "signup") {
-        const { data, error } = await sb.auth.signUp({ email: v.email, password: v.password });
-        if (error) throw error;
-        if (data.session && data.user) {
-          const shown = await ensureProfile(data.user, v.name);
-          try { localStorage.removeItem(GUEST_KEY); } catch (e) {}
-          showPlaying(`You're in, ${shown} — go play today's seven.`, data.session.access_token, false);
-        } else {
-          // email confirmation required: remember the name for the first sign-in
-          try { localStorage.setItem("bgw_pending_name", v.name); } catch (e) {}
-          setChMode("signin");
-          chEmail.value = v.email;
-          say("Check your email and open the confirmation link, then sign in here with the same password.", "ok");
-        }
-      } else {
-        const { data, error } = await sb.auth.signInWithPassword({ email: v.email, password: v.password });
-        if (error) throw error;
-        let pending = null;
-        try { pending = localStorage.getItem("bgw_pending_name"); localStorage.removeItem("bgw_pending_name"); } catch (e) {}
-        const shown = await ensureProfile(data.user, pending);
-        try { localStorage.removeItem(GUEST_KEY); } catch (e) {}
-        showPlaying(`Welcome back, ${shown} — go play today's seven.`, data.session.access_token, false);
-      }
-    } catch (err) {
-      say(friendly(err), "err");
-    } finally {
-      if (sbState === "ready") chSubmit.disabled = false;
-    }
-  });
-
-  /* ---- leaderboard (built with textContent: display names are user input) ---- */
-  const boardEl = $("chBoard");
-  function renderBoardMessage(text, retry) {
-    boardEl.replaceChildren();
-    const li = document.createElement("li");
-    li.className = "ch-board-empty";
-    li.textContent = text;
-    if (retry) {
-      const b = document.createElement("button");
-      b.type = "button"; b.className = "ch-retry"; b.textContent = "Try again";
-      b.addEventListener("click", loadBoard);
-      li.append(" ", b);
-    }
-    boardEl.append(li);
-  }
-  async function loadBoard() {
-    if (!sb) return;
-    renderBoardMessage("Loading today's scores…");
-    const { data: scores, error } = await sb
-      .from("portal_challenge_scores")
-      .select("user_id,total_score")
-      .eq("challenge_date", chDate)
-      .order("total_score", { ascending: false })
-      .limit(20);
-    if (error) return renderBoardMessage("Couldn't load today's leaderboard.", true);
-    if (!scores || !scores.length) return renderBoardMessage("No scores yet today — be the first to finish all seven.");
-    const { data: profiles } = await sb.from("portal_profiles").select("id,display_name").in("id", scores.map(s => s.user_id));
-    const names = {};
-    (profiles || []).forEach(p => { names[p.id] = p.display_name; });
-    boardEl.replaceChildren(...scores.map((s, i) => {
-      const li = document.createElement("li");
-      [["rank", i + 1], ["name", names[s.user_id] || "Player"], ["score", Number(s.total_score) || 0]].forEach(([cls, val]) => {
-        const span = document.createElement("span");
-        span.className = cls;
-        span.textContent = String(val);
-        li.append(span);
+  function board(rows) {
+    const el = $("chBoard");
+    $("sevenBoard").hidden = false;
+    el.replaceChildren();
+    if (!rows || !rows.length) { const li = document.createElement("li"); li.className = "none"; li.textContent = "No members on the board yet today. Be the first!"; el.append(li); return; }
+    rows.forEach((r, i) => {
+      const li = document.createElement("li"); if (r.you) li.className = "you";
+      [["rank", i + 1], ["name", r.name], ["done", r.done + "/7"], ["streak", r.streak ? "\u{1F525}" + r.streak : ""]].forEach(([c, v]) => {
+        const sp = document.createElement("span"); sp.className = c; sp.textContent = String(v); li.append(sp);
       });
-      return li;
-    }));
+      el.append(li);
+    });
   }
 
-  function startSupabase() {
-    const timer = setTimeout(setOffline, SB_TIMEOUT_MS);
+  async function load(sb) {
+    const { data, error } = await sb.rpc("daily_seven");
+    if (error || !data) return;
+    member = !!(data.me && data.me.member);
+    done = new Set((data.me && data.me.done) || []);
+    tiles(); meBox(data); board(data.board);
+  }
+
+  // Today's challenge button and the #challenge link both bring it into view.
+  function focusSeven() {
+    seven.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    seven.classList.remove("flash"); void seven.offsetWidth; seven.classList.add("flash");
+  }
+  $("openChallenge").addEventListener("click", focusSeven);
+  if (location.hash === "#challenge") setTimeout(focusSeven, 300);
+  window.addEventListener("hashchange", () => { if (location.hash === "#challenge") focusSeven(); });
+
+  function start() {
     const s = document.createElement("script");
     s.src = SB_JS; s.async = true;
-    s.onerror = () => { clearTimeout(timer); setOffline(); };
     s.onload = () => {
-      clearTimeout(timer);
-      if (!window.supabase) return setOffline();
-      sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: window.bgwSharedAuth() });
-      sbState = "ready";
-      chSubmit.disabled = false;
-      if (chMsg.classList.contains("err")) say("");
-      sb.auth.getSession().then(async ({ data }) => {
-        if (data.session && data.session.user) {
-          const shown = await ensureProfile(data.session.user);
-          showPlaying(`You're set, ${shown} — go play today's seven.`, data.session.access_token, false);
-        }
-      }).catch(() => {});
-      loadBoard();
+      if (!window.supabase) return;
+      const sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: window.bgwSharedAuth() });
+      load(sb);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) load(sb); }); // back from a game: refresh
     };
     document.head.append(s);
   }
-  // after first paint, so the page never waits on it
-  if (document.readyState === "complete") startSupabase();
-  else window.addEventListener("load", startSupabase, { once: true });
+  if (document.readyState === "complete") start(); else window.addEventListener("load", start, { once: true });
 })();
 </script>
 </body>
