@@ -230,7 +230,9 @@ tbody tr:hover td{background:var(--rule-2)}
     h+=table([{t:"Site"},{t:"Today",num:1},{t:"Visits",num:1},{t:"Visitors",num:1}],
       (T.sites||[]).map(function(x){return '<tr>'+td('<b>'+esc(siteName(x.site))+'</b>')+td(fmt(x.today),1)+td(fmt(x.visits),1)+td(fmt(x.visitors),1)+'</tr>'}),
       "No visits yet.");
-    h+='<div class="card-body muted">A visit is one browser tab opening one site, so moving from a game to bgameworld.com counts on both. "Played" means the visitor finished at least one game that day; guest plays are counted from 26 November.</div>';
+    var reasons=Object.keys(T.bot_reasons||{}).map(function(k){return esc(k)+" "+fmt(T.bot_reasons[k])}).join(", ");
+    h+='<div class="card-body muted"><b>Bots left out:</b> '+fmt(T.bots_today||0)+' today, '+fmt(T.bots_filtered||0)+' in the last '+data.range_days+' days'+(reasons?' ('+reasons+')':'')+'. Crawlers, preview bots, headless browsers and data-centre visitors are never counted. Bot checks began on 26 November; earlier visits were checked only for data-centre locations.</div>';
+    h+='<div class="card-body muted">A visit is anyone who opened a page, whether or not they played; one browser tab opening one site, so moving from a game to bgameworld.com counts on both. "Played" means the visitor finished at least one game that day; guest plays are counted from 26 November.</div>';
     return h}
   function vk(label,value,sub){return '<div class="vkpi"><div class="label">'+label+'</div><div class="value">'+fmt(value)+'</div><div class="sub">'+sub+'</div></div>'}
 

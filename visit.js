@@ -12,6 +12,9 @@
   var host = location.hostname;
   if (!/(^|\.)bgameworld\.com$/.test(host)) return; // not on the live site
   if (navigator.webdriver) return; // automated browsers
+  // Crawlers and scripted browsers aren't visitors. (The server checks again.)
+  // ("Googlebot/2.1" yes, but not phones like "Cubot X50".)
+  if (/\bbot\b|[a-z]bot\/|crawl|spider|slurp|headless|lighthouse|pagespeed|facebookexternalhit|python-|curl\/|wget\//i.test(navigator.userAgent)) return;
 
   // Offer guests an account (not on the admin page or the answer pages).
   if (!/^\/(admin|a)\//.test(location.pathname)) {
@@ -70,9 +73,24 @@
     } catch (e) { return null; }
   }
 
+  // Signs of a real browser, checked on the server too.
+  info.p_signals = {
+    webdriver: !!navigator.webdriver,
+    langs: (navigator.languages || []).length,
+    w: (window.screen && screen.width) || 0,
+    h: (window.screen && screen.height) || 0,
+  };
+
+  // Count a page only once it has actually been on screen (not prerendered or
+  // opened in the background by a crawler).
+  var seen = document.visibilityState === "visible";
+  if (!seen) document.addEventListener("visibilitychange", function onVis() {
+    if (document.visibilityState === "visible") { seen = true; document.removeEventListener("visibilitychange", onVis); setTimeout(send, 1500); }
+  });
+
   var tries = 0, sent = false;
   function send(now) {
-    if (sent) return;
+    if (sent || !seen) return;
     var t = token();
     if (!t && !now && ++tries < 8) return setTimeout(send, 1000); // give the game a moment to sign the guest in
     sent = true;
