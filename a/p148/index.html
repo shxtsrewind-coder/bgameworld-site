@@ -110,7 +110,7 @@ footer a{color:var(--ink-3)}
       <path d="M32 12H52V32" fill="none" stroke="#121212" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       <g fill="#121212"><circle cx="12" cy="12" r="6"/><circle cx="52" cy="52" r="6"/><circle cx="32" cy="32" r="2.5"/></g>
       <g fill="#fff" stroke="#121212" stroke-width="2.5"><circle cx="32" cy="12" r="5.5"/><circle cx="52" cy="32" r="5.5"/></g></svg></span><h1>6 pairs. One way.</h1></div>
-  <div class="actions"><a class="btn" href="https://linkezy.bgameworld.com/?utm_medium=answer&utm_campaign=linkezy&utm_content=p148-top">Play today's Linkezy free</a></div>
+  <div class="actions" data-top-play><a class="btn" href="https://linkezy.bgameworld.com/?utm_medium=answer&utm_campaign=linkezy&utm_content=p148-top">Play today's Linkezy free</a></div>
   <img class="puz" src="/social/fb/p148.png" alt="6 pairs. One way. Join each pair. Lines can&#x27;t cross, and every square gets filled." width="1080" height="1350">
   <div class="actions"><button class="btn ghost" id="show" type="button">Show the answer</button></div>
   <section class="ans" id="ans" hidden>
@@ -132,6 +132,8 @@ footer a{color:var(--ink-3)}
   <footer><span>Free, no download · <a href="/">bgameworld.com</a></span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></footer>
 </main>
 <noscript><style>#ans{display:block!important}#show{display:none}</style></noscript>
+<script>/* Send visitors straight on to today's game (visit.js has already noted the post). ?stay shows this page. */
+document.addEventListener("DOMContentLoaded",function(){if(/[?&]stay\b/.test(location.search))return;var a=document.querySelector("[data-top-play] a");if(!a)return;if(window.bgwVisitFlush)window.bgwVisitFlush();setTimeout(function(){location.replace(a.href)},150);});</script>
 <script>
 document.getElementById('show').addEventListener('click',function(){var a=document.getElementById('ans');a.hidden=false;this.style.display='none';a.scrollIntoView({behavior:'smooth',block:'start'});});
 </script>

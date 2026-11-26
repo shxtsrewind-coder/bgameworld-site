@@ -110,7 +110,7 @@ footer a{color:var(--ink-3)}
       <rect x="4" y="12" width="10" height="10" rx="1.5" fill="#121212"/><rect x="16" y="12" width="10" height="10" rx="1.5"/><rect x="28" y="12" width="10" height="10" rx="1.5" fill="#121212"/><rect x="40" y="12" width="10" height="10" rx="1.5"/><rect x="52" y="12" width="10" height="10" rx="1.5"/>
       <rect x="4" y="27" width="10" height="10" rx="1.5" fill="#121212"/><rect x="16" y="27" width="10" height="10" rx="1.5" fill="#121212"/><rect class="mv" style="--move:flip" x="28" y="27" width="10" height="10" rx="1.5" fill="#fff"/><rect x="40" y="27" width="10" height="10" rx="1.5"/><rect x="52" y="27" width="10" height="10" rx="1.5"/>
       <rect x="4" y="42" width="10" height="10" rx="1.5"/><rect x="16" y="42" width="10" height="10" rx="1.5"/><rect x="28" y="42" width="10" height="10" rx="1.5"/><rect x="40" y="42" width="10" height="10" rx="1.5"/><rect x="52" y="42" width="10" height="10" rx="1.5"/></g></svg></span><h1>One letter left.</h1></div>
-  <div class="actions"><a class="btn" href="https://wordezy.bgameworld.com/?utm_medium=answer&utm_campaign=wordezy&utm_content=p169-top">Play today's Wordezy free</a></div>
+  <div class="actions" data-top-play><a class="btn" href="https://wordezy.bgameworld.com/?utm_medium=answer&utm_campaign=wordezy&utm_content=p169-top">Play today's Wordezy free</a></div>
   <img class="puz" src="/social/fb/p169.png" alt="One letter left. Berry, ferry or merry?" width="1080" height="1350">
   <div class="actions"><button class="btn ghost" id="show" type="button">Show the answer</button></div>
   <section class="ans" id="ans" hidden>
@@ -132,6 +132,8 @@ footer a{color:var(--ink-3)}
   <footer><span>Free, no download · <a href="/">bgameworld.com</a></span><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span></footer>
 </main>
 <noscript><style>#ans{display:block!important}#show{display:none}</style></noscript>
+<script>/* Send visitors straight on to today's game (visit.js has already noted the post). ?stay shows this page. */
+document.addEventListener("DOMContentLoaded",function(){if(/[?&]stay\b/.test(location.search))return;var a=document.querySelector("[data-top-play] a");if(!a)return;if(window.bgwVisitFlush)window.bgwVisitFlush();setTimeout(function(){location.replace(a.href)},150);});</script>
 <script>
 document.getElementById('show').addEventListener('click',function(){var a=document.getElementById('ans');a.hidden=false;this.style.display='none';a.scrollIntoView({behavior:'smooth',block:'start'});});
 </script>
