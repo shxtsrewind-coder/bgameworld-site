@@ -143,6 +143,19 @@
     }
     return cand.map(function (g) { return [score(g), g]; }).sort(function (a, b) { return b[0] - a[0]; }).slice(0, 3).map(function (x) { return x[1]; });
   }
+  // Record every finished game, guests included (most games only save results
+  // for players with a name, so guest play would otherwise be invisible).
+  function logFinish(e) {
+    var game = e && e.detail && e.detail.game;
+    if (!game) return;
+    var t = token(), h = { "Content-Type": "application/json", apikey: SB_KEY };
+    if (t) h.Authorization = "Bearer " + t;
+    fetch(SB_URL + "/rest/v1/rpc/log_finish", {
+      method: "POST", keepalive: true, headers: h, body: JSON.stringify({ p_game: game, p_site: location.hostname }),
+    }).catch(function () {});
+  }
+  window.addEventListener("bgw:finished", logFinish);
+
   var lastFinish = 0;
   function playNext() {
     if (Date.now() - lastFinish < 10000) return; // one card per finish
