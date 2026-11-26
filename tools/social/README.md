@@ -13,8 +13,10 @@ Needs Python 3 with playwright, numpy and Pillow, plus Node 22+ (it runs Scrambl
 - `gamedata.py`: word lists, rules and checks for each game (every puzzle must have exactly one answer).
 - `design.py`: the post, Pin and answer-page look, from DESIGN.md (white paper, ink, one colour per game).
 - `render.py`: screenshots each post with Chromium and flags anything that spills off the card.
-- `nov.py`: the puzzles for 13-26 Nov 2026 (p061-p116). Copy it for the next batch.
-- `challenge.py`: the daily 7-game challenge posts, e.g. `python3 challenge.py 2026-11-13 2026-11-26`.
+- `nov.py`: the puzzles for 13-26 Nov 2026 (p061-p116), the builders for each game, and `publish()`.
+- `dec.py`: the puzzles for 27 Nov - 10 Dec 2026 (p117-p172). It reuses nov.py's builders and checks that no
+  answer repeats an earlier post. Copy it for the next batch (new ids, start date and Linkezy file).
+- `challenge.py`: the Daily Seven posts, e.g. `python3 challenge.py 2026-11-27 2026-12-10`.
 
 Outputs: `social/fb/<id>.png` (1080x1350), `social/pin/<id>.jpg` (1000x1500), `a/<id>/index.html`,
 and new rows in `src/posts.json` and `src/pins.json`.

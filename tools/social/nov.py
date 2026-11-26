@@ -96,8 +96,8 @@ def letterezy(word, extra, seed, hint, headline="9 letters. One 7-letter word.")
                 pin_title=f"Find the 7-Letter Word in {' '.join(rack)}")
 
 LINKS = json.load(open(HERE / "data" / "links-nov.json"))
-def linkezy(i, cap):
-    segs = LINKS[i]; g.link_ok(segs); k = len(segs)
+def linkezy(i, cap, links=None):
+    segs = (links or LINKS)[i]; g.link_ok(segs); k = len(segs)
     return dict(game="linkezy", headline=f"{k} pairs. One way.", sub="Join each pair. Lines can't cross, and every square gets filled.",
                 vis=d.link_grid(segs, g.LINK_COLORS), caption=cap + "\n\nPlay today's Linkezy free: {link}",
                 ans_title="The only solution", ans_vis=d.link_grid(segs, g.LINK_COLORS, solved=True, cell=46),
@@ -235,9 +235,9 @@ def more_for(p, i):
     pool = [k for k in MORE if k != p["game"]]
     return [pool[(i + j * 3) % len(pool)] for j in range(3)]
 
-def main():
+def publish(P):
+    """Render P's images, write their answer pages and add them to src/posts.json and src/pins.json."""
     import render
-    P = build_puzzles()
     rep_fb = render.render(P, "fb", SITE / "social" / "fb")
     rep_pin = render.render(P, "pin", SITE / "social" / "pin")
     bad = {k: v for k, v in list(rep_fb.items()) + list(rep_pin.items()) if v["bad"] or not v["fonts"]}
@@ -266,6 +266,9 @@ def main():
     (SITE / "src/pins.json").write_text(json.dumps(pins, indent=1, ensure_ascii=False))
     import pins_index; pins_index.build()  # titles and pictures for the admin's Top pins tab
     print(f"{len(P)} puzzles: images, answer pages, posts.json ({len(posts)}), pins.json ({len(pins)})")
+
+def main():
+    publish(build_puzzles())
 
 if __name__ == "__main__":
     main()
