@@ -196,6 +196,94 @@
     );
   }
 
+  // ---------- more games: a showcase every game places with <div data-bgw-more-games> ----------
+  // The game's own plain links stay inside the element as a fallback; this
+  // draws over them in a shadow root, so the game's styles can't clash.
+  var SEVEN_POOL = ["wordezy", "wordsearch", "scramble", "ladder", "warmezy", "letterezy", "sortezy", "mergezy"];
+  function fnv(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h = (h ^ str.charCodeAt(i)) >>> 0; h = Math.imul(h, 16777619) >>> 0; } return h; }
+  function sevenToday() {
+    var d = new Date().toISOString().slice(0, 10);
+    return SEVEN_POOL.map(function (a) { return [fnv(d + ":" + a), a]; }).sort(function (x, y) { return x[0] - y[0] || (x[1] < y[1] ? -1 : 1); }).slice(0, 7).map(function (x) { return x[1]; });
+  }
+  var HOOK = {
+    wordezy: "Guess today's 5-letter word in 6 tries", wordsearch: "Find every hidden word on today's board",
+    scramble: "Unscramble five words against the clock", ladder: "Turn one word into another, a letter at a time",
+    warmezy: "Find the secret word by how close each guess is", letterezy: "Spell big words from a bag of letters",
+    lingoezy: "Spot the right translation, dodge the traps", sortezy: "Pour the colours until every tube matches",
+    linkezy: "Join the dots without crossing a line", mergezy: "Merge three of a kind to climb higher",
+    timeguess: "Guess when and where a real photo was taken",
+  };
+  var MORE_CSS = ":host{all:initial;display:block;width:100%}" +
+    "*{box-sizing:border-box}" +
+    ".panel{font:15px/1.4 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#1d1530;text-align:left;border-radius:22px;padding:20px 16px 16px;margin:8px 0 4px;" +
+    "background:linear-gradient(160deg,#fff7e6 0%,#fde9f6 45%,#ece6ff 100%);box-shadow:0 10px 30px -14px rgba(90,40,160,.45),inset 0 0 0 1px rgba(120,60,200,.15)}" +
+    ".kick{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#a1401b}" +
+    ".kick i{font-style:normal;display:inline-block;animation:tw 1.6s ease-in-out infinite}@keyframes tw{50%{transform:scale(1.35) rotate(15deg)}}" +
+    "h3{margin:6px 0 2px;font-size:22px;line-height:1.15;font-weight:900;letter-spacing:-.01em}" +
+    ".sub{margin:0 0 14px;color:#5b4f6e;font-size:14px}" +
+    ".seven{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;border-radius:14px;padding:11px 14px;margin:0 0 14px;font-weight:700;font-size:14px;" +
+    "background:linear-gradient(90deg,#7c3aed,#db2777,#f59e0b);background-size:200% 100%;animation:sh 6s linear infinite;box-shadow:0 6px 18px -8px rgba(219,39,119,.8)}" +
+    "@keyframes sh{to{background-position:200% 0}}.seven span{flex:1}.seven b{font-size:18px}" +
+    ".grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media (min-width:460px){.grid{grid-template-columns:repeat(3,1fr)}}" +
+    "a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px -8px rgba(40,20,80,.45),0 0 0 1px rgba(40,20,80,.06);transition:transform .18s,box-shadow .18s}" +
+    "a.card:hover,a.card:focus-visible{transform:translateY(-3px);box-shadow:0 12px 26px -10px rgba(90,40,160,.55),0 0 0 2px #7c3aed;outline:none}" +
+    ".pic{position:relative;aspect-ratio:4/3;background:#24123a;overflow:hidden}.pic img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;transition:transform .3s}" +
+    "a.card:hover .pic img{transform:scale(1.06)}" +
+    ".badge{position:absolute;left:8px;top:8px;font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#fbbf24;color:#3b2300}" +
+    ".badge.done{background:rgba(255,255,255,.9);color:#1e7d4a}" +
+    ".body{padding:9px 10px 10px;display:flex;flex-direction:column;gap:3px;flex:1}" +
+    ".name{font-weight:800;font-size:14.5px;line-height:1.2}.hook{font-size:12.5px;color:#6a5f7a;line-height:1.3;flex:1}" +
+    ".go{margin-top:6px;align-self:flex-start;font-size:12.5px;font-weight:800;color:#fff;background:#1d1530;border-radius:999px;padding:5px 12px}" +
+    "a.card:hover .go{background:#7c3aed}" +
+    "a.card.played{opacity:.72}" +
+    ".all{display:block;text-align:center;margin-top:14px;font-weight:800;color:#5b21b6;text-decoration:none;font-size:14px}.all:hover{text-decoration:underline}" +
+    "@media (prefers-color-scheme:dark){.panel{color:#f5f0fc;background:linear-gradient(160deg,#2a1645 0%,#331a3f 50%,#1f1d4a 100%);box-shadow:0 10px 30px -14px rgba(0,0,0,.8),inset 0 0 0 1px rgba(216,180,254,.18)}" +
+    ".kick{color:#fbbf24}.sub{color:#cdc1e2}a.card{background:#1d1229;box-shadow:0 0 0 1px rgba(216,180,254,.14)}.hook{color:#b9acd0}.go{background:#a855f7}.all{color:#d8b4fe}}" +
+    "@media (prefers-reduced-motion:reduce){.kick i,.seven{animation:none}a.card,.pic img{transition:none}}";
+
+  function renderMore(el) {
+    el.setAttribute("data-bgw-done", "1");
+    var here = el.getAttribute("data-game") || (current && current.art);
+    var root = el.attachShadow ? el.attachShadow({ mode: "open" }) : null;
+    if (!root) return; // very old browser: the game's own links stay
+    function draw(st) {
+      var seven = (st && st.seven) || sevenToday(), today = (st && st.today) || [], member = registered();
+      var list = GAMES.filter(function (g) { return g.art !== here; }).map(function (g) {
+        var played = today.indexOf(g.art) >= 0, inSeven = seven.indexOf(g.art) >= 0;
+        return { g: g, played: played, inSeven: inSeven, rank: (played ? 0 : 4) + (inSeven ? 2 : 0) + Math.random() };
+      }).sort(function (a, b) { return b.rank - a.rank; }).slice(0, 6);
+      var left = seven.filter(function (a) { return today.indexOf(a) < 0; }).length;
+      var strip = member
+        ? (left ? "<a class='seven' href='" + SITE + "/#challenge'><b>&#128293;</b><span>Daily Seven: " + (7 - left) + " of 7 done. Finish all seven to grow your streak.</span>&rsaquo;</a>"
+                : "<a class='seven' href='" + SITE + "/#challenge'><b>&#127942;</b><span>Daily Seven complete! See today's leaderboard.</span>&rsaquo;</a>")
+        : "<a class='seven' href='" + joinUrl() + "'><b>&#10022;</b><span>Play the Daily Seven: join free, build a streak, top the leaderboard.</span>&rsaquo;</a>";
+      root.innerHTML = "<style>" + MORE_CSS + "</style><section class='panel' aria-label='More free games'>" +
+        "<span class='kick'><i>&#10022;</i> More free puzzles today</span>" +
+        "<h3>Play your next game</h3><p class='sub'>New puzzles every day. Free, no download.</p>" + strip +
+        "<div class='grid'>" + list.map(function (x) {
+          var badge = x.played ? "<span class='badge done'>&#10003; Played</span>" : x.inSeven ? "<span class='badge'>Daily Seven</span>" : "";
+          return "<a class='card" + (x.played ? " played" : "") + "' href='" + x.g.url + "/'>" +
+            "<span class='pic'><img src='" + SITE + "/art/" + x.g.guide + "-poster.webp' alt='' loading='lazy'>" + badge + "</span>" +
+            "<span class='body'><span class='name'>" + esc(x.g.name) + "</span><span class='hook'>" + esc(HOOK[x.g.art] || x.g.line) + "</span>" +
+            "<span class='go'>" + (x.played ? "Play again" : "Play now") + " &#9656;</span></span></a>";
+        }).join("") + "</div>" +
+        "<a class='all' href='" + SITE + "/'>See all " + GAMES.length + " games on BGameWorld &rarr;</a></section>";
+    }
+    draw(null);                 // straight away, then again with what they've played today
+    status().then(function (st) { if (st) draw(st); });
+    window.addEventListener("bgw:finished", function () { setTimeout(function () { status().then(function (st) { if (st) draw(st); }); }, 1500); });
+  }
+  function findMore() {
+    var els = document.querySelectorAll("[data-bgw-more-games]:not([data-bgw-done])");
+    for (var i = 0; i < els.length; i++) renderMore(els[i]);
+  }
+  findMore();
+  // Games draw their pages after loading, so watch for the spot to appear (checked at most twice a second).
+  var moreTimer = null;
+  if (window.MutationObserver) new MutationObserver(function () {
+    if (!moreTimer) moreTimer = setTimeout(function () { moreTimer = null; findMore(); }, 500);
+  }).observe(document.documentElement, { childList: true, subtree: true });
+
   // ---------- start ----------
   setTimeout(function () {
     if (registered()) { markWelcomed(); return; }
