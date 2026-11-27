@@ -205,12 +205,13 @@ h1{{margin:0;font:700 46px/1.02 "Zilla Slab",serif;letter-spacing:-.02em}}
 .pin .body{{padding-top:26px}}.pin h1{{font-size:48px}}.pin .foot{{padding-bottom:20px}}
 """
 
-def post_html(p, kind="fb"):
+def post_html(p, kind="fb", cta=None, cls="", css=""):
+    """kind sets the size (fb 4:5, pin 2:3); cta, cls and css let other platforms reuse the card (instagram.py)."""
     g = game(p["game"])
-    cta = "Play free: link in the post" if kind == "fb" else "Tap to play free"
+    cta = cta or ("Play free: link in the post" if kind == "fb" else "Tap to play free")
     zoom = p.get("zoom", 1)
-    return f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONT}{VIS_CSS}{POST_CSS}</style></head><body>
-<div class="post {kind}" style="--tile:{g['color']}">
+    return f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONT}{VIS_CSS}{POST_CSS}{css}</style></head><body>
+<div class="post {kind} {cls}" style="--tile:{g['color']}">
 <div class="band"><span class="ic">{g['icon']}</span><span><b>{e(g['name'])}</b><small>{e(LABEL[p['game']])}</small></span></div>
 <div class="body"><h1>{p['headline']}</h1><p class="sub">{e(p['sub'])}</p>
 <div class="vis"><div style="zoom:{zoom}">{p['vis']}</div></div></div>
