@@ -27,6 +27,7 @@ export async function reelsDue(env, now) {
 
   for (const r of reels) {
     const at = Date.parse(r.at);
+    if (at > now || now - at > 24 * 60 * 60 * 1000) continue;   // nothing to do outside the last day (keeps KV reads low)
     const key = `rl:${r.id}`;
     let rec = JSON.parse((await env.SOCIAL.get(key)) || "null");
 
@@ -98,9 +99,10 @@ async function fail(env, id, step, r, now) {
   }), { expirationTtl: ERROR_TTL });
 }
 
-export async function reelsStatus(env, now) {
-  const out = { paused: (await env.SOCIAL.get("REELS_PAUSED")) === "1", reels: [] };
+export async function reelsStatus(env, now, span = 2 * 86400000) {
+  const out = { paused: (await env.SOCIAL.get("REELS_PAUSED")) === "1", scheduled_until: reels.length ? reels[reels.length - 1].at : null, reels: [] };
   for (const r of reels) {
+    if (Math.abs(Date.parse(r.at) - now) > span) continue;
     const rec = JSON.parse((await env.SOCIAL.get(`rl:${r.id}`)) || "null");
     const err = await env.SOCIAL.get(`rlerr:${r.id}`);
     const at = Date.parse(r.at);

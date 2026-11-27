@@ -171,15 +171,17 @@ async function channelInfo(token) {
 }
 
 // ---------------------------------------------------------------- status
-export async function youtubeStatus(env, now) {
+export async function youtubeStatus(env, now, span = 2 * 86400000) {
   const a = JSON.parse((await env.SOCIAL.get("yt:auth")) || "null");
   const out = { configured: configured(env), connected: Boolean(a), paused: (await env.SOCIAL.get("YOUTUBE_PAUSED")) === "1", shorts: [] };
   const ch = await env.SOCIAL.get("yt:channel");
   if (ch) out.channel = JSON.parse(ch);
   const ae = await env.SOCIAL.get("yt:err:auth");
   if (ae) out.auth_error = JSON.parse(ae);
+  out.scheduled_until = shorts.length ? shorts[shorts.length - 1].at : null;
   for (const s of shorts) {
     const at = Date.parse(s.at);
+    if (Math.abs(at - now) > span) continue;
     if (now - at > 3 * 86400000 && !(await env.SOCIAL.get(`yt:err:${s.id}`))) {
       const done = await env.SOCIAL.get(`yt:s:${s.id}`);
       if (!done) continue;                          // old and never posted: leave it out of the list

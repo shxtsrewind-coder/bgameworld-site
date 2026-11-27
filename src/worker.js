@@ -48,7 +48,7 @@ const ERROR_TTL = 14 * 24 * 60 * 60;
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (url.pathname === "/api/social/status") return status(env);
+    if (url.pathname === "/api/social/status") return status(env, url);
     if (url.pathname.startsWith("/api/tiktok/")) return tiktokRoute(request, env, url);
     if (url.pathname.startsWith("/api/pinterest/")) return pinterestRoute(request, env, url);
     if (url.pathname.startsWith("/api/youtube/")) return youtubeRoute(request, env, url);
@@ -115,15 +115,22 @@ async function postDue(env, now) {
   }
 }
 
-async function status(env) {
+// The page lists what's around now: 2 days either side (?days= up to 5). Each item's state is its own
+// KV read, and Cloudflare allows 1,000 reads per request, so listing every post ever made breaks the page.
+async function status(env, url) {
   const now = Date.now();
+  const days = Math.min(5, Math.max(1, Number(url.searchParams.get("days")) || 2));
+  const span = days * 86400000;
   const out = {
     facebook_configured: Boolean(env.FB_PAGE_ID && env.FB_PAGE_TOKEN),
     paused: (await env.SOCIAL.get("PAUSED")) === "1",
     now: new Date(now).toISOString(),
+    showing: `${days} day${days > 1 ? "s" : ""} either side of now${days < 5 ? " (add ?days=5 to see more)" : ""}`,
+    posts_scheduled_until: posts.length ? posts[posts.length - 1].at : null,
     posts: [],
   };
   for (const p of posts) {
+    if (Math.abs(Date.parse(p.at) - now) > span) continue;
     const done = await env.SOCIAL.get(`fb:${p.id}`);
     const err = await env.SOCIAL.get(`err:${p.id}`);
     const at = Date.parse(p.at);
@@ -138,11 +145,11 @@ async function status(env) {
     if (err) row.last_error = JSON.parse(err);
     out.posts.push(row);
   }
-  out.reels = await reelsStatus(env, now);
+  out.reels = await reelsStatus(env, now, span);
   out.pinterest = await pinterestStatus(env);
   out.tiktok = await tiktokStatus(env, now);
-  out.youtube = await youtubeStatus(env, now);
-  out.instagram = await instagramStatus(env, now);
+  out.youtube = await youtubeStatus(env, now, span);
+  out.instagram = await instagramStatus(env, now, span);
   return new Response(JSON.stringify(out, null, 2), {
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
   });

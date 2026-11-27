@@ -134,7 +134,7 @@ async function account(env, t) {
 }
 
 // ---------------------------------------------------------------- status (never shows the token)
-export async function instagramStatus(env, now) {
+export async function instagramStatus(env, now, span = 2 * 86400000) {
   const out = { configured: Boolean(env.INSTAGRAM_TOKEN), paused: (await env.SOCIAL.get("INSTAGRAM_PAUSED")) === "1", posts: [] };
   if (out.configured) {
     const t = await currentToken(env);
@@ -148,8 +148,10 @@ export async function instagramStatus(env, now) {
     const e = await env.SOCIAL.get(`ig:err:${k}`);
     if (e) out[`${k}_error`] = JSON.parse(e);
   }
+  out.scheduled_until = items.length ? items[items.length - 1].at : null;
   for (const it of items) {
     const at = Date.parse(it.at);
+    if (Math.abs(at - now) > span) continue;
     const s = await env.SOCIAL.get(`ig:s:${it.id}`);
     const err = await env.SOCIAL.get(`ig:err:${it.id}`);
     if (now - at > 3 * 86400000 && !s && !err) continue;      // old and never posted: leave it out
