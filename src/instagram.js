@@ -12,6 +12,7 @@
 // What it posts: src/instagram.json (made by tools/social/instagram.py), each item at its time,
 // within 6 hours, so an outage never dumps a backlog:
 //   carousel  two JPEG slides from /social/ig/ (the puzzle, then the answer)
+//   image     one JPEG from /social/ig/ (the Daily Seven)
 //   reel      a puzzle Short from /social/shorts/
 // Instagram fetches the files from this site, then processes them; a Reel can take a minute or
 // two, so a post may finish on the next 30-minute run. Pause: KV key INSTAGRAM_PAUSED = 1 (or PAUSED).
@@ -80,6 +81,9 @@ async function createContainer(token, acct, it) {
   const me = `/${acct.user_id}/media`;
   if (it.kind === "reel") {
     return (await post(me, { media_type: "REELS", video_url: `${SITE}/${it.video}`, caption: it.caption, share_to_feed: "true" }, token)).id;
+  }
+  if (it.kind === "image") {
+    return (await post(me, { image_url: `${SITE}/${it.image}`, caption: it.caption }, token)).id;
   }
   const children = [];
   for (const img of it.images) children.push((await post(me, { image_url: `${SITE}/${img}`, is_carousel_item: "true" }, token)).id);

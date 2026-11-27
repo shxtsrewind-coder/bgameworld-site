@@ -1,13 +1,15 @@
-"""Instagram: puzzle carousels (slide 1 the puzzle, slide 2 the answer) and puzzle Reels -> src/instagram.json.
+"""Instagram, 7 posts a day: puzzle carousels (slide 1 the puzzle, slide 2 the answer), the Daily Seven and
+puzzle Reels -> src/instagram.json.
 
 Instagram captions can't hold working links, so each post answers itself: swipe for the answer, and
 "link in bio" for the games. Images are JPEG (the only kind Instagram's API takes), 1080x1350 (4:5).
 
     python3 instagram.py      # renders social/ig/<id>.jpg + <id>-a.jpg for dec.py's puzzles, writes src/instagram.json
 
-Schedule (UTC): 2 carousels a day from that day's Facebook puzzles, each after its Facebook post
-    13:00  the 1st or 2nd puzzle (06:00 / 09:00 on Facebook)     21:00  the 3rd or 4th (16:00 / 19:00)
-and 1 Reel a day at 17:00 from the puzzle Shorts (social/shorts/, nov.py's puzzles).
+Schedule (UTC), each puzzle after its Facebook post (06:00, 09:00, 12:00 Daily Seven, 16:00, 19:00):
+    07:30 puzzle 1 · 10:30 puzzle 2 · 12:30 Daily Seven · 15:00 Reel · 17:00 puzzle 3 · 20:00 puzzle 4 · 22:30 Reel
+Reels are the puzzle Shorts (social/shorts/, nov.py's puzzles), 2 a day while they last.
+Slots before FIRST are left out, so switching on part-way through a day doesn't post a burst of catch-ups.
 """
 import json, re, pathlib, tempfile, datetime as dt
 from playwright.sync_api import sync_playwright
@@ -15,7 +17,9 @@ import design as d, render, nov, dec, shorts_schedule as ss
 
 SITE = d.SITE
 OUT = SITE / "social" / "ig"
-START, DAYS, REEL_DAYS = dt.date(2026, 11, 27), 14, 26          # carousels 27 Nov - 10 Dec, Reels 27 Nov - 22 Dec
+START, DAYS = dt.date(2026, 11, 27), 14                          # puzzles and Daily Seven 27 Nov - 10 Dec
+FIRST = "2026-11-27T14:30:00Z"                                    # Instagram went from 3 to 7 a day at 14:00 UTC on 27 Nov
+PUZZLE_AT, CH_AT, REEL_AT = ["07:30", "10:30", "17:00", "20:00"], "12:30", ["15:00", "22:30"]
 
 # answer slide: a smaller headline, room for the explanation, and the visual scaled to fill what's left
 ANS_CSS = """.ans h1{font-size:36px}.ans .sub{font-size:17px}.ans .close{width:430px}.ans .anstag{display:inline-block;margin:0 0 10px;padding:6px 12px;
@@ -62,18 +66,28 @@ def reel(p, at):
            f"Play {g['name']} and more free daily puzzles at bgameworld.com (link in bio 🔗)\n\n#reels {hashtags(p['game'])}")
     return {"id": f"igr-{p['id']}", "at": at, "kind": "reel", "game": p["game"], "video": f"social/shorts/{p['id']}.mp4", "caption": cap}
 
+def daily_seven(c, at):
+    """The Facebook Daily Seven post as a single Instagram image; the link paragraph becomes 'link in bio'."""
+    from PIL import Image
+    jpg = OUT / f"{c['id']}.jpg"
+    Image.open(SITE / "social/fb" / f"{c['id']}.png").convert("RGB").save(jpg, quality=90)
+    paras = [x if "https://" not in x else "Make a free account and play at bgameworld.com (link in bio 🔗)" for x in c["caption"].split("\n\n")]
+    return {"id": f"ig-{c['id']}", "at": at, "kind": "image", "game": "challenge", "image": f"social/ig/{c['id']}.jpg", "caption": "\n\n".join(paras)}
+
 def schedule(P):
     out = []
     posts = {x["id"]: x for x in json.load(open(SITE / "src/posts.json"))}
     for i in range(DAYS):
-        day = (START + dt.timedelta(days=i)).isoformat(); four = P[4 * i: 4 * i + 4]
-        out += [carousel(four[i % 2], f"{day}T13:00:00Z"), carousel(four[2 + (i + 1) % 2], f"{day}T21:00:00Z")]
+        date = START + dt.timedelta(days=i); day = date.isoformat()
+        out += [carousel(p, f"{day}T{t}:00Z") for p, t in zip(P[4 * i: 4 * i + 4], PUZZLE_AT)]
+        out.append(daily_seven(posts[f"ch{date:%m%d}"], f"{day}T{CH_AT}:00Z"))
     R = nov.build_puzzles()
-    for i in range(REEL_DAYS):
-        out.append(reel(R[i], f"{(START + dt.timedelta(days=i)).isoformat()}T17:00:00Z"))
-    out.sort(key=lambda x: x["at"])
+    for i, p in enumerate(R):
+        day = (START + dt.timedelta(days=i // 2)).isoformat()
+        out.append(reel(p, f"{day}T{REEL_AT[i % 2]}:00Z"))
+    out = sorted((x for x in out if x["at"] >= FIRST), key=lambda x: x["at"])
     for x in out:
-        for f in x.get("images", []) + ([x["video"]] if "video" in x else []): assert (SITE / f).exists(), f
+        for f in x.get("images", []) + [x[k] for k in ("video", "image") if k in x]: assert (SITE / f).exists(), f
         assert len(x["caption"]) <= 2200 and x["caption"].count("#") <= 30, x["id"]      # Instagram's caption limits
         pid = x["id"].split("-", 1)[1]
         assert posts[pid]["at"] < x["at"], x["id"]                                         # never answers before its Facebook post
